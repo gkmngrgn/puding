@@ -1,0 +1,4 @@
+Varsayımlar:
+ * Kullanıcıların dosya yolu yazmada yetenekli oldukları varsayılıyor.
+ * Kullanıcıların USB belleği bootable ve FAT32 olarak biçimlendirdiği
+   varsayılıyor.

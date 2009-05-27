@@ -1,0 +1,30 @@
+Yapılacaklar:
+
+--0.0.2
+* Birtakım kullanıcı arayüz eksikliklerini giderme
+ - USB bellekte yeteri kadar yer olmadığında uyarma                 |
+ - Raw_Input yerine argümanlarla aynı işi yapma                     |
+ - Gettext ile çeviri desteği                                       |
+
+-- 0.0.1
+* Karşılama ekranı ve sorular
+ - Yetkili kullanıcı olup olmadığı kontrol edilmeli                 | OK
+ - Çevirmek istediğiniz CD kalıbının yolu                           | OK
+ - Kullanmak istediğiniz USB belleğin bağlandığı dizin yolu         | OK
+ - USB bellek hakkında bilgileri ekrana yazdırma                    | OK
+ - Bilgilerin doğruluğu ile ilgili onay                             | OK
+
+* Kopyalama
+ - CD kalıbını geçici bir dizine bağlama                            | OK
+ - CD kalıbı içeriğini USB belleğe kopyalama                        | OK
+ - isolinux dizinini syslinux olarak yeniden adlandırma             | OK
+ - isolinux.cfg dosyasını syslinux.cfg olarak yeniden adlandırma    | OK
+ - Kopyalama işlemi için bir fonksiyon yazma                        |
+
+* Syslinux.cfg yapılandırma
+ - dosyada isolinux kelimesini aratıp yerine syslinux yazdırma      | OK
+ - append satırına mudur=livedisk parametresini ekleme              | OK
+
+* USB belleğin açılış kaydını yazma
+ - syslinux komutuyla ldlinux.sys dosyası oluşturma                 | OK
+ - mbr.bin dosyasını MBR'ye yazma                                   | OK

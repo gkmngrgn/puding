@@ -1,0 +1,4 @@
+Requirements:
+ - Python 2.5.*
+ - Syslinux
+ - Mtools 3.9.11 (I didn't try with 4.*)
