@@ -45,7 +45,7 @@ class Options:
 
         else:
             print(_("%s: Missing argument." % const.app_name))
-            print(_("For more information, type '%s --help'." % const.app_name))
+            print(_("For more information, type '%s --help'." % sys.argv[0]))
 
 if __name__ == '__main__':
     try:

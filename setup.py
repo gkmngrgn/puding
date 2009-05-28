@@ -20,10 +20,28 @@ os.chmod(script, 0755)
 DOC_DIR = '/usr/share/doc'
 SBIN_DIR = '/usr/sbin'
 LOCALE_DIR = '/usr/share/locale'
+LANGS = ['tr', ]
+
+def locale(lang):
+    return('share/locale/%s/LC_MESSAGES' % lang,
+            ['po/locale/%s/%s.mo' % (lang, app_launch_name)])
+
+#Create .mo files
+if not os.path.exists('po/locale'):
+    os.mkdir('po/locale')
+
+    for lang in LANGS:
+        pofile = 'po/' + lang + '.po'
+        mofile = 'po/locale/' + lang + '/%s.mo' % app_launch_name
+
+        os.mkdir('po/locale/' + lang + '/')
+        print("generating %s" % mofile)
+        os.system('msgfmt %s -o %s' % (pofile, mofile))
 
 datas = [
     ('%s/%s' % (DOC_DIR, app_launch_name), ['NOTES', 'TODO']),
     (SBIN_DIR, [script, ]),
+    locale('tr'),
     ]
 
 setup(
@@ -37,7 +55,5 @@ setup(
     platforms = ['Linux', ],
     packages = ['%s/' % app_launch_name, ],
     data_files = datas,
-    po_directory = 'po',
-    po_package = app_launch_name,
     )
 
