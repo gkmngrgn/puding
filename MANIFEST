@@ -8,5 +8,6 @@ po/puic.pot
 po/tr.po
 puic/__init__.py
 puic/const.py
+puic/main.py
 puic/puic
 puic/ui_cmd.py
