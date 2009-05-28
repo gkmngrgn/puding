@@ -5,6 +5,7 @@ NOTES
 TODO
 po/POTFILES.in
 po/puic.pot
+po/tr.po
 puic/__init__.py
 puic/const.py
 puic/puic

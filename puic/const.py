@@ -8,7 +8,7 @@ from puic import _
 
 app_name = _('Pardus USB Image Creator')
 app_launch_name = 'puic'
-app_version = '0.0.2'
+app_version = '0.0.3'
 app_description = _("An USB Image Creator For Pardus Linux.")
 app_url = 'http://www.gokmengorgen.net/puic'
 app_license_name = 'GPLv3'
