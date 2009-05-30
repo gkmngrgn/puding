@@ -1,10 +1,15 @@
 Yapılacaklar:
 
+--0.0.6
+ - USB bellekte yeteri kadar yer olmadığında uyarma                 |
+
+--0.0.5
+ - Gfxtheme desteği                                                 | OK
+
 --0.0.2
 * Birtakım kullanıcı arayüz eksikliklerini giderme
- - USB bellekte yeteri kadar yer olmadığında uyarma                 |
- - Raw_Input yerine argümanlarla aynı işi yapma                     |
- - Gettext ile çeviri desteği                                       |
+ - Raw_Input yerine argümanlarla aynı işi yapma                     | OK
+ - Gettext ile çeviri desteği                                       | OK
 
 -- 0.0.1
 * Karşılama ekranı ve sorular

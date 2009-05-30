@@ -2,3 +2,12 @@ Varsayımlar:
  * Kullanıcıların dosya yolu yazmada yetenekli oldukları varsayılıyor.
  * Kullanıcıların USB belleği bootable ve FAT32 olarak biçimlendirdiği
    varsayılıyor.
+
+Sorunlar:
+ * puic/main.py:104
+    ver = "2.26.1"
+    map(int, ver.split("."))
+    [2, 26, 1]   <= Bu daha mantıklı.
+
+ * puic/main.py:84
+    Bir yerlerde version.py dosyası olmalı, sürüm bilgisi almak için.
