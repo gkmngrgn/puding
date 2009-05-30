@@ -10,6 +10,7 @@ import sys
 
 from main import createImage
 from main import getDiskInfo
+from puic import _
 
 class Create:
     def __init__(self, src, dst):

@@ -5,6 +5,7 @@
 # license: GPLv3
 #
 
+import glob
 import os
 import shutil
 
@@ -41,6 +42,7 @@ if not os.path.exists('po/locale'):
 datas = [
     ('%s/%s' % (DOC_DIR, app_launch_name), ['NOTES', 'TODO']),
     (SBIN_DIR, [script, ]),
+    ('share/%s' % app_launch_name, glob.glob('datas/syslinux.cfg.*')),
     locale('tr'),
     ]
 

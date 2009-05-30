@@ -4,10 +4,12 @@
 # author: Gökmen Görgen
 # license: GPLv3
 
+import glob
 import os
 import shutil
 import subprocess
 
+from const import app_launch_name
 from puic import _
 
 def getMounted(disk_path):
@@ -57,34 +59,66 @@ def runCommand(cmd):
     return proc
 
 def copyImage(src, dst):
-    # sembolik baglantilari dogru kopyalamiyor.
-    # eheh allahtan sembolik baglanti yok..
-    for sub in os.listdir(src):
-        sub_src = os.path.join(src, sub)
-        sub_dst = os.path.join(dst, sub)
+    print(_("\nCreated \"repo\" directory in %s." % dst))
+    os.mkdir('%s/repo' % dst)
+    for file in glob.glob('%s/repo/*' % src):
+        file_name = os.path.split(file)[1]
+        print(_("Copying %s.." % file_name))
+        shutil.copy(file, '%s/repo/%s' % (dst, file_name))
 
-        print(_("Copying %s.." % sub_src))
+    print(_("\nCreated \"boot\" directory in %s." % dst))
+    os.mkdir('%s/boot' % dst)
+    for file in glob.glob('%s/boot/*' % src):
+        if not os.path.isdir(file):
+            file_name = os.path.split(file)[1]
+            print(_("Copying %s.." % file_name))
+            shutil.copy(file, '%s/boot/%s' % (dst, file_name))
 
-        if os.path.isdir(sub_src):
-            shutil.copytree(sub_src, sub_dst)
+    print(_("\nAnd copying pardus.img to %s" % dst))
+    shutil.copy('%s/pardus.img' % src, '%s/pardus.img' % dst)
 
-        else:
-            shutil.copy2(sub_src, sub_dst)
+def createConfigFile(dst):
+    # Syslinux'un kurulu olup olmadigina bakmiyor. Pisi paketine syslinux
+    # bagimliligi yazdim zaten. Asagidaki bilgileri su betikten ogrendim:
+    # /usr/lib/pardus/pisi/cli/info.py
+    from pisi.api import info_name
 
-def configSyslinux(iso_cfg, sys_cfg):
-    # Tum yapilandirma dosyasini bellege almak bu fonksiyonu biraz
-    # hantallastiriyor. Daha kolay bir cozum yolu bulunmalı. Mesela
-    # dosya icerigini satir satir okutmak gibi.. Bu is icin start-
-    # swith fonksiyonu arastirilmali.
-    old_file = open(iso_cfg)
-    new_file = open(sys_cfg, 'w')
+    # Kurmadan da uygulamanin calismasi icin
+    if os.path.exists('/usr/share/%s' % app_launch_name):
+        DATA_DIR = '/usr/share/%s' % app_launch_name
 
-    new_file.write(old_file.read().replace('isolinux',
-                                            'syslinux').replace('root=/dev/ram0',
-                                                                'root=/dev/ram0 mudur=livedisk')),
-    new_file.close()
+    else:
+        DATA_DIR = 'datas'
 
-    os.remove(iso_cfg)
+    SYSLINUX_DIR = '/usr/lib/syslinux'
+    GFXTHEME_DIR = '/usr/share/gfxtheme/'
+
+    # True parametresi ne ise yarar bilmiyorum henuz.
+    metadata = info_name('syslinux', True)[0]
+    version = metadata.package.version
+
+    # Her seyden once syslinux dizinini olusturmak gerek
+    os.mkdir('%s/boot/syslinux' % dst)
+
+    # Bu nasil calisiyor ki, string kiyaslamasi yapiyorum =/
+    if version < '3.74':
+        syslinux_conf_file = '%s/syslinux.cfg.old' % DATA_DIR
+
+    else:
+        syslinux_conf_file = '%s/syslinux.cfg.new' % DATA_DIR
+
+        shutil.copy('%s/gfxboot.com' % SYSLINUX_DIR,
+                    '%s/boot/syslinux/gfxboot.com' % dst)
+
+        # Bu ne bilmiyom =/ Genis bir zamanda ogrenmek gerek.
+        shutil.copy('%s/hdt.c32' % SYSLINUX_DIR,
+                    '%s/boot/syslinux/hdt.c32' % dst)
+
+    for file in glob.glob('%s/pardus/boot/*' % GFXTHEME_DIR):
+        file_name = os.path.split(file)[1]
+        shutil.copy(file, '%s/boot/syslinux/%s' % (dst, file_name))
+
+    shutil.copy(syslinux_conf_file, '%s/boot/syslinux/syslinux.cfg' % dst)
 
 def mountDisk(src, dst):
     print(_("Mounting %s.." % src))
@@ -145,14 +179,8 @@ def createImage(src, dst):
         # unmount and remove dirname
         unmountDisk(dirname)
 
-        # change directory name and create syslinux.cfg
-        print(_("Renaming boot/isolinux to boot/syslinux.."))
-        os.rename('%s/boot/isolinux' % dst,
-                  '%s/boot/syslinux' % dst)
-
-        print(_("Renaming boot/syslinux/isolinux.cfg to boot/syslinux/syslinux.cfg and configuring.."))
-        configSyslinux('%s/boot/syslinux/isolinux.cfg' % dst,
-                       '%s/boot/syslinux/syslinux.cfg' % dst)
+        print(_("Copying syslinux files.."))
+        createConfigFile(dst)
 
         # install syslinux and create mbr
         if createMBR(dst):

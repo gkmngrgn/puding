@@ -3,6 +3,8 @@ setup.py
 INSTALL
 NOTES
 TODO
+datas/syslinux.cfg.new
+datas/syslinux.cfg.old
 po/POTFILES.in
 po/puic.pot
 po/tr.po
