@@ -4,10 +4,10 @@ Varsayımlar:
    varsayılıyor.
 
 Sorunlar:
- * puic/main.py:104
-    ver = "2.26.1"
-    map(int, ver.split("."))
-    [2, 26, 1]   <= Bu daha mantıklı.
-
  * puic/main.py:84
     Bir yerlerde version.py dosyası olmalı, sürüm bilgisi almak için.
+
+ * puic.py:37
+    destination = /media/disk ise problem yok ama eğer /media/disk/ ise,
+    onu bu satırda düzeltip önlemini almalısın. Bu düzeltmeyi yaptıktan
+    sonra, main.py'deki önemleri geri alabilirsin.

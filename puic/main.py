@@ -74,8 +74,24 @@ def copyImage(src, dst):
             print(_("Copying %s.." % file_name))
             shutil.copy(file, '%s/boot/%s' % (dst, file_name))
 
-    print(_("\nAnd copying pardus.img to %s" % dst))
+    print(_("\nAnd copying pardus.img to %s.." % dst))
     shutil.copy('%s/pardus.img' % src, '%s/pardus.img' % dst)
+
+def checkVersion(src, dst):
+    src_ver = map(int, src.split('.'))
+    dst_ver = map(int, dst.split('.'))
+
+    # Syslinux'un 4.* surumu cikarsa diye..
+    if src_ver[0] > dst_ver[0]:
+        return True
+
+    # src_ver, dst_ver'den buyuk degilse, esittir buyuk olasilikla.
+    else:
+        if src_ver[1] < dst_ver[1]:
+            return False
+
+        else:
+            return True
 
 def createConfigFile(dst):
     # Syslinux'un kurulu olup olmadigina bakmiyor. Pisi paketine syslinux
@@ -101,7 +117,7 @@ def createConfigFile(dst):
     os.mkdir('%s/boot/syslinux' % dst)
 
     # Bu nasil calisiyor ki, string kiyaslamasi yapiyorum =/
-    if version < '3.74':
+    if not checkVersion(version, '3.74'):
         syslinux_conf_file = '%s/syslinux.cfg.old' % DATA_DIR
 
     else:
@@ -110,7 +126,6 @@ def createConfigFile(dst):
         shutil.copy('%s/gfxboot.com' % SYSLINUX_DIR,
                     '%s/boot/syslinux/gfxboot.com' % dst)
 
-        # Bu ne bilmiyom =/ Genis bir zamanda ogrenmek gerek.
         shutil.copy('%s/hdt.c32' % SYSLINUX_DIR,
                     '%s/boot/syslinux/hdt.c32' % dst)
 

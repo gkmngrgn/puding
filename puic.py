@@ -8,14 +8,15 @@ import getopt
 import sys
 
 from puic import ui_cmd
-from puic import const
 from puic import _
+from puic.const import app_launch_name, app_name, \
+                       app_version, license
 
 class Options:
     def parseArgs(self):
         from optparse import OptionParser
 
-        parser = OptionParser(version = const.app_version)
+        parser = OptionParser(version = app_version)
 
         parser.add_option('-c', '--create', dest = 'create', action = 'store_true',
                           help = _("create Pardus USB image from console"))
@@ -38,13 +39,14 @@ class Options:
 
             except IndexError:
                 print(_("Invalid usage. Example:"))
-                print("%s --create /mnt/archive/Pardus_2009_Prealpha3.iso /media/disk" % const.app_launch_name)
+                print("%s --create /mnt/archive/Pardus_2009.iso /media/disk" % \
+                      app_launch_name)
 
         elif opts.license:
-            print(const.license)
+            print(license)
 
         else:
-            print(_("%s: Missing argument." % const.app_name))
+            print(_("%s: Missing argument." % app_name))
             print(_("For more information, type '%s --help'." % sys.argv[0]))
 
 if __name__ == '__main__':
