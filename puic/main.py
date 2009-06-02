@@ -12,6 +12,19 @@ import subprocess
 from const import app_launch_name
 from puic import _
 
+def fixPath(dst):
+    # Verilen yollari bozuksa duzeltir. Ornek:
+    # //media////disk/ ---> /media/disk
+    path_list = []
+
+    for path in dst.split('/'):
+        if path != '':
+            path_list.append(path)
+
+    new_dst = '/' + '/'.join(path_list)
+
+    return new_dst
+
 def getMounted(disk_path):
     # Bu fonksiyon biraz daha basitlestirilebilir gibime
     # geliyor. parts sozlugu olusturup, sonra buna ogeler
@@ -25,14 +38,7 @@ def getMounted(disk_path):
             device, path, other = line.split(" ", 2)
             parts[path] = device
 
-    try:
-        return parts[disk_path]
-
-    except KeyError:
-        # Kullanicinin USB bellek dizini olarak /media/disk/ yazma ihti-
-        # maline karsilik boyle onlem alabildim. Sondaki '/' karakterini
-        # almamasi icin
-        return parts[disk_path[:-1]]
+    return parts[disk_path]
 
 def getDiskInfo(disk_path):
     command_df = subprocess.Popen('df -h'.split(), stdout = subprocess.PIPE)

@@ -9,8 +9,11 @@ import sys
 
 from puic import ui_cmd
 from puic import _
-from puic.const import app_launch_name, app_name, \
-                       app_version, license
+from puic.const import app_launch_name, \
+                       app_name, \
+                       app_version, \
+                       license
+from puic.main import fixPath
 
 class Options:
     def parseArgs(self):
@@ -32,14 +35,14 @@ class Options:
             from puic import ui_cmd
 
             try:
-                source = sys.argv[2]
-                destination = sys.argv[3]
+                source = fixPath(sys.argv[2])
+                destination = fixPath(sys.argv[3])
 
                 ui_cmd.Create(source, destination)
 
             except IndexError:
                 print(_("Invalid usage. Example:"))
-                print("%s --create /mnt/archive/Pardus_2009.iso /media/disk" % \
+                print("%s --create /mnt/archive/Pardus-2009.iso /media/disk" % \
                       app_launch_name)
 
         elif opts.license:

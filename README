@@ -1,0 +1,7 @@
+For translators:
+    $ cd $(PUIC)/po
+    $ msginit -l $(LANG)
+
+For developers:
+    $ cd $(PUIC)/po
+    $ xgettext -f POTFILES.in ../puic.py -L Python --output=puic.pot

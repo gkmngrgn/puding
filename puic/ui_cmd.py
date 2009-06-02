@@ -73,12 +73,7 @@ class Create:
          2.2 Onay alındıysa, True döndür.
          2.3 Onay alınamadıysa, False döndür.
         """
-        if not os.path.isdir(dst) and os.path.ismount(dst):
-            print(_("The path you have typed is invalid. If you think the path is valid, make sure you have mounted USB stick to the path you gave. To check the path, you can use: mount | grep %s"))
-
-            return False
-
-        else:
+        if os.path.isdir(dst) and os.path.ismount(dst):
             getDiskInfo(dst)
             print(_("Please double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?"))
 
@@ -93,3 +88,8 @@ class Create:
                 print(_("You did not type CONFIRM. Exiting.."))
 
                 return False
+
+        else:
+            print(_("The path you have typed is invalid. If you think the path is valid, make sure you have mounted USB stick to the path you gave. To check the path, you can use: mount | grep %s" % dst))
+
+            return False
