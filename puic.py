@@ -5,6 +5,7 @@
 # license: GPLv3
 
 import getopt
+import os
 import sys
 
 from puic import ui_cmd
