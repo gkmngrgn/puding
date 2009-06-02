@@ -3,6 +3,7 @@ setup.py
 COPYING
 INSTALL
 NOTES
+README
 TODO
 datas/syslinux.cfg.new
 datas/syslinux.cfg.old
