@@ -33,14 +33,6 @@ class Create:
                 sys.exit(1)
 
     def checkSource(self, src):
-        """
-        1. Eğer KAYNAK bir dosya değilse, False döndür.
-        2. Eğer KAYNAK bir dosya ise;
-         2.1. Uzantısını değişkene ata. Eğer uzantı .iso değilse, False
-         döndür.
-         2.2. Eğer uzantısı .iso ise, True döndür.
-         2.3. Uzantısı yoksa False döndür.
-        """
         if not os.path.isfile(src):
             print(_("Path to the source file is invalid, try again."))
 
@@ -66,13 +58,6 @@ class Create:
                 return False
 
     def checkDestination(self, dst):
-        """
-        1. Eğer DİZİN bir bölümün bağlandığı dizin değilse, False döndür.
-        2. Eğer öyleyse;
-         2.1 DİZİN bilgilerini ekrana bas ve işlem devamı için onay iste.
-         2.2 Onay alındıysa, True döndür.
-         2.3 Onay alınamadıysa, False döndür.
-        """
         if os.path.isdir(dst) and os.path.ismount(dst):
             getDiskInfo(dst)
             print(_("Please double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?"))
