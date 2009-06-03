@@ -6,18 +6,4 @@ Yapılacaklar:
    ma. Kök dizine bağlı olan bir partisyon için onay istemeye
    gerek yok mesela.
 
---0.0.5
- - Gfxtheme desteği                                                 | OK
 
---0.0.2
-* Birtakım kullanıcı arayüz eksikliklerini giderme
- - Raw_Input yerine argümanlarla aynı işi yapma                     | OK
- - Gettext ile çeviri desteği                                       | OK
-
--- 0.0.1
-* Karşılama ekranı ve sorular
- - Yetkili kullanıcı olup olmadığı kontrol edilmeli                 | OK
- - Çevirmek istediğiniz CD kalıbının yolu                           | OK
- - Kullanmak istediğiniz USB belleğin bağlandığı dizin yolu         | OK
- - USB bellek hakkında bilgileri ekrana yazdırma                    | OK
- - Bilgilerin doğruluğu ile ilgili onay                             | OK

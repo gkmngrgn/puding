@@ -40,7 +40,11 @@ if not os.path.exists('po/locale'):
         os.system('msgfmt %s -o %s' % (pofile, mofile))
 
 datas = [
-    ('%s/%s' % (DOC_DIR, app_launch_name), ['COPYING', 'NOTES', 'README', 'TODO']),
+    ('%s/%s' % (DOC_DIR, app_launch_name), ['ChangeLog', \
+                                            'COPYING', \
+                                            'NOTES', \
+                                            'README', \
+                                            'TODO']),
     (SBIN_DIR, [script, ]),
     ('share/%s' % app_launch_name, glob.glob('datas/syslinux.cfg.*')),
     locale('tr'),
