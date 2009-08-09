@@ -7,13 +7,10 @@
 import getopt
 import os
 import sys
+import ui_cmd
 
-from puic import ui_cmd
-from puic import _
-from puic.const import app_launch_name, \
-                       app_name, \
-                       app_version, \
-                       license
+from common import (app_launch_name, app_name, app_version, \
+                   license, _)
 
 class Options:
     def parseArgs(self):

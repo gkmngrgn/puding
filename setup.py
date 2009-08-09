@@ -10,9 +10,9 @@ import os
 import shutil
 
 from distutils.core import setup
-from puic.const import app_launch_name, app_version, app_description, \
-                       core_developer, core_developer_email, \
-                       app_url, app_license_name
+from src.common import (app_launch_name, app_version, app_description, \
+                        core_developer, core_developer_email, app_url, \
+                        app_license_name)
 
 script = '%s/%s' % (app_launch_name, app_launch_name)
 shutil.copyfile('%s.py' % app_launch_name, script)

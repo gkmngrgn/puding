@@ -4,7 +4,21 @@
 # author: Gökmen Görgen
 # license: GPLv3
 
-from puic import _
+import os
+import gettext
+
+app_launch_name = 'puic'
+
+if os.path.exists('locale'):
+    localedir = 'locale'
+
+else:
+    localedir = '/usr/share/locale'
+
+t = gettext.translation(app_launch_name, localedir, fallback = True)
+_ = t.ugettext
+
+# General Informations
 
 app_name = _('Pardus USB Image Creator')
 app_launch_name = 'puic'
