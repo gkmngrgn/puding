@@ -24,7 +24,7 @@ class Create:
         else:
             # Yollar soruluyor, bilgiler dogruysa imaj olusturma islemi
             # baslatiliyor.
-            if self.checkSource(src) and self.checkDestination(dst):
+            if self.__checkSource(src) and self.__checkDestination(dst):
                 createImage(src, dst)
 
             else:
@@ -32,7 +32,7 @@ class Create:
 
                 sys.exit(1)
 
-    def checkSource(self, src):
+    def __checkSource(self, src):
         if not os.path.isfile(src):
             print(_("Path to the source file is invalid, try again."))
 
@@ -57,7 +57,7 @@ class Create:
 
                 return False
 
-    def checkDestination(self, dst):
+    def __checkDestination(self, dst):
         if os.path.isdir(dst) and os.path.ismount(dst):
             getDiskInfo(dst)
             print(_("Please double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?"))
