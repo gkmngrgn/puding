@@ -46,13 +46,12 @@ class Options:
 
         else:
             from puic import ui_qt
-            
-            try:
-                ui_qt.Create()
-            
-            except:
-                print(_("%s: Missing argument." % app_name))
-                print(_("For more information, type '%s --help'." % sys.argv[0]))
+            from PyQt4 import QtGui
+        
+            app = QtGui.QApplication(sys.argv)
+            form = ui_qt.Create()
+            form.show()
+            sys.exit(app.exec_())
 
 if __name__ == '__main__':
     try:
