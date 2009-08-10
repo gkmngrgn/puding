@@ -9,8 +9,7 @@ import os
 import shutil
 import subprocess
 
-from const import app_launch_name
-from puic import _
+from common import (app_launch_name, _)
 
 def getMounted(disk_path):
     # Bu fonksiyon biraz daha basitlestirilebilir gibime
