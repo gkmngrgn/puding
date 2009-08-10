@@ -26,10 +26,10 @@ os.chmod(script, 0755)
 # General installation functions
 # def locale(lang):
 #    return("share/locale/%s/LC_MESSAGES" % lang,
-#            ["datas/po/locale/%s/%s.mo" % (lang, app_launch_name)])
+#            ["data/po/locale/%s/%s.mo" % (lang, app_launch_name)])
 
 def removeBuildFiles():
-    rmDir = ["build", "datas/po/locale", app_launch_name]
+    rmDir = ["build", "data/po/locale", app_launch_name]
 
     # remove build directories
     for dir in rmDir:
@@ -45,22 +45,23 @@ def removeBuildFiles():
             os.remove(file)
 
 # Create .mo files
-# if not os.path.exists("datas/po/locale"):
-#    os.mkdir("datas/po/locale")
+# if not os.path.exists("data/po/locale"):
+#    os.mkdir("data/po/locale")
 # 
 #    for lang in LANGS:
-#        pofile = "datas/po/" + lang + ".po"
-#        mofile = "datas/po/locale/" + lang + "/%s.mo" % app_launch_name
+#        pofile = "data/po/" + lang + ".po"
+#        mofile = "data/po/locale/" + lang + "/%s.mo" % app_launch_name
 # 
-#        os.mkdir("datas/po/locale/" + lang + "/")
+#        os.mkdir("data/po/locale/" + lang + "/")
 #        print("generating %s" % mofile)
 #        os.system("msgfmt %s -o %s" % (pofile, mofile))
 
-datas = [
+data = [
     ("share/doc/%s" % app_launch_name, ["ChangeLog", "COPYING", "NOTES", \
                                             "README", "TODO"]),
-    ("share/%s" % app_launch_name, glob.glob("datas/syslinux.cfg.*"))]
-#    ("share/%s/ui" % app_launch_name, glob.glob("datas/ui/*")),
+    ("share/%s" % app_launch_name, glob.glob("data/syslinux.cfg.*")),
+    ("share/%s/ui" % app_launch_name, glob.glob("data/ui/*"))]
+#    ("share/%s/ui" % app_launch_name, glob.glob("data/ui/*")),
 #    locale("tr")]
 
 setup(
@@ -73,7 +74,7 @@ setup(
     license = app_license_name,
     packages = [app_launch_name],
     scripts = [script],
-    data_files = datas,
+    data_files = data,
     )
 
 # Clean build files and directories

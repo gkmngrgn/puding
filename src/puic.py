@@ -45,8 +45,14 @@ class Options:
             print(license)
 
         else:
-            print(_("%s: Missing argument." % app_name))
-            print(_("For more information, type '%s --help'." % sys.argv[0]))
+            from puic import ui_qt
+            
+            try:
+                ui_qt.Create()
+            
+            except:
+                print(_("%s: Missing argument." % app_name))
+                print(_("For more information, type '%s --help'." % sys.argv[0]))
 
 if __name__ == '__main__':
     try:

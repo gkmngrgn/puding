@@ -7,19 +7,21 @@
 import os
 import gettext
 
-app_launch_name = 'puic'
+# General variables
+app_launch_name = "puic"
+share_dir = "/usr/share/%s" % app_launch_name
 
-if os.path.exists('locale'):
-    localedir = 'locale'
+# General functions
+if os.path.exists("locale"):
+    localedir = "locale"
 
 else:
-    localedir = '/usr/share/locale'
+    localedir = "/usr/share/locale"
 
 t = gettext.translation(app_launch_name, localedir, fallback = True)
 _ = t.ugettext
 
 # General Informations
-
 app_name = _('Pardus USB Image Creator')
 app_launch_name = 'puic'
 app_version = '0.0.5'
@@ -28,7 +30,7 @@ app_url = 'http://www.gokmengorgen.net/puic'
 app_license_name = 'GPLv3'
 core_developer = 'Gökmen Görgen'
 core_developer_email = 'gkmngrgn@gmail.com'
-copyright = _("Copyright") + "\302\251 2009 Gökmen Görgen, <gkmngrgn@gmail.com>"
+copyright = _("Copyright") + " \302\251 2009 Gökmen Görgen, <%s>" % core_developer_email
 license = _("""\
 Puic is an USB image creator for Pardus Linux.
 %s
