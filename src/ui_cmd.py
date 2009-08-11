@@ -8,8 +8,7 @@ import os
 import glob
 import sys
 
-from main import createImage
-from main import getDiskInfo
+from main import (createImage, getDiskInfo)
 from common import _
 
 class Create:

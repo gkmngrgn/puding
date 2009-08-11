@@ -69,21 +69,23 @@ def copyImage(src, dst):
     print(_("\nAnd copying pardus.img to %s.." % dst))
     shutil.copy('%s/pardus.img' % src, '%s/pardus.img' % dst)
 
-def checkVersion(src, dst):
-    src_ver = map(int, src.split('.'))
-    dst_ver = map(int, dst.split('.'))
+def mountDisk(src, dst):
+    print(_("Mounting %s.." % src))
+    cmd = 'mount -o loop %s %s' % (src, dst)
+    proc = subprocess.call(cmd, shell = True)
 
-    # Syslinux'un 4.* surumu cikarsa diye..
-    if src_ver[0] > dst_ver[0]:
-        return True
+    return proc
 
-    # src_ver, dst_ver'den buyuk degilse, esittir buyuk olasilikla.
+def unmountDisk(dst):
+    print(_("Unmounting %s.." % dst))
+    cmd = 'umount %s' % dst
+    proc = subprocess.call(cmd, shell = True)
+
+    if not proc:
+        os.removedirs(dst)
+
     else:
-        if src_ver[1] < dst_ver[1]:
-            return False
-
-        else:
-            return True
+        print(_("Could not unmount, %s." % dst))
 
 def createConfigFile(dst):
     # Syslinux'un kurulu olup olmadigina bakmiyor. Pisi paketine syslinux
@@ -126,24 +128,6 @@ def createConfigFile(dst):
         shutil.copy(file, '%s/boot/syslinux/%s' % (dst, file_name))
 
     shutil.copy(syslinux_conf_file, '%s/boot/syslinux/syslinux.cfg' % dst)
-
-def mountDisk(src, dst):
-    print(_("Mounting %s.." % src))
-    cmd = 'mount -o loop %s %s' % (src, dst)
-    proc = subprocess.call(cmd, shell = True)
-
-    return proc
-
-def unmountDisk(dst):
-    print(_("Unmounting %s.." % dst))
-    cmd = 'umount %s' % dst
-    proc = subprocess.call(cmd, shell = True)
-
-    if not proc:
-        os.removedirs(dst)
-
-    else:
-        print(_("Could not unmount, %s." % dst))
 
 def createMBR(dst):
     print(_("Creating ldlinux.sys.."))
@@ -199,3 +183,19 @@ def createImage(src, dst):
             print(_("Could not write MBR to USB disk."))
 
             return False
+
+def checkVersion(src, dst):
+    src_ver = map(int, src.split('.'))
+    dst_ver = map(int, dst.split('.'))
+
+    # Syslinux'un 4.* surumu cikarsa diye..
+    if src_ver[0] > dst_ver[0]:
+        return True
+
+    # src_ver, dst_ver'den buyuk degilse, esittir buyuk olasilikla.
+    else:
+        if src_ver[1] < dst_ver[1]:
+            return False
+
+        else:
+            return True
