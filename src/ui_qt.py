@@ -21,6 +21,8 @@ class Create(QtGui.QMainWindow):
         self.connect(self.button_prev, QtCore.SIGNAL("clicked()"), self.__actionPreview)
         self.connect(self.button_quit, QtCore.SIGNAL("clicked()"), QtCore.SLOT("close()"))
 
+        self.button_prev.hide()
+
     def __actionNext(self):
         src = self.line_src.displayText()
         dst = self.line_dst.displayText()
@@ -35,11 +37,14 @@ class Create(QtGui.QMainWindow):
             
             return False
 
-        self.label_warning.setText("<strong>The paths you have specified are valid..</strong>")
+        self.label_warning.setText("<i>The paths you have specified are valid..</i>")
 
         id = self.stackedWidget.currentIndex()
         if id < 1:
             self.stackedWidget.setCurrentIndex(id + 1)
+
+        if id == 0:
+            self.button_prev.show()
             
         return True
 
@@ -48,6 +53,9 @@ class Create(QtGui.QMainWindow):
         
         if id > 0:
             self.stackedWidget.setCurrentIndex(id - 1)
+
+        if id == 1:
+            self.button_prev.hide()
 
     def __checkSource(self, src):
         if QtCore.QString(src).isEmpty():
