@@ -18,6 +18,7 @@ class Create(QtGui.QMainWindow):
         self.text_dst = self.label_dst.text()
 
         self.connect(self.button_next, QtCore.SIGNAL("clicked()"), self.__actionNext)
+        self.connect(self.button_prev, QtCore.SIGNAL("clicked()"), self.__actionPreview)
         self.connect(self.button_quit, QtCore.SIGNAL("clicked()"), QtCore.SLOT("close()"))
 
     def __actionNext(self):
@@ -25,13 +26,28 @@ class Create(QtGui.QMainWindow):
         dst = self.line_dst.displayText()
 
         if not self.__checkSource(src):
-            self.label_info.setText("<font color=\"red\">The ISO path you have specified is invalid!</font>")
+            self.label_warning.setText("<font color=\"red\">The ISO path you have specified is invalid!</font>")
+            
+            return False
 
-        elif not self.__checkDestination(dst, self.text_dst):
-            self.label_info.setText("<font color=\"red\">The USB disk path you have specified is invalid!</font>")
+        if not self.__checkDestination(dst):
+            self.label_warning.setText("<font color=\"red\">The USB disk path you have specified is invalid!</font>")
+            
+            return False
 
-        else:
-            pass
+        self.label_warning.setText("<strong>The paths you have specified are valid..</strong>")
+
+        id = self.stackedWidget.currentIndex()
+        if id < 1:
+            self.stackedWidget.setCurrentIndex(id + 1)
+            
+        return True
+
+    def __actionPreview(self):
+        id = self.stackedWidget.currentIndex()
+        
+        if id > 0:
+            self.stackedWidget.setCurrentIndex(id - 1)
 
     def __checkSource(self, src):
         if QtCore.QString(src).isEmpty():
@@ -39,28 +55,13 @@ class Create(QtGui.QMainWindow):
             return False
 
         else:
-#===============================================================================
-#            src_extension = path.splitext(src) == ".iso"
-#            if not path.isfile(src) and not src_extension:
-#===============================================================================
-            if not path.isfile(src):
+            src_extension = path.splitext(str(src))[1] == ".iso"
 
-                return False
+            return path.isfile(src) and src_extension
 
-            else:
-
-                return True
-
-    def __checkDestination(self, dst, text):
+    def __checkDestination(self, dst):
         if QtCore.QString(dst).isEmpty():
-
             return False
 
         else:
-            if not path.isdir(dst) and not path.ismount(dst):
-
-                return False
-
-            else:
-
-                return True
+            return path.ismount(str(dst))

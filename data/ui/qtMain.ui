@@ -66,11 +66,45 @@
          </spacer>
         </item>
         <item row="1" column="0">
+         <widget class="QLabel" name="label_warning">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="sayfa">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="label_title">
+          <property name="styleSheet">
+           <string>font-size: 20px; font-weight: bold;</string>
+          </property>
+          <property name="text">
+           <string>Informations:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QLabel" name="label_info">
           <property name="text">
            <string/>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>53</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -138,14 +172,14 @@
     </property>
     <addaction name="action_quit"/>
    </widget>
-   <widget class="QMenu" name="menuHelp">
+   <widget class="QMenu" name="menu_Help">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="action_About"/>
    </widget>
    <addaction name="menu_Quit"/>
-   <addaction name="menuHelp"/>
+   <addaction name="menu_Help"/>
   </widget>
   <action name="action_quit">
    <property name="text">
