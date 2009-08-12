@@ -28,27 +28,18 @@ def getMounted(disk_path):
 
     return parts[disk_path]
 
-def getDiskInfo(disk_path):
-    command_df = subprocess.Popen('df -h'.split(), stdout = subprocess.PIPE)
+def printDiskInfo(dst):
+    from common import getDiskInfo
 
-    grep = 'grep %s' % getMounted(disk_path)
-    command_grep = subprocess.Popen(grep.split(), stdin = command_df.stdout,
-                                                  stdout = subprocess.PIPE)
-
-    disk_info = command_grep.stdout.read()
-
-    filesystem, size, used, avail, use, mounted_on = disk_info.split()
-
+    (capacity, available, used) = getDiskInfo(str(dst))
+    
     output = """\
-Usb disk informations:
-    Filesystem : %s
-    Mounted On : %s
-    Size       : %s
-    Used       : %s
-    Available  : %s
-    Use Rating : %s""" % (filesystem, mounted_on, size, used, avail, use)
-
-    return output
+USB disk informations:
+    Capacity  : %d
+    Available : %d
+    Used      : %d""" % (capacity, available, used)
+    
+    return output 
 
 def runCommand(cmd):
     proc = subprocess.call(cmd, shell = True)
@@ -252,7 +243,7 @@ class Create:
 
     def __checkDestination(self, dst):
         if os.path.isdir(dst) and os.path.ismount(dst):
-            print(getDiskInfo(dst))
+            print(printDiskInfo(dst))
             print(_("Please double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?"))
 
             answer = raw_input(_("Please type CONFIRM to continue: "))
