@@ -11,7 +11,6 @@ import gettext
 app_launch_name = "puic"
 share_dir = "/usr/share/%s" % app_launch_name
 
-# General functions
 if os.path.exists("locale"):
     localedir = "locale"
 
@@ -20,6 +19,17 @@ else:
 
 t = gettext.translation(app_launch_name, localedir, fallback = True)
 _ = t.ugettext
+
+# General functions
+def getDiskInfo(dst):
+    from math import pow
+
+    disk_info = os.statvfs(dst)
+    capacity = int(disk_info.f_bsize * disk_info.f_blocks / pow(1024, 2))
+    available = int(disk_info.f_bsize * disk_info.f_bavail / pow(1024, 2))
+    used = int(disk_info.f_bsize * (disk_info.f_blocks - disk_info.f_bavail) / pow(1024, 2))
+    
+    return [capacity, available, used]
 
 # General Informations
 app_name = _('Pardus USB Image Creator')
