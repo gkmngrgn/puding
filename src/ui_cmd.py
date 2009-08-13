@@ -10,7 +10,6 @@ import sys
 import shutil
 import subprocess
 
-from main import (createImage, getDiskInfo)
 from common import (_, runCommand, copyPisiPackage, createConfigFile, getMounted)
 from common import (HOME, NAME, SHARE)
 
