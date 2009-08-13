@@ -8,11 +8,12 @@ import os
 import gettext
 import subprocess
 
+# General variables
+NAME = "puic"
+
 t = gettext.translation(NAME, localedir, fallback = True)
 _ = t.ugettext
 
-# General variables
-NAME = "puic"
 VERSION = "0.1"
 HOME = "%s/.puic" % os.getenv("HOME")
 SHARE = "/usr/share/%s" % NAME
