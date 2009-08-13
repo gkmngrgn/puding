@@ -8,14 +8,11 @@ import getopt
 import os
 import sys
 
+from optparse import OptionParser
 from puic.common import (_, HOME, LICENSE, NAME, VERSION)
 
 class Options:
-    def parseArgs(self):
-        from optparse import OptionParser
-
-        parser = OptionParser(version = VERSION)
-
+    def parseArgs(self, parser):
         parser.add_option('-l', '--license', dest = 'license', action = 'store_true',
                           help = _("show program's license info and exit"))
         parser.add_option("-c", "--create", dest = "create", action = "store_true",
@@ -26,7 +23,8 @@ class Options:
         return parser.parse_args()
 
     def main(self):
-        opts, args = self.parseArgs()
+        parser = OptionParser(version = VERSION)
+        (opts, args) = self.parseArgs(parser)
 
         if opts.create:
             if not os.getuid() == 0:
@@ -60,7 +58,7 @@ class Options:
             sys.exit(app.exec_())
 
         else:
-            print("This should be help output.")
+            parser.print_help()
 
 if __name__ == '__main__':
     if not os.path.exists(HOME):
