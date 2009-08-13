@@ -13,12 +13,11 @@ from distutils.core import setup
 
 if not os.path.exists("puic/"):
     shutil.copytree("src/", "puic/")
-from puic.common import (app_launch_name, app_version, app_description, \
-                         core_developer, core_developer_email, app_url, \
-                         app_license_name)
+from puic.common import (NAME, VERSION, DESCRIPTION, CORE_DEVELOPER, \
+                         CORE_EMAIL, URL, LICENSE_NAME)
 
-script = "%s/%s" % (app_launch_name, app_launch_name)
-shutil.copyfile("%s/%s.py" % (app_launch_name, app_launch_name), script)
+script = "%s/%s" % (NAME, NAME)
+shutil.copyfile("%s.py" % script, script)
 os.chmod(script, 0755)
 
 #LANGS = ["tr"]
@@ -26,10 +25,10 @@ os.chmod(script, 0755)
 # General installation functions
 # def locale(lang):
 #    return("share/locale/%s/LC_MESSAGES" % lang,
-#            ["data/po/locale/%s/%s.mo" % (lang, app_launch_name)])
+#            ["data/po/locale/%s/%s.mo" % (lang, NAME)])
 
 def removeBuildFiles():
-    rmDir = ["build", "data/po/locale", app_launch_name]
+    rmDir = ["build", "data/po/locale", NAME]
 
     # remove build directories
     for dir in rmDir:
@@ -50,29 +49,28 @@ def removeBuildFiles():
 # 
 #    for lang in LANGS:
 #        pofile = "data/po/" + lang + ".po"
-#        mofile = "data/po/locale/" + lang + "/%s.mo" % app_launch_name
+#        mofile = "data/po/locale/" + lang + "/%s.mo" % NAME
 # 
 #        os.mkdir("data/po/locale/" + lang + "/")
 #        print("generating %s" % mofile)
 #        os.system("msgfmt %s -o %s" % (pofile, mofile))
 
 data = [
-    ("share/doc/%s" % app_launch_name, ["ChangeLog", "COPYING", "NOTES", \
-                                            "README", "TODO"]),
-    ("share/%s" % app_launch_name, glob.glob("data/syslinux.cfg.*")),
-    ("share/%s/ui" % app_launch_name, glob.glob("data/ui/*"))]
-#    ("share/%s/ui" % app_launch_name, glob.glob("data/ui/*")),
+    ("share/doc/%s" % NAME, ["ChangeLog", "COPYING", "NOTES", "README", "TODO"]),
+    ("share/%s" % NAME, glob.glob("data/syslinux.cfg.*")),
+    ("share/%s/ui" % NAME, glob.glob("data/ui/*"))]
+#    ("share/%s/ui" % NAME, glob.glob("data/ui/*")),
 #    locale("tr")]
 
 setup(
-    name = app_launch_name,
-    version = app_version,
-    description = app_description,
-    author = core_developer,
-    author_email = core_developer_email,
-    url = app_url,
-    license = app_license_name,
-    packages = [app_launch_name],
+    name = NAME,
+    version = VERSION,
+    description = DESCRIPTION,
+    author = CORE_DEVELOPER,
+    author_email = CORE_EMAIL,
+    url = URL,
+    license = LICENSE_NAME,
+    packages = [NAME],
     scripts = [script],
     data_files = data,
     )

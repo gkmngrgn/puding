@@ -8,24 +8,40 @@ import os
 import gettext
 import subprocess
 
+t = gettext.translation(NAME, localedir, fallback = True)
+_ = t.ugettext
+
 # General variables
-# FIX ME: Remove unused variables.
-app_launch_name = "puic"
 NAME = "puic"
-share_dir = "/usr/share/%s" % app_launch_name
+VERSION = "0.1"
 HOME = "%s/.puic" % os.getenv("HOME")
 SHARE = "/usr/share/%s" % NAME
+LOCALE = "/usr/share/locale"
 SYSLINUX = "/usr/lib/syslinux"
 GFXTHEME = "/usr/share/gfxtheme/"
+DESCRIPTION = _("An USB Image Creator For Pardus Linux.")
+URL = "http://www.gokmengorgen.net/puic"
+LICENSE_NAME = "GPLv3"
+CORE_DEVELOPER = "Gökmen Görgen"
+CORE_EMAIL = "gkmngrgn@gmail.com"
+COPYRIGHT = _("Copyright") + " \302\251 2009 Gökmen Görgen, <%s>" % CORE_EMAIL
+LICENSE = _("""\
+Puic is an USB image creator for Pardus Linux.
+%s
 
-if os.path.exists("locale"):
-    localedir = "locale"
+Puic is a free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
 
-else:
-    localedir = "/usr/share/locale"
+Pati is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-t = gettext.translation(app_launch_name, localedir, fallback = True)
-_ = t.ugettext
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.\
+""" % COPYRIGHT)
 
 # General functions
 def getDiskInfo(dst):
@@ -35,7 +51,7 @@ def getDiskInfo(dst):
     capacity = int(disk_info.f_bsize * disk_info.f_blocks / pow(1024, 2))
     available = int(disk_info.f_bsize * disk_info.f_bavail / pow(1024, 2))
     used = int(disk_info.f_bsize * (disk_info.f_blocks - disk_info.f_bavail) / pow(1024, 2))
-    
+
     return [capacity, available, used]
 
 def runCommand(cmd):
@@ -104,30 +120,3 @@ def getMounted(disk_path):
 
     return parts[disk_path]
 
-# General Informations
-app_name = _('Pardus USB Image Creator')
-app_launch_name = 'puic'
-app_version = '0.0.5'
-app_description = _("An USB Image Creator For Pardus Linux.")
-app_url = 'http://www.gokmengorgen.net/puic'
-app_license_name = 'GPLv3'
-core_developer = 'Gökmen Görgen'
-core_developer_email = 'gkmngrgn@gmail.com'
-copyright = _("Copyright") + " \302\251 2009 Gökmen Görgen, <%s>" % core_developer_email
-license = _("""\
-Puic is an USB image creator for Pardus Linux.
-%s
-
-Puic is a free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
-
-Pati is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.\
-""" % copyright)

@@ -8,19 +8,20 @@ import getopt
 import os
 import sys
 
-from puic.common import (app_launch_name, app_name, app_version, license, _)
-from puic import ui_cmd
+from puic.common import (_, HOME, LICENSE, NAME, VERSION)
 
 class Options:
     def parseArgs(self):
         from optparse import OptionParser
 
-        parser = OptionParser(version = app_version)
+        parser = OptionParser(version = VERSION)
 
-        parser.add_option('-c', '--create', dest = 'create', action = 'store_true',
-                          help = _("create Pardus USB image from console"))
         parser.add_option('-l', '--license', dest = 'license', action = 'store_true',
                           help = _("show program's license info and exit"))
+        parser.add_option("-c", "--create", dest = "create", action = "store_true",
+                          help = _("create Pardus USB image from console"))
+        parser.add_option("--with-qt", dest = "with_qt", action = "store_true",
+                          help = _("run Puic with Qt4 graphical interface"))
 
         return parser.parse_args()
 
@@ -28,9 +29,14 @@ class Options:
         opts, args = self.parseArgs()
 
         if opts.create:
-            from puic import ui_cmd
+            if not os.getuid() == 0:
+                print(_("You need superuser permissions to run this application."))
+
+                sys.exit(0)
 
             try:
+                from puic import ui_cmd
+
                 source = os.path.realpath(sys.argv[2])
                 destination = os.path.realpath(sys.argv[3])
 
@@ -39,21 +45,27 @@ class Options:
             except IndexError:
                 print(_("Invalid usage. Example:"))
                 print("%s --create /mnt/archive/Pardus-2009.iso /media/disk" % \
-                      app_launch_name)
+                      NAME)
 
         elif opts.license:
             print(license)
 
-        else:
+        elif opts.with_qt:
             from puic import ui_qt
             from PyQt4 import QtGui
-        
+
             app = QtGui.QApplication(sys.argv)
             form = ui_qt.Create()
             form.show()
             sys.exit(app.exec_())
 
+        else:
+            print("This should be help output.")
+
 if __name__ == '__main__':
+    if not os.path.exists(HOME):
+        os.mkdir(HOME)
+
     try:
         Options().main()
 
