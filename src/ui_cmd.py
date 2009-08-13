@@ -100,8 +100,8 @@ USB disk informations:
             self.__copyImage(dirname, dst)
 
             # unmount and remove dirname
-            print(_("Unmounting %s.." % dst))
-            cmd = "umount %s" % dst
+            print(_("Unmounting %s.." % dirname))
+            cmd = "umount %s" % dirname
 
             if runCommand(cmd):
                 print(_("Could not unmounted CD image."))
@@ -134,7 +134,6 @@ USB disk informations:
             return True
 
     def __copyImage(self, src, dst):
-        # Create repo directory
         os.mkdir('%s/repo' % dst)
 
         for file in glob.glob('%s/repo/*' % src):

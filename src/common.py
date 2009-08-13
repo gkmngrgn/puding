@@ -6,6 +6,8 @@
 
 import os
 import gettext
+import glob
+import shutil
 import subprocess
 
 # General variables
