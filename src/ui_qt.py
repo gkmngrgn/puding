@@ -7,13 +7,13 @@
 import os
 import sys
 
-from common import (NAME, getDiskInfo)
+from common import (SHARE, getDiskInfo)
 from PyQt4 import (QtCore, QtGui, uic)
 
 class Create(QtGui.QMainWindow):
     def __init__(self, parent = None):
         super(Create, self).__init__(parent)
-        uic.loadUi("%s/ui/qtMain.ui" % NAME, self)
+        uic.loadUi("%s/ui/qtMain.ui" % SHARE, self)
         self.text_src = self.label_src.text()
         self.text_dst = self.label_dst.text()
 

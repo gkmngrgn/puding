@@ -10,14 +10,14 @@ import subprocess
 
 # General variables
 NAME = "puic"
+LOCALE = "/usr/share/locale"
 
-t = gettext.translation(NAME, localedir, fallback = True)
+t = gettext.translation(NAME, LOCALE, fallback = True)
 _ = t.ugettext
 
 VERSION = "0.1"
 HOME = "%s/.puic" % os.getenv("HOME")
 SHARE = "/usr/share/%s" % NAME
-LOCALE = "/usr/share/locale"
 SYSLINUX = "/usr/lib/syslinux"
 GFXTHEME = "/usr/share/gfxtheme/"
 DESCRIPTION = _("An USB Image Creator For Pardus Linux.")
