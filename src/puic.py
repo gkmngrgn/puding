@@ -31,14 +31,14 @@ class Options:
         if opts.create:
             if not os.getuid() == 0:
                 print(_("You need superuser permissions to run this application."))
-
+ 
                 sys.exit(0)
 
             try:
                 from puic import ui_cmd
 
-                source = os.path.realpath(sys.argv[2])
-                destination = os.path.realpath(sys.argv[3])
+                source = os.path.realpath(args[0])
+                destination = os.path.realpath(args[1])
 
                 ui_cmd.Create(source, destination)
 
