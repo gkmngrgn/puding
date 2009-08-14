@@ -51,9 +51,9 @@ def getDiskInfo(dst):
     from math import pow
 
     disk_info = os.statvfs(dst)
-    capacity = int(disk_info.f_bsize * disk_info.f_blocks / pow(1024, 2))
-    available = int(disk_info.f_bsize * disk_info.f_bavail / pow(1024, 2))
-    used = int(disk_info.f_bsize * (disk_info.f_blocks - disk_info.f_bavail) / pow(1024, 2))
+    capacity = int(disk_info.f_bsize * disk_info.f_blocks / pow(1024, 3))
+    available = int(disk_info.f_bsize * disk_info.f_bavail / pow(1024, 3))
+    used = int(disk_info.f_bsize * (disk_info.f_blocks - disk_info.f_bavail) / pow(1024, 3))
 
     return [capacity, available, used]
 
