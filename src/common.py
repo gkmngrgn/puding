@@ -123,3 +123,14 @@ def getMounted(disk_path):
 
     return parts[disk_path]
 
+class PartitionUtils:
+    import parted
+
+    label = "PARDUS_USB"
+    flags = [parted.PARTITION_BOOT]
+    type = parted.PARTITION_PRIMARY
+ 
+    def formatDevice(self, dst):
+        cmd = "mkfs.vfat -F 32 %s" % dst
+        
+        return runCommand(cmd)
