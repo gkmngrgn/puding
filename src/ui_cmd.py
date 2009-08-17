@@ -43,12 +43,12 @@ class Create:
         self.partutils = PartitionUtils()
 
         if not self.partutils.detectRemovableDrives():
-            self.utils.cprint("red", "USB device not found.")
+            self.utils.cprint("USB device not found.", "red")
             
             sys.exit(1)
 
         else:
-            self.utils.cprint("brightcyan", "Devices:")
+            self.utils.cprint("Devices:", "brightcyan")
             print("Du şimdi anlamaya çalışıyoruz.")
             
             sys.exit()

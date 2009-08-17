@@ -8,9 +8,9 @@ import getopt
 import os
 import sys
 
-from optparse import OptionParser
+from optparse import (OptionParser, OptionGroup)
 from puic.common import (_, run)
-from puic.constants import (HOME, LICENSE, NAME, VERSION)
+from puic.constants import (HOME, LICENSE, NAME, USAGE, VERSION)
 
 class Options:
     def parseArgs(self, parser):
@@ -18,13 +18,17 @@ class Options:
                           help = _("show program's license info and exit"))
         parser.add_option("-c", "--create", dest = "create", action = "store_true",
                           help = _("create Pardus USB image from console"))
-        parser.add_option("--with-qt", dest = "with_qt", action = "store_true",
+
+        group = OptionGroup(parser, _("Experimental Options"))
+        group.add_option("--with-qt", dest = "with_qt", action = "store_true",
                           help = _("run Puic with Qt4 graphical interface"))
+
+        parser.add_option_group(group)
 
         return parser.parse_args()
 
     def main(self):
-        parser = OptionParser(version = VERSION)
+        parser = OptionParser(usage = USAGE, version = VERSION)
         (opts, args) = self.parseArgs(parser)
 
         if opts.create:
@@ -46,7 +50,7 @@ class Options:
                       NAME)
 
         elif opts.license:
-            print(license)
+            print(LICENSE)
 
         elif opts.with_qt:
             from puic import ui_qt
