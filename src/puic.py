@@ -9,7 +9,8 @@ import os
 import sys
 
 from optparse import OptionParser
-from puic.common import (_, HOME, LICENSE, NAME, VERSION)
+from puic.common import (_, run)
+from puic.constants import (HOME, LICENSE, NAME, VERSION)
 
 class Options:
     def parseArgs(self, parser):
@@ -36,13 +37,12 @@ class Options:
                 from puic import ui_cmd
 
                 source = os.path.realpath(args[0])
-                destination = os.path.realpath(args[1])
 
-                ui_cmd.Create(source, destination)
+                ui_cmd.Create(source)
 
             except IndexError:
                 print(_("Invalid usage. Example:"))
-                print("%s --create /mnt/archive/Pardus-2009.iso /media/disk" % \
+                print("%s --create /mnt/archive/Pardus-2009.iso" % \
                       NAME)
 
         elif opts.license:

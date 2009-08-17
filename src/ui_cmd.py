@@ -11,10 +11,11 @@ import shutil
 import subprocess
 
 from common import (_, runCommand, copyPisiPackage, createConfigFile, getMounted)
-from common import (HOME, NAME, SHARE)
+from common import PartitionUtils
+from constants import (HOME, NAME, SHARE)
 
 class Utils:
-    def colorize(self, color, output):
+    def colorize(self, output, color = "white"):
         colors = {'red'                : "\033[31m",
                   'green'              : "\033[32m",
                   'yellow'             : "\033[33m",
@@ -22,7 +23,6 @@ class Utils:
                   'purple'             : "\033[35m",
                   'cyan'               : "\033[36m",
                   'white'              : "\033[37m",
-                  'brightblack'        : "\033[01;30m",
                   'brightred'          : "\033[01;31m",
                   'brightgreen'        : "\033[01;32m",
                   'brightyellow'       : "\033[01;33m",
@@ -34,19 +34,34 @@ class Utils:
 
         return colors[color] + output + colors["default"]
 
+    def cprint(self, output, color):
+        print(self.colorize(_(output), color))
+
 class Create:
-    def __init__(self, src, dst):
+    def __init__(self, src):
         self.utils = Utils()
+        self.partutils = PartitionUtils()
+
+        if not self.partutils.detectRemovableDrives():
+            self.utils.cprint("red", "USB device not found.")
+            
+            sys.exit(1)
+
+        else:
+            self.utils.cprint("brightcyan", "Devices:")
+            print("Du şimdi anlamaya çalışıyoruz.")
+            
+            sys.exit()
 
         if self.__checkSource(src) and self.__checkDestination(dst):
             self.__createImage(src, dst)
 
         else:
-            print(_(self.utils.colorize("red", "An error occured. Check the parameters please.")))
+            self.utils.cprint("An error occured. Check the parameters please.", "red")
 
     def __checkSource(self, src):
         if not os.path.isfile(src):
-            print(_(self.utils.colorize("red", "Path to the source file is invalid, try again.")))
+            self.utils.cprint("Path to the source file is invalid, try again.", "red")
 
             return False
 
@@ -55,39 +70,40 @@ class Create:
                 iso_extension = os.path.splitext(src)[1] == ".iso"
 
                 if not iso_extension:
-                    print(_(self.utils.colorize("red", "The file you have specified is not an ISO image. If you think it's an ISO image, change the extension to \".iso\"")))
+                    self.utils.cprint("The file you have specified is not an ISO image. If you think it's an ISO image, change the extension to \".iso\"", "red")
 
                     return False
 
                 else:
-                    print(_("\nCD image: %s" % src))
+                    self.utils.cprint("\nCD image: %s" % src)
 
                     return True
 
             except IndexError:
-                print(_(self.utils.colorize("red", "The file you have specified is invalid. It's a CD image, use \".iso\" extension. e.g. Pardus_2009_Prealpha3.iso")))
+                self.utils.cprint("The file you have specified is invalid. It's a CD image, use \".iso\" extension. e.g. Pardus_2009_Prealpha3.iso", "red")
 
                 return False
 
     def __checkDestination(self, dst):
         if os.path.isdir(dst) and os.path.ismount(dst):
             print(self.__printDiskInfo(dst))
-            print(_("Please double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?"))
+            self.utils.cprint("Please double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?")
 
             answer = raw_input(_("Please type CONFIRM to continue: "))
 
             if answer in (_('CONFIRM'), _('confirm')):
-                print(_(self.utils.colorize("green", "Writing CD image data to USB stick!")))
+                self.utils.cprint("Writing CD image data to USB stick!", "green")
 
                 return True
 
             else:
-                print(_(self.utils.colorize("red", "You did not type CONFIRM. Exiting..")))
+                self.utils.cprint("You did not type CONFIRM. Exiting..", "red")
 
                 return False
 
         else:
-            print(_(self.utils.colorize("red", "The path you have typed is invalid. If you think the path is valid, make sure you have mounted USB stick to the path you gave. To check the path, you can use: mount | grep %s" % dst)))
+            # FIX ME: is it required?
+            self.utils.cprint("The path you have typed is invalid. If you think the path is valid, make sure you have mounted USB stick to the path you gave. To check the path, you can use: mount | grep %s" % dst, "red")
 
             return False
 
@@ -110,46 +126,46 @@ USB disk informations:
         dirname = "%s/iso_mount_dir" % HOME
         os.mkdir(dirname)
 
-        print(_(self.utils.colorize("green", "Mounting %s.." % src)))
+        self.utils.cprint("Mounting %s.." % src, "green")
 
         cmd = "mount -o loop %s %s" % (src, dirname)
         if runCommand(cmd):
-            print(_(self.utils.colorize("red", "Could not mounted CD image.")))
+            self.utils.cprint("Could not mounted CD image.", "red")
 
             return False
 
         else:
             self.__copyImage(dirname, dst)
 
-            print(_(self.utils.colorize("green", "\nUnmounting %s.." % dirname)))
+            self.utils.cprint("\nUnmounting %s.." % dirname, "green")
             cmd = "umount %s" % dirname
 
             if runCommand(cmd):
-                print(_(self.utils.colorize("red", "Could not unmounted CD image.")))
+                self.utils.cprint("Could not unmounted CD image.", "red")
 
                 return False
 
-            print(_(self.utils.colorize("yellow", "Copying syslinux files..")))
+            self.utils.cprint("Copying syslinux files..", "yellow")
             createConfigFile(dst)
 
-            print(_(self.utils.colorize("yellow", "Creating ldlinux.sys..")))
+            self.utils.cprint("Creating ldlinux.sys..", "yellow")
             cmd = "syslinux %s" % getMounted(dst)
 
             if runCommand(cmd):
-                print(_(self.utils.colorize("red", "Could not create, ldlinux.sys.")))
+                self.utils.cprint("Could not create, ldlinux.sys.", "red")
 
                 return False
 
             device = os.path.split(getMounted(dst))[1][:3]
-            print(_(self.utils.colorize("yellow", "Concatenating MBR to %s" % device)))
+            self.utils.cprint("Concatenating MBR to %s" % device, "yellow")
             cmd = "cat /usr/lib/syslinux/mbr.bin > /dev/%s" % device
 
             if runCommand(cmd):
-                print(_(self.utils.colorize("red", "Could not concatenate, MBR.")))
+                self.utils.cprint("Could not concatenate, MBR.", "red")
 
                 return False
 
-            print(_(self.utils.colorize("brightgreen", "MBR written, USB disk is ready for Pardus installation.")))
+            self.utils.cprint("MBR written, USB disk is ready for Pardus installation.", "brightgreen")
 
             return True
 
@@ -158,15 +174,16 @@ USB disk informations:
 
         for file in glob.glob("%s/repo/*" % src):
             pisi = os.path.split(file)[1]
-            print(_(self.utils.colorize("green", "Copying: ") + self.utils.colorize("brightyellow", copyPisiPackage(file, dst, pisi))))
+            self.utils.cprint("Copying: ", "green") + self.utils.colorize(copyPisiPackage(file, dst, pisi), "brightyellow")
 
-        print(_(self.utils.colorize("green", "\nCreated \"boot\" directory in %s." % dst)))
+        self.utils.cprint("\nCreated \"boot\" directory in %s." % dst, "green")
         os.mkdir("%s/boot" % dst)
         for file in glob.glob("%s/boot/*" % src):
             if not os.path.isdir(file):
                 file_name = os.path.split(file)[1]
-                print(_(self.utils.colorize("green", "Copying: ") + self.utils.colorize("cyan", file_name)))
+                self.utils.cprint("Copying: ", "green") + self.utils.colorize(file_name, "cyan")
+
                 shutil.copy(file, "%s/boot/%s" % (dst, file_name))
 
-        print(_(self.utils.colorize("green", "And copying pardus.img to %s.." % dst)))
+        self.utils.cprint("And copying pardus.img to %s.." % dst, "green")
         shutil.copy('%s/pardus.img' % src, '%s/pardus.img' % dst)

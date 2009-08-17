@@ -4,49 +4,19 @@
 # author: Gökmen Görgen
 # license: GPLv3
 
+import dbus
 import os
 import gettext
 import glob
+import parted
 import shutil
 import subprocess
 
-# General variables
-NAME = "puic"
-LOCALE = "/usr/share/locale"
+from constants import (NAME, GFXTHEME, LOCALE, SHARE, SYSLINUX)
 
 t = gettext.translation(NAME, LOCALE, fallback = True)
 _ = t.ugettext
 
-VERSION = "0.1"
-HOME = "%s/.puic" % os.getenv("HOME")
-SHARE = "/usr/share/%s" % NAME
-SYSLINUX = "/usr/lib/syslinux"
-GFXTHEME = "/usr/share/gfxtheme/"
-DESCRIPTION = _("An USB Image Creator For Pardus Linux.")
-URL = "http://www.gokmengorgen.net/puic"
-LICENSE_NAME = "GPLv3"
-CORE_DEVELOPER = "Gökmen Görgen"
-CORE_EMAIL = "gkmngrgn@gmail.com"
-COPYRIGHT = _("Copyright") + " \302\251 2009 Gökmen Görgen, <%s>" % CORE_EMAIL
-LICENSE = _("""\
-Puic is an USB image creator for Pardus Linux.
-%s
-
-Puic is a free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
-
-Pati is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.\
-""" % COPYRIGHT)
-
-# General functions
 def getDiskInfo(dst):
     from math import pow
 
@@ -58,9 +28,18 @@ def getDiskInfo(dst):
     return [capacity, available, used]
 
 def runCommand(cmd):
-    proc = subprocess.call(cmd, shell = True)
+    process = subprocess.call(cmd, shell = True)
 
-    return proc
+    return process
+
+def run(cmd):
+    process = subprocess.Popen(cmd, stdout = subprocess.PIPE,
+                               stderr = subprocess.PIPE,
+                               stdin = subprocess.PIPE)
+
+    result = process.communicate()
+
+    return process, result
 
 def copyPisiPackage(file, dst, pisi):
     shutil.copy(file, "%s/repo/%s" % (dst, pisi))
@@ -124,13 +103,70 @@ def getMounted(disk_path):
     return parts[disk_path]
 
 class PartitionUtils:
+    import dbus
     import parted
 
-    label = "PARDUS_USB"
-    flags = [parted.PARTITION_BOOT]
-    type = parted.PARTITION_PRIMARY
- 
+    def __init__(self):
+        self.bus = dbus.SystemBus()
+        self.drives = {}
+        self.devices = []
+        label = "PARDUS_USB"
+        flags = [parted.PARTITION_BOOT]
+        type = parted.PARTITION_PRIMARY
+
     def formatDevice(self, dst):
         cmd = "mkfs.vfat -F 32 %s" % dst
-        
+
         return runCommand(cmd)
+    
+    def getDevice(self, device):
+        dev_obj = self.bus.get_object("org.freedesktop.Hal", device)
+        
+        return dbus.Interface(dev_obj, "org.freedesktop.Hal.Device")
+    
+    def addDevice(self, dev, parent = None):
+        mount = str(dev.GetProperty("volume.mount_point"))
+        device = str(dev.GetProperty("block.device"))
+        
+        self.drives[device] = {"label"    : str(dev.GetProperty("volume.label")).replace(" ", "_"),
+                          "fstype"   : str(dev.GetProperty("volume.fstype")),
+                          "fsversion": str(dev.GetProperty("volume.fsversion")),
+                          "uuid"     : str(dev.GetProperty("volume.uuid")),
+                          "mount"    : mount,
+                          "device"   : dev,
+                          "unmount"  : False,
+                          "device"   : device,
+                          "parent"   : parent.GetProperty("block.device")
+                          }
+    
+    def detectRemovableDrives(self):
+        hal_obj = self.bus.get_object("org.freedesktop.Hal",
+                                 "/org/freedesktop/Hal/Manager")
+        hal = dbus.Interface(hal_obj, "org.freedesktop.Hal.Manager")
+    
+        devices = hal.FindDeviceByCapability("storage")
+    
+        for device in devices:
+            dev = self.getDevice(device)
+    
+            if dev.GetProperty("storage.bus") == "usb":
+                if dev.GetProperty("block.is_volume"):
+                    self.addDevice(dev)
+    
+                    continue
+    
+                else:
+                    children = hal.FindDeviceStringMatch("info.parent", device)
+    
+                    for child in children:
+                        child = self.getDevice(child)
+    
+                        if child.GetProperty("block.is_volume"):
+                            self.addDevice(child, parent = dev)
+
+
+        if not len(self.drives):
+            return False
+    
+        else:
+        	return True

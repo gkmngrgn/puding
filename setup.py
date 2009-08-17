@@ -14,8 +14,8 @@ from distutils.core import setup
 if not os.path.exists("puic/"):
     shutil.copytree("src/", "puic/")
 
-from puic.common import (NAME, VERSION, DESCRIPTION, CORE_DEVELOPER, \
-                         CORE_EMAIL, URL, LICENSE_NAME)
+from puic.constants import (NAME, VERSION, DESCRIPTION, CORE_DEVELOPER, \
+                            CORE_EMAIL, URL, LICENSE_NAME)
 
 script = "%s/%s" % (NAME, NAME)
 shutil.copyfile("%s.py" % script, script)
