@@ -1,0 +1,36 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+# author: Gökmen Görgen
+# license: GPLv3
+
+NAME = "puic"
+LOCALE = "/usr/share/locale"
+VERSION = "0.1"
+HOME = "%s/.puic" % os.getenv("HOME")
+SHARE = "/usr/share/%s" % NAME
+SYSLINUX = "/usr/lib/syslinux"
+GFXTHEME = "/usr/share/gfxtheme/"
+DESCRIPTION = _("An USB Image Creator For Pardus Linux.")
+URL = "http://www.gokmengorgen.net/puic"
+LICENSE_NAME = "GPLv3"
+CORE_DEVELOPER = "Gökmen Görgen"
+CORE_EMAIL = "gkmngrgn@gmail.com"
+COPYRIGHT = _("Copyright") + " \302\251 2009 Gökmen Görgen, <%s>" % CORE_EMAIL
+LICENSE = _("""\
+Puic is an USB image creator for Pardus Linux.
+%s
+
+Puic is a free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+Pati is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.\
+""" % COPYRIGHT)
