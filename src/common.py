@@ -103,16 +103,16 @@ def getMounted(disk_path):
     return parts[disk_path]
 
 class PartitionUtils:
-    import dbus
-    import parted
-
     def __init__(self):
         self.bus = dbus.SystemBus()
         self.drives = {}
         self.devices = []
-        label = "PARDUS_USB"
-        flags = [parted.PARTITION_BOOT]
+        self.label = "PARDUS_USB"
+        self.flags = [parted.PARTITION_BOOT]
         type = parted.PARTITION_PRIMARY
+
+    def returnDrives(self):
+        return self.drives
 
     def formatDevice(self, dst):
         cmd = "mkfs.vfat -F 32 %s" % dst
@@ -128,16 +128,17 @@ class PartitionUtils:
         mount = str(dev.GetProperty("volume.mount_point"))
         device = str(dev.GetProperty("block.device"))
         
-        self.drives[device] = {"label"    : str(dev.GetProperty("volume.label")).replace(" ", "_"),
-                          "fstype"   : str(dev.GetProperty("volume.fstype")),
-                          "fsversion": str(dev.GetProperty("volume.fsversion")),
-                          "uuid"     : str(dev.GetProperty("volume.uuid")),
-                          "mount"    : mount,
-                          "device"   : dev,
-                          "unmount"  : False,
-                          "device"   : device,
-                          "parent"   : parent.GetProperty("block.device")
-                          }
+        self.drives[device] = {
+            "label" : str(dev.GetProperty("volume.label")).replace(" ", "_"),
+            "fstype"   : str(dev.GetProperty("volume.fstype")),
+            "fsversion": str(dev.GetProperty("volume.fsversion")),
+            "uuid"     : str(dev.GetProperty("volume.uuid")),
+            "mount"    : mount,
+            "device"   : dev,
+            "unmount"  : False,
+            "device"   : device,
+            "parent"   : parent.GetProperty("block.device")
+            }
     
     def detectRemovableDrives(self):
         hal_obj = self.bus.get_object("org.freedesktop.Hal",
