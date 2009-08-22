@@ -46,46 +46,17 @@ def copyPisiPackage(file, dst, pisi):
 
     return pisi
 
-def checkSyslinuxVersion(version, request):
-    ver = map(int, version.split('.'))
-    req = map(int, request.split('.'))
-
-    # Syslinux'un 4.* surumu cikarsa diye..
-    if ver[0] > req[0]:
-        return True
-
-    # src_ver, dst_ver'den buyuk degilse, esittir buyuk olasilikla.
-    else:
-        if ver[1] < req[1]:
-            return False
-
-        else:
-            return True
-
 def createConfigFile(dst):
-    # FIX ME: This puic should be work in Windows or another distribution.
-    # So you mustn't use pisi.api
-    from pisi.api import info_name
-
-    # True parametresi ne ise yarar bilmiyorum henuz.
-    metadata = info_name('syslinux', True)[0]
-    version = metadata.package.version
-
     # Her seyden once syslinux dizinini olusturmak gerek
     os.mkdir('%s/boot/syslinux' % dst)
 
-    # Bu nasil calisiyor ki, string kiyaslamasi yapiyorum =/
-    if not checkSyslinuxVersion(version, "3.74"):
-        syslinux_conf_file = '%s/syslinux.cfg.old' % SHARE
+    syslinux_conf_file = '%s/syslinux.cfg' % SHARE
 
-    else:
-        syslinux_conf_file = '%s/syslinux.cfg.new' % SHARE
+    shutil.copy('%s/gfxboot.com' % SYSLINUX,
+                '%s/boot/syslinux/gfxboot.com' % dst)
 
-        shutil.copy('%s/gfxboot.com' % SYSLINUX,
-                    '%s/boot/syslinux/gfxboot.com' % dst)
-
-        shutil.copy('%s/hdt.c32' % SYSLINUX,
-                    '%s/boot/syslinux/hdt.c32' % dst)
+    shutil.copy('%s/hdt.c32' % SYSLINUX,
+                '%s/boot/syslinux/hdt.c32' % dst)
 
     for file in glob.glob('%s/pardus/boot/*' % GFXTHEME):
         file_name = os.path.split(file)[1]

@@ -27,15 +27,18 @@ class Utils:
                   'brightgreen'        : "\033[01;32m",
                   'brightyellow'       : "\033[01;33m",
                   'brightblue'         : "\033[01;34m",
-                  'brightmagenta'      : "\033[01;35m",
                   'brightcyan'         : "\033[01;36m",
                   'brightwhite'        : "\033[01;37m",
                   'default'            : "\033[0m"  }
 
         return colors[color] + output + colors["default"]
 
-    def cprint(self, output, color):
-        print(self.colorize(_(output), color))
+    def cprint(self, output, color, no_wrap = False):
+        if no_wrap:
+            print(self.colorize(_(output), color)),
+
+        else:
+            print(self.colorize(_(output), color))
 
 class Create:
     def __init__(self, src):
@@ -45,14 +48,12 @@ class Create:
         if not self.partutils.detectRemovableDrives():
             self.utils.cprint("USB device not found.", "red")
             
-            sys.exit(1)
-
-        else:
-            self.utils.cprint("Devices:", "brightcyan")
-            print("Du şimdi anlamaya çalışıyoruz.")
-            
             sys.exit()
 
+        else:
+            self.__askDestination()
+
+        # FIX ME: is __checkDestination really required?
         if self.__checkSource(src) and self.__checkDestination(dst):
             self.__createImage(src, dst)
 
@@ -83,6 +84,55 @@ class Create:
                 self.utils.cprint("The file you have specified is invalid. It's a CD image, use \".iso\" extension. e.g. Pardus_2009_Prealpha3.iso", "red")
 
                 return False
+
+    def __askDestination(self):
+        drives = self.partutils.returnDrives()
+        
+        if len(drives):
+            # FIX ME: If disk is unmounted, you should mount it before return process!
+            # It returns mount point directory.
+            return drives[drives.keys()[0]]["mount"]
+
+        else:
+            drive_no = 0
+
+            self.utils.cprint("Devices:", "brightwhite")
+
+            for drive in drives:
+                drive_no += 1
+
+                # FIX ME: Bad coding..
+                self.utils.cprint("\n%d) %s:" % (drive_no, drive), "brightwhite")
+                self.utils.cprint("    Label\t\t:", "green", True)
+                self.utils.cprint(drives[drive]["label"], "yellow")
+
+                self.utils.cprint("    Parent\t\t:", "green", True)
+                self.utils.cprint(str(drives[drive]["parent"]), "yellow")
+
+                self.utils.cprint("    Mount Point\t\t:", "green", True)
+                self.utils.cprint(drives[drive]["mount"], "yellow")
+
+                self.utils.cprint("    Unmount\t\t:", "green", True)
+                self.utils.cprint(drives[drive]["unmount"], "yellow")
+
+                self.utils.cprint("    UUID\t\t:", "green", True)
+                self.utils.cprint(drives[drive]["uuid"], "yellow")
+
+                self.utils.cprint("    File System Version\t:", "green", True)
+                self.utils.cprint(drives[drive]["fsversion"], "yellow")
+
+                self.utils.cprint("    File System Type\t:", "green", True)
+                self.utils.cprint(drives[drive]["fstype"], "yellow")
+
+            # Birden fazla USB bölümü bulunursa seçmeler olacak.
+            try:
+                answer = int(raw_input("Birden fazla USB aygıtı veya bölümü bulundu, birini seçin: "))
+                destination = 
+
+            except ValueError:
+                self.cprint("You must enter a number between 0 - %d!" % drive_no + 1, "red")
+
+        sys.exit()
 
     def __checkDestination(self, dst):
         if os.path.isdir(dst) and os.path.ismount(dst):

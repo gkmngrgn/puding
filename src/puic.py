@@ -19,7 +19,7 @@ class Options:
         parser.add_option("-c", "--create", dest = "create", action = "store_true",
                           help = _("create Pardus USB image from console"))
 
-        group = OptionGroup(parser, _("Experimental Options"))
+        group = OptionGroup(parser, _("Graphical Interface Options"))
         group.add_option("--with-qt", dest = "with_qt", action = "store_true",
                           help = _("run Puic with Qt4 graphical interface"))
 
