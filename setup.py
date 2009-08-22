@@ -57,7 +57,7 @@ def removeBuildFiles():
 #        os.system("msgfmt %s -o %s" % (pofile, mofile))
 
 data = [
-    ("share/doc/%s" % NAME, ["ChangeLog", "COPYING", "NOTES", "README", "TODO"]),
+    ("share/doc/%s" % NAME, ["AUTHORS", "ChangeLog", "COPYING", "NOTES", "README"]),
     ("share/%s" % NAME, glob.glob("data/syslinux.cfg.*")),
     ("share/%s/ui" % NAME, glob.glob("data/ui/*"))]
 #    ("share/%s/ui" % NAME, glob.glob("data/ui/*")),

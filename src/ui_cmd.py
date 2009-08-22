@@ -127,7 +127,6 @@ class Create:
             # Birden fazla USB bölümü bulunursa seçmeler olacak.
             try:
                 answer = int(raw_input("Birden fazla USB aygıtı veya bölümü bulundu, birini seçin: "))
-                destination = 
 
             except ValueError:
                 self.cprint("You must enter a number between 0 - %d!" % drive_no + 1, "red")
