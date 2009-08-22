@@ -53,11 +53,11 @@ class Create:
 
         if not self.partutils.detectRemovableDrives():
             self.utils.cprint("USB device not found.", "red")
+            sys.exit()
             
         else:
             self.__askDestination()
-
-        print("buraya kadar tamam.")
+            
         sys.exit()
 
         # FIX ME: is __checkDestination really required?
@@ -95,7 +95,7 @@ class Create:
     def __askDestination(self):
         drives = self.partutils.returnDrives()
         
-        if len(drives):
+        if len(drives) == 1:
             # FIX ME: If disk is unmounted, you should mount it before return process!
             # It returns mount point directory.
             return drives[drives.keys()[0]]["mount"]
@@ -103,13 +103,13 @@ class Create:
         else:
             drive_no = 0
 
-            self.utils.cprint("Devices:", "brightwhite")
+            self.utils.cprint("Devices:", "brightcyan")
 
             for drive in drives:
                 drive_no += 1
 
                 # FIX ME: Bad coding..
-                self.utils.cprint("\n%d) %s:" % (drive_no, drive), "brightwhite")
+                self.utils.cprint("\n%d) %s:" % (drive_no, drive), "brightcyan")
                 self.utils.cprint("    Label\t\t:", "green", True)
                 self.utils.cprint(drives[drive]["label"], "yellow")
 
@@ -132,11 +132,11 @@ class Create:
                 self.utils.cprint(drives[drive]["fstype"], "yellow")
 
             # Birden fazla USB bölümü bulunursa seçmeler olacak.
-            try:
-                answer = int(raw_input("Birden fazla USB aygıtı veya bölümü bulundu, birini seçin: "))
+            # try:
+            #     answer = int(raw_input("Birden fazla USB aygıtı veya bölümü bulundu, birini seçin: "))
 
-            except ValueError:
-                self.cprint("You must enter a number between 0 - %d!" % drive_no + 1, "red")
+            # except ValueError:
+            #    self.cprint("You must enter a number between 0 - %d!" % drive_no + 1, "red")
 
         sys.exit()
 

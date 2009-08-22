@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <gtodo>
-  <category title="Ki&#x15F;isel" place="0"/>
-  <category title="&#x130;&#x15F;" place="1"/>
-  <category title="Dosyalanmam&#x131;&#x15F;" place="2"/>
+  <category title="Ki&#x15F;isel" place="1"/>
+  <category title="&#x130;&#x15F;" place="2"/>
+  <category title="puding" place="0">
+    <item>
+      <attribute id="1250953836" priority="2" done="0" start_date="733641" enddate="99999999" notify="0" endtime="-60" last_edited="1250953836"/>
+      <summary>fix func, __askDestination</summary>
+      <comment></comment>
+    </item>
+  </category>
 </gtodo>
