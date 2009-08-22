@@ -19,7 +19,7 @@ CORE_DEVELOPER = "Gökmen Görgen"
 CORE_EMAIL = "gkmngrgn@gmail.com"
 SUMMARY = "An USB Image Creator For Pardus Linux."
 DESCRIPTION = "Puic is an USB image creator for Pardus Linux."
-COPYRIGHT = "Copyright \302\251 2009 Gökmen Görgen, <%s>" % CORE_EMAIL
+COPYRIGHT = u"Copyright (c) 2009 Gökmen Görgen, <%s>" % CORE_EMAIL
 USAGE = "%s\n%s\n\nUsage: %s [options]" % (DESCRIPTION, COPYRIGHT, NAME)
 LICENSE = """%s
 

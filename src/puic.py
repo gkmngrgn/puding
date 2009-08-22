@@ -64,7 +64,7 @@ class Options:
         else:
             parser.print_help()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if not os.path.exists(HOME):
         os.mkdir(HOME)
 

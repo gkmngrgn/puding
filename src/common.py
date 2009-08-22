@@ -8,7 +8,6 @@ import dbus
 import os
 import gettext
 import glob
-import parted
 import shutil
 import subprocess
 
@@ -75,6 +74,8 @@ def getMounted(disk_path):
 
 class PartitionUtils:
     def __init__(self):
+    	import parted
+
         self.bus = dbus.SystemBus()
         self.drives = {}
         self.devices = []
