@@ -1,6 +1,7 @@
 #!/usr/bin/python
+#-*- coding: utf-8 -*-
 #
-# main.py
+# puding.py
 # Copyright (C) Gökmen Görgen 2009 <gkmngrgn@gmail.com>
 # 
 # main.py is free software: you can redistribute it and/or modify it

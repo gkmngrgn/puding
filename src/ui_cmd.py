@@ -15,7 +15,7 @@ from common import PartitionUtils
 from constants import (HOME, NAME, SHARE)
 
 class Utils:
-    def colorize(self, output, color = "white"):
+    def colorize(self, output, color):
         colors = {'red'                : "\033[31m",
                   'green'              : "\033[32m",
                   'yellow'             : "\033[33m",
@@ -33,9 +33,15 @@ class Utils:
 
         return colors[color] + output + colors["default"]
 
-    def cprint(self, output, color, no_wrap = False):
-        if no_wrap:
+    def cprint(self, output, color = None, no_wrap = False):
+        if no_wrap and color == None:
+            print(_(output)),
+
+        elif no_wrap and not color == None:
             print(self.colorize(_(output), color)),
+
+        elif not no_wrap and color == None:
+            print(_(output))
 
         else:
             print(self.colorize(_(output), color))
@@ -48,10 +54,11 @@ class Create:
         if not self.partutils.detectRemovableDrives():
             self.utils.cprint("USB device not found.", "red")
             
-            sys.exit()
-
         else:
             self.__askDestination()
+
+        print("buraya kadar tamam.")
+        sys.exit()
 
         # FIX ME: is __checkDestination really required?
         if self.__checkSource(src) and self.__checkDestination(dst):
