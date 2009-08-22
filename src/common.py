@@ -74,14 +74,10 @@ def getMounted(disk_path):
 
 class PartitionUtils:
     def __init__(self):
-    	import parted
-
         self.bus = dbus.SystemBus()
         self.drives = {}
         self.devices = []
         self.label = "PARDUS_USB"
-        self.flags = [parted.PARTITION_BOOT]
-        type = parted.PARTITION_PRIMARY
 
     def returnDrives(self):
         return self.drives
