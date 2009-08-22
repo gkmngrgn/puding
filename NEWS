@@ -1,5 +1,5 @@
 Sorunlar:
- * puic/ui_cmd.py:27
+ * puding/ui_cmd.py:27
     Uyarılar düzenlenmeli. Birinci parametre doğru; ama ikinci parametre
     yanlış olduğu zaman, birinci parametre hakkında bilgi verilmesine
     gerek yok. Yani her iki parametre düzgün olmadan ekrana bilgi basıl-

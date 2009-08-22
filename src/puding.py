@@ -1,16 +1,28 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
 #
-# author: Gökmen Görgen
-# license: GPLv3
+# main.py
+# Copyright (C) Gökmen Görgen 2009 <gkmngrgn@gmail.com>
+# 
+# main.py is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the
+# Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# main.py is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License along
+# with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import getopt
 import os
 import sys
 
 from optparse import (OptionParser, OptionGroup)
-from puic.common import (_, run)
-from puic.constants import (HOME, LICENSE, NAME, USAGE, VERSION)
+from puding.common import (_, run)
+from puding.constants import (HOME, LICENSE, NAME, USAGE, VERSION)
 
 class Options:
     def parseArgs(self, parser):
@@ -21,7 +33,7 @@ class Options:
 
         group = OptionGroup(parser, _("Graphical Interface Options"))
         group.add_option("--with-qt", dest = "with_qt", action = "store_true",
-                          help = _("run Puic with Qt4 graphical interface"))
+                          help = _("run Puding with Qt4 graphical interface"))
 
         parser.add_option_group(group)
 
@@ -38,7 +50,7 @@ class Options:
                 sys.exit(0)
 
             try:
-                from puic import ui_cmd
+                from puding import ui_cmd
 
                 source = os.path.realpath(args[0])
 
@@ -53,7 +65,7 @@ class Options:
             print(LICENSE)
 
         elif opts.with_qt:
-            from puic import ui_qt
+            from puding import ui_qt
             from PyQt4 import QtGui
 
             app = QtGui.QApplication(sys.argv)

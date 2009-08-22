@@ -2,6 +2,11 @@ WHAT IS PUIC?
   Puic is a USB image creator for Pardus 2008 or later. You can write
   image to USB disk from any Pardus 2008 or later ISO image.
 
+REQUIREMENTS
+  python >= 2.5
+  syslinux > 3.82.1
+  mtools
+
 INSTALLATION
   Now, puic is not stable and still it has not any graphical
   interface. So it is not at Pardus repositories, now. But you can

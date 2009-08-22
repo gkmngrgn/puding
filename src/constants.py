@@ -6,24 +6,24 @@
 
 from os import getenv
 
-NAME = "puic"
+NAME = "puding"
 LOCALE = "/usr/share/locale"
 VERSION = "0.1"
-HOME = "%s/.puic" % getenv("HOME")
+HOME = "%s/.puding" % getenv("HOME")
 SHARE = "/usr/share/%s" % NAME
 SYSLINUX = "/usr/lib/syslinux"
 GFXTHEME = "/usr/share/gfxtheme/"
-URL = "http://www.gokmengorgen.net/puic"
+URL = "http://www.gokmengorgen.net/puding"
 LICENSE_NAME = "GPLv3"
 CORE_DEVELOPER = "Gökmen Görgen"
 CORE_EMAIL = "gkmngrgn@gmail.com"
 SUMMARY = "An USB Image Creator For Pardus Linux."
-DESCRIPTION = "Puic is an USB image creator for Pardus Linux."
+DESCRIPTION = "Puding is an USB image creator for Pardus Linux."
 COPYRIGHT = u"Copyright (c) 2009 Gökmen Görgen, <%s>" % CORE_EMAIL
 USAGE = "%s\n%s\n\nUsage: %s [options]" % (DESCRIPTION, COPYRIGHT, NAME)
 LICENSE = """%s
 
-Puic is a free software; you can redistribute it and/or modify
+Puding is a free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 3 of the License, or
 (at your option) any later version.

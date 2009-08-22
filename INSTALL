@@ -1,5 +1,0 @@
-Requirements:
- - python >= 2.5
- - syslinux
- - mtools
- - gfxtheme-boot-pardus

@@ -11,10 +11,10 @@ import shutil
 
 from distutils.core import setup
 
-if not os.path.exists("puic/"):
-    shutil.copytree("src/", "puic/")
+if not os.path.exists("puding/"):
+    shutil.copytree("src/", "puding/")
 
-from puic.constants import (NAME, VERSION, DESCRIPTION, CORE_DEVELOPER, \
+from puding.constants import (NAME, VERSION, DESCRIPTION, CORE_DEVELOPER, \
                             CORE_EMAIL, URL, LICENSE_NAME)
 
 script = "%s/%s" % (NAME, NAME)
