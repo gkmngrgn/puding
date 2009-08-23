@@ -18,5 +18,10 @@
       <summary>Ba&#x11F;lanmam&#x131;&#x15F; diskin ba&#x11F;lanmas&#x131;</summary>
       <comment>Disk e&#x11F;er ba&#x11F;l&#x131; de&#x11F;ilse, &#xF6;nce o diski ba&#x11F;lay&#x131;p, sonra ba&#x11F;land&#x131;&#x11F;&#x131; dizinin de&#x11F;erini d&#xF6;nd&#xFC;recek bir fonksiyon yazmam&#x131;z gerekiyor. Hatta bu fonksiyonun common.py dosyas&#x131;na yaz&#x131;lmas&#x131; olas&#x131;.</comment>
     </item>
+    <item>
+      <attribute id="1251021909" priority="1" done="0" start_date="733642" enddate="99999999" notify="0" endtime="-60" last_edited="1251021909"/>
+      <summary>Sadece Pardus yazabilecek &#x15F;ekilde kitle</summary>
+      <comment>Ba&#x15F;ka bir imaj yolu g&#xF6;sterilmi&#x15F;se, "Bu Pardus imaj&#x131; de&#x11F;il" uyar&#x131;s&#x131; vermeli.</comment>
+    </item>
   </category>
 </gtodo>

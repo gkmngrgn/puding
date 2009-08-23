@@ -11,7 +11,7 @@ import glob
 import shutil
 import subprocess
 
-from constants import (NAME, GFXTHEME, LOCALE, SHARE, SYSLINUX)
+from constants import (NAME, LOCALE, SHARE, SYSLINUX)
 
 t = gettext.translation(NAME, LOCALE, fallback = True)
 _ = t.ugettext
@@ -49,7 +49,7 @@ def createConfigFile(dst):
     # Her seyden once syslinux dizinini olusturmak gerek
     os.mkdir('%s/boot/syslinux' % dst)
 
-    syslinux_conf_file = '%s/syslinux.cfg' % SHARE
+    syslinux_conf_file = '%s/syslinux.cfg.pardus' % SHARE
 
     shutil.copy('%s/gfxboot.com' % SYSLINUX,
                 '%s/boot/syslinux/gfxboot.com' % dst)
@@ -57,7 +57,7 @@ def createConfigFile(dst):
     shutil.copy('%s/hdt.c32' % SYSLINUX,
                 '%s/boot/syslinux/hdt.c32' % dst)
 
-    for file in glob.glob('%s/pardus/boot/*' % GFXTHEME):
+    for file in glob.glob('%s/gfxtheme/*' % SHARE):
         file_name = os.path.split(file)[1]
         shutil.copy(file, '%s/boot/syslinux/%s' % (dst, file_name))
 

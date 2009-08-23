@@ -66,12 +66,10 @@ class Create:
 
                 dst = self.drives[device]["mount"]
 
-        print(dst)
-        sys.exit()
+        if self.__checkSource(src) and self.__checkDestination(dst):
+            self.__createImage(src, dst)
 
-        if self.__checkSource(src) and self.__checkDestination(destination):
-            self.__createImage(src, destination)
-
+        # FIX ME: Is it required?
         else:
             self.utils.cprint("An error occured. Check the parameters please.", "red")
 
@@ -239,14 +237,16 @@ USB disk informations:
 
         for file in glob.glob("%s/repo/*" % src):
             pisi = os.path.split(file)[1]
-            self.utils.cprint("Copying: ", "green") + self.utils.colorize(copyPisiPackage(file, dst, pisi), "brightyellow")
+            self.utils.cprint("Copying: ", "green", True)
+            self.utils.cprint(copyPisiPackage(file, dst, pisi), "brightyellow")
 
         self.utils.cprint("\nCreated \"boot\" directory in %s." % dst, "green")
         os.mkdir("%s/boot" % dst)
         for file in glob.glob("%s/boot/*" % src):
             if not os.path.isdir(file):
                 file_name = os.path.split(file)[1]
-                self.utils.cprint("Copying: ", "green") + self.utils.colorize(file_name, "cyan")
+                self.utils.cprint("Copying: ", "green", True)
+                self.utils.cprint(file_name, "cyan")
 
                 shutil.copy(file, "%s/boot/%s" % (dst, file_name))
 

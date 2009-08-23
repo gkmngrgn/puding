@@ -12,7 +12,6 @@ VERSION = "0.1"
 HOME = "%s/.puding" % getenv("HOME")
 SHARE = "/usr/share/%s" % NAME
 SYSLINUX = "/usr/lib/syslinux"
-GFXTHEME = "/usr/share/gfxtheme/"
 URL = "http://www.gokmengorgen.net/puding"
 LICENSE_NAME = "GPLv3"
 CORE_DEVELOPER = "Gökmen Görgen"
