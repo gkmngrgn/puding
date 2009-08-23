@@ -17,13 +17,17 @@ class Create(QtGui.QMainWindow):
         self.text_src = self.label_src.text()
         self.text_dst = self.label_dst.text()
 
-        self.connect(self.button_next, QtCore.SIGNAL("clicked()"), self.__actionNext)
+        #self.connect(self.button_next, QtCore.SIGNAL("clicked()"), self.__actionNext)
         self.connect(self.button_prev, QtCore.SIGNAL("clicked()"), self.__actionPreview)
         self.connect(self.button_ok, QtCore.SIGNAL("clicked()"), self.__actionOk)
         self.connect(self.button_quit, QtCore.SIGNAL("clicked()"), QtCore.SLOT("close()"))
 
         self.button_prev.hide()
         self.button_ok.hide()
+
+    @QtCore.pyqtSignature("bool")
+    def on_button_next_clicked(self):
+        print("deneme")
 
     def __actionNext(self):
         src = self.line_src.displayText()
