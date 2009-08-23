@@ -17,9 +17,6 @@ class Create(QtGui.QMainWindow):
         self.text_src = self.label_src.text()
         self.text_dst = self.label_dst.text()
 
-        #self.connect(self.button_next, QtCore.SIGNAL("clicked()"), self.__actionNext)
-        self.connect(self.button_prev, QtCore.SIGNAL("clicked()"), self.__actionPreview)
-        self.connect(self.button_ok, QtCore.SIGNAL("clicked()"), self.__actionOk)
         self.connect(self.button_quit, QtCore.SIGNAL("clicked()"), QtCore.SLOT("close()"))
 
         self.button_prev.hide()
@@ -54,7 +51,8 @@ class Create(QtGui.QMainWindow):
 
         return True
 
-    def __actionPreview(self):
+    @QtCore.pyqtSignature("bool")
+    def on_button_prev_clicked(self):
         id = self.stackedWidget.currentIndex()
 
         if id > 0:
@@ -65,7 +63,8 @@ class Create(QtGui.QMainWindow):
             self.button_ok.hide()
             self.button_next.show()
 
-    def __actionOk(self):
+    @QtCore.pyqtSignature("bool")
+    def on_button_ok_clicked(self):
         id = self.stackedWidget.currentIndex()
 
         self.stackedWidget.setCurrentIndex(id + 1)
