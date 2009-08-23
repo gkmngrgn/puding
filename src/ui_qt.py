@@ -27,9 +27,6 @@ class Create(QtGui.QMainWindow):
 
     @QtCore.pyqtSignature("bool")
     def on_button_next_clicked(self):
-        print("deneme")
-
-    def __actionNext(self):
         src = self.line_src.displayText()
         dst = self.line_dst.displayText()
 
