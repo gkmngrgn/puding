@@ -47,22 +47,30 @@ class Utils:
             print(self.colorize(_(output), color))
 
 class Create:
-    def __init__(self, src):
+    def __init__(self, src, dst):
         self.utils = Utils()
-        self.partutils = PartitionUtils()
+        
+        if dst == None:
+            self.partutils = PartitionUtils()
 
-        if not self.partutils.detectRemovableDrives():
-            self.utils.cprint("USB device not found.", "red")
-            sys.exit()
-            
-        else:
-            self.__askDestination()
-            
+            if not self.partutils.detectRemovableDrives():
+                self.utils.cprint("USB device not found.", "red")
+                sys.exit()
+                
+            else:
+                device = self.__askDestination()
+
+                if not device:
+                    # Destination information is wrong!
+                    sys.exit()
+
+                dst = self.drives[device]["mount"]
+
+        print(dst)
         sys.exit()
 
-        # FIX ME: is __checkDestination really required?
-        if self.__checkSource(src) and self.__checkDestination(dst):
-            self.__createImage(src, dst)
+        if self.__checkSource(src) and self.__checkDestination(destination):
+            self.__createImage(src, destination)
 
         else:
             self.utils.cprint("An error occured. Check the parameters please.", "red")
@@ -93,52 +101,53 @@ class Create:
                 return False
 
     def __askDestination(self):
-        drives = self.partutils.returnDrives()
+        self.drives = self.partutils.returnDrives()
         
-        if len(drives) == 1:
+        if len(self.drives) == 1:
             # FIX ME: If disk is unmounted, you should mount it before return process!
             # It returns mount point directory.
-            return drives[drives.keys()[0]]["mount"]
+            return self.drives.keys()[0]
 
         else:
             drive_no = 0
 
             self.utils.cprint("Devices:", "brightcyan")
 
-            for drive in drives:
+            for drive in self.drives:
                 drive_no += 1
 
                 # FIX ME: Bad coding..
                 self.utils.cprint("\n%d) %s:" % (drive_no, drive), "brightcyan")
                 self.utils.cprint("    Label\t\t:", "green", True)
-                self.utils.cprint(drives[drive]["label"], "yellow")
+                self.utils.cprint(self.drives[drive]["label"], "yellow")
 
                 self.utils.cprint("    Parent\t\t:", "green", True)
-                self.utils.cprint(str(drives[drive]["parent"]), "yellow")
+                self.utils.cprint(str(self.drives[drive]["parent"]), "yellow")
 
                 self.utils.cprint("    Mount Point\t\t:", "green", True)
-                self.utils.cprint(drives[drive]["mount"], "yellow")
+                self.utils.cprint(self.drives[drive]["mount"], "yellow")
 
                 self.utils.cprint("    Unmount\t\t:", "green", True)
-                self.utils.cprint(drives[drive]["unmount"], "yellow")
+                self.utils.cprint(self.drives[drive]["unmount"], "yellow")
 
                 self.utils.cprint("    UUID\t\t:", "green", True)
-                self.utils.cprint(drives[drive]["uuid"], "yellow")
+                self.utils.cprint(self.drives[drive]["uuid"], "yellow")
 
                 self.utils.cprint("    File System Version\t:", "green", True)
-                self.utils.cprint(drives[drive]["fsversion"], "yellow")
+                self.utils.cprint(self.drives[drive]["fsversion"], "yellow")
 
                 self.utils.cprint("    File System Type\t:", "green", True)
-                self.utils.cprint(drives[drive]["fstype"], "yellow")
+                self.utils.cprint(self.drives[drive]["fstype"], "yellow")
 
-            # Birden fazla USB bölümü bulunursa seçmeler olacak.
-            # try:
-            #     answer = int(raw_input("Birden fazla USB aygıtı veya bölümü bulundu, birini seçin: "))
+            try:
+                id = int(raw_input("USB devices or partitions have found more than one. Please choose one: "))
 
-            # except ValueError:
-            #    self.cprint("You must enter a number between 0 - %d!" % drive_no + 1, "red")
+                return self.drives.keys()[id - 1]
 
-        sys.exit()
+            except ValueError:
+               self.cprint("You must enter a number between 0 - %d!" % drive_no + 1, "red")
+               
+               return False
 
     def __checkDestination(self, dst):
         if os.path.isdir(dst) and os.path.ismount(dst):

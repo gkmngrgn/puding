@@ -55,7 +55,13 @@ class Options:
 
                 source = os.path.realpath(args[0])
 
-                ui_cmd.Create(source)
+                try:
+                    destination = os.path.realpath(args[1])
+
+                except:
+                    destination = None
+
+                ui_cmd.Create(source, destination)
 
             except IndexError:
                 print(_("Invalid usage. Example:"))
