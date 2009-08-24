@@ -11,7 +11,7 @@ import glob
 import shutil
 import subprocess
 
-from constants import (NAME, LOCALE, SHARE, SYSLINUX)
+from constants import (HOME, MOUNT, NAME, LOCALE, SHARE, SYSLINUX)
 
 t = gettext.translation(NAME, LOCALE, fallback = True)
 _ = t.ugettext
@@ -72,6 +72,10 @@ def getMounted(disk_path):
 
     return parts[disk_path]
 
+def createDirs():
+    if not os.path.exists(HOME):
+        os.makedirs(MOUNT)
+
 class PartitionUtils:
     def __init__(self):
         self.bus = dbus.SystemBus()
@@ -117,13 +121,13 @@ class PartitionUtils:
     
         for device in devices:
             dev = self.getDevice(device)
-    
+
             if dev.GetProperty("storage.bus") == "usb":
                 if dev.GetProperty("block.is_volume"):
                     self.addDevice(dev)
-    
+
                     continue
-    
+
                 else:
                     children = hal.FindDeviceStringMatch("info.parent", device)
     

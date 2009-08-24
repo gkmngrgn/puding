@@ -22,7 +22,7 @@ import os
 import sys
 
 from optparse import (OptionParser, OptionGroup)
-from puding.common import (_, run)
+from puding.common import (_, run, createDirs)
 from puding.constants import (HOME, LICENSE, NAME, USAGE, VERSION)
 
 class Options:
@@ -84,8 +84,7 @@ class Options:
             parser.print_help()
 
 if __name__ == "__main__":
-    if not os.path.exists(HOME):
-        os.mkdir(HOME)
+    createDirs()
 
     try:
         Options().main()

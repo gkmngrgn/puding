@@ -9,7 +9,8 @@ from os import getenv
 NAME = "puding"
 LOCALE = "/usr/share/locale"
 VERSION = "0.1"
-HOME = "%s/.puding" % getenv("HOME")
+HOME = "%s/.%s" % (getenv("HOME"), NAME)
+MOUNT = "%s/iso_mount_dir" % HOME
 SHARE = "/usr/share/%s" % NAME
 SYSLINUX = "/usr/lib/syslinux"
 URL = "http://www.gokmengorgen.net/puding"

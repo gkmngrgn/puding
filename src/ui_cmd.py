@@ -12,7 +12,7 @@ import subprocess
 
 from common import (_, runCommand, copyPisiPackage, createConfigFile, getMounted)
 from common import PartitionUtils
-from constants import (HOME, NAME, SHARE)
+from constants import (HOME, MOUNT, NAME, SHARE)
 
 class Utils:
     def colorize(self, output, color):
@@ -185,23 +185,19 @@ USB disk informations:
         return output
 
     def __createImage(self, src, dst):
-        # create a directory for mounting iso image.
-        dirname = "%s/iso_mount_dir" % HOME
-        os.mkdir(dirname)
-
         self.utils.cprint("Mounting %s.." % src, "green")
 
-        cmd = "mount -o loop %s %s" % (src, dirname)
+        cmd = "mount -o loop %s %s" % (src, MOUNT)
         if runCommand(cmd):
             self.utils.cprint("Could not mounted CD image.", "red")
 
             return False
 
         else:
-            self.__copyImage(dirname, dst)
+            self.__copyImage(MOUNT, dst)
 
-            self.utils.cprint("\nUnmounting %s.." % dirname, "green")
-            cmd = "umount %s" % dirname
+            self.utils.cprint("\nUnmounting %s.." % MOUNT, "green")
+            cmd = "umount %s" % MOUNT
 
             if runCommand(cmd):
                 self.utils.cprint("Could not unmounted CD image.", "red")
@@ -233,14 +229,11 @@ USB disk informations:
             return True
 
     def __copyImage(self, src, dst):
-        os.mkdir("%s/repo" % dst)
+        # Pardus Image
+        self.utils.cprint("Copying pardus.img to %s.." % dst, "green")
+        shutil.copy('%s/pardus.img' % src, '%s/pardus.img' % dst)
 
-        for file in glob.glob("%s/repo/*" % src):
-            pisi = os.path.split(file)[1]
-            self.utils.cprint("Copying: ", "green", True)
-            self.utils.cprint(copyPisiPackage(file, dst, pisi), "brightyellow")
-
-        self.utils.cprint("\nCreated \"boot\" directory in %s." % dst, "green")
+        # Boot directory
         os.mkdir("%s/boot" % dst)
         for file in glob.glob("%s/boot/*" % src):
             if not os.path.isdir(file):
@@ -250,5 +243,10 @@ USB disk informations:
 
                 shutil.copy(file, "%s/boot/%s" % (dst, file_name))
 
-        self.utils.cprint("And copying pardus.img to %s.." % dst, "green")
-        shutil.copy('%s/pardus.img' % src, '%s/pardus.img' % dst)
+        # Pisi Packages
+        os.mkdir("%s/repo" % dst)
+
+        for file in glob.glob("%s/repo/*" % src):
+            pisi = os.path.split(file)[1]
+            self.utils.cprint("Copying: ", "green", True)
+            self.utils.cprint(copyPisiPackage(file, dst, pisi), "brightyellow")
