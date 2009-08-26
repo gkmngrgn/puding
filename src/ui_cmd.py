@@ -208,7 +208,8 @@ USB disk informations:
             createConfigFile(dst)
 
             self.utils.cprint("Creating ldlinux.sys..", "yellow")
-            cmd = "syslinux %s" % getMounted(dst)
+            # Shit! There's upstream bug on mtools..
+            cmd = "LC_ALL=C syslinux %s" % getMounted(dst)
 
             if runCommand(cmd):
                 self.utils.cprint("Could not create, ldlinux.sys.", "red")
