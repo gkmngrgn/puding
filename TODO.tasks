@@ -23,5 +23,10 @@
       <summary>Sadece Pardus yazabilecek &#x15F;ekilde kitle</summary>
       <comment>Ba&#x15F;ka bir imaj yolu g&#xF6;sterilmi&#x15F;se, "Bu Pardus imaj&#x131; de&#x11F;il" uyar&#x131;s&#x131; vermeli.</comment>
     </item>
+    <item>
+      <attribute id="1251153539" priority="1" done="0" start_date="733644" enddate="99999999" notify="0" endtime="-60" last_edited="1251153539"/>
+      <summary>Archlinux'ta Mtools paketi sorunlu.</summary>
+      <comment>Archlinux'ta mtools paketiyle ilgili sorunu d&#xFC;zeltmek i&#xE7;in debian-tracker veya pardus'taki yamalara bak.</comment>
+    </item>
   </category>
 </gtodo>
