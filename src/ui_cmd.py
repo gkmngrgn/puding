@@ -10,7 +10,8 @@ import sys
 import shutil
 import subprocess
 
-from common import (_, runCommand, copyPisiPackage, createConfigFile, getMounted)
+from common import (_, runCommand, copyPisiPackage, \
+                    createConfigFile, createUSBDirs, getMounted)
 from common import PartitionUtils
 from constants import (HOME, MOUNT, NAME, SHARE)
 
@@ -193,49 +194,50 @@ USB disk informations:
 
             return False
 
-        else:
-            self.__copyImage(MOUNT, dst)
+        self.__copyImage(MOUNT, dst)
 
-            self.utils.cprint("\nUnmounting %s.." % MOUNT, "green")
-            cmd = "umount %s" % MOUNT
+        self.utils.cprint("\nUnmounting %s.." % MOUNT, "green")
+        cmd = "umount %s" % MOUNT
 
-            if runCommand(cmd):
-                self.utils.cprint("Could not unmounted CD image.", "red")
+        if runCommand(cmd):
+            self.utils.cprint("Could not unmounted CD image.", "red")
 
-                return False
+            return False
 
-            self.utils.cprint("Copying syslinux files..", "yellow")
-            createConfigFile(dst)
+        self.utils.cprint("Copying syslinux files..", "yellow")
+        createConfigFile(dst)
 
-            self.utils.cprint("Creating ldlinux.sys..", "yellow")
-            # Shit! There's upstream bug on mtools..
-            cmd = "LC_ALL=C syslinux %s" % getMounted(dst)
+        self.utils.cprint("Creating ldlinux.sys..", "yellow")
+        # Shit! There's upstream bug on mtools..
+        cmd = "LC_ALL=C syslinux %s" % getMounted(dst)
 
-            if runCommand(cmd):
-                self.utils.cprint("Could not create, ldlinux.sys.", "red")
+        if runCommand(cmd):
+            self.utils.cprint("Could not create, ldlinux.sys.", "red")
 
-                return False
+            return False
 
-            device = os.path.split(getMounted(dst))[1][:3]
-            self.utils.cprint("Concatenating MBR to %s" % device, "yellow")
-            cmd = "cat /usr/lib/syslinux/mbr.bin > /dev/%s" % device
+        device = os.path.split(getMounted(dst))[1][:3]
+        self.utils.cprint("Concatenating MBR to %s" % device, "yellow")
+        cmd = "cat /usr/lib/syslinux/mbr.bin > /dev/%s" % device
 
-            if runCommand(cmd):
-                self.utils.cprint("Could not concatenate, MBR.", "red")
+        if runCommand(cmd):
+            self.utils.cprint("Could not concatenate, MBR.", "red")
 
-                return False
+            return False
 
-            self.utils.cprint("MBR written, USB disk is ready for Pardus installation.", "brightgreen")
+        self.utils.cprint("MBR written, USB disk is ready for Pardus installation.", "brightgreen")
 
-            return True
+        return True
 
     def __copyImage(self, src, dst):
+        # create required directories
+        createUSBDIRS(dst)
+
         # Pardus Image
         self.utils.cprint("Copying pardus.img to %s.." % dst, "green")
         shutil.copy('%s/pardus.img' % src, '%s/pardus.img' % dst)
 
         # Boot directory
-        os.mkdir("%s/boot" % dst)
         for file in glob.glob("%s/boot/*" % src):
             if not os.path.isdir(file):
                 file_name = os.path.split(file)[1]
@@ -245,8 +247,6 @@ USB disk informations:
                 shutil.copy(file, "%s/boot/%s" % (dst, file_name))
 
         # Pisi Packages
-        os.mkdir("%s/repo" % dst)
-
         for file in glob.glob("%s/repo/*" % src):
             pisi = os.path.split(file)[1]
             self.utils.cprint("Copying: ", "green", True)

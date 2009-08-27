@@ -76,6 +76,14 @@ def createDirs():
     if not os.path.exists(HOME):
         os.makedirs(MOUNT)
 
+def createUSBDirs(dst):
+    dirs = ("repo", "boot/syslinux")
+    
+    for d in dirs:
+        path = "%s/%s" % (dst, d)
+        if not os.path.exists(path):
+            os.makedirs(path)
+
 class PartitionUtils:
     def __init__(self):
         self.bus = dbus.SystemBus()
