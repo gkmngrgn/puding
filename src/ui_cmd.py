@@ -13,7 +13,7 @@ import subprocess
 from common import (_, runCommand, copyPisiPackage, \
                     createConfigFile, createUSBDirs, getMounted)
 from common import PartitionUtils
-from constants import (HOME, MOUNT, NAME, SHARE)
+from constants import (HOME, MOUNT_ISO, MOUNT_USB, NAME, SHARE)
 
 class Utils:
     def colorize(self, output, color):
@@ -59,13 +59,15 @@ class Create:
                 sys.exit()
                 
             else:
-                device = self.__askDestination()
+                device, dst = self.__askDestination()
 
-                if not device:
-                    # Destination information is wrong!
-                    sys.exit()
+                if dst == "":
+                    cmd = "mount -t vfat %s %s" % (device, MOUNT_USB)
+                    runCommand(cmd)
+                    dst = MOUNT_USB
 
-                dst = self.drives[device]["mount"]
+                print("dst: %s" % dst)
+                sys.exit()
 
         if self.__checkSource(src) and self.__checkDestination(dst):
             self.__createImage(src, dst)
@@ -105,7 +107,7 @@ class Create:
         if len(self.drives) == 1:
             # FIX ME: If disk is unmounted, you should mount it before return process!
             # It returns mount point directory.
-            return self.drives.keys()[0]
+            device = self.drives.keys()[0]
 
         else:
             drive_no = 0
@@ -141,12 +143,16 @@ class Create:
             try:
                 id = int(raw_input("USB devices or partitions have found more than one. Please choose one: "))
 
-                return self.drives.keys()[id - 1]
+                device = self.drives.keys()[id - 1]
 
             except ValueError:
                self.cprint("You must enter a number between 0 - %d!" % drive_no + 1, "red")
                
                return False
+
+        destination = self.drives[device]["mount"]
+
+        return device, destination
 
     def __checkDestination(self, dst):
         if os.path.isdir(dst) and os.path.ismount(dst):
@@ -188,16 +194,16 @@ USB disk informations:
     def __createImage(self, src, dst):
         self.utils.cprint("Mounting %s.." % src, "green")
 
-        cmd = "mount -o loop %s %s" % (src, MOUNT)
+        cmd = "mount -o loop %s %s" % (src, MOUNT_ISO)
         if runCommand(cmd):
             self.utils.cprint("Could not mounted CD image.", "red")
 
             return False
 
-        self.__copyImage(MOUNT, dst)
+        self.__copyImage(MOUNT_ISO, dst)
 
-        self.utils.cprint("\nUnmounting %s.." % MOUNT, "green")
-        cmd = "umount %s" % MOUNT
+        self.utils.cprint("\nUnmounting %s.." % MOUNT_ISO, "green")
+        cmd = "umount %s" % MOUNT_ISO
 
         if runCommand(cmd):
             self.utils.cprint("Could not unmounted CD image.", "red")

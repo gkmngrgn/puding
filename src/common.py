@@ -11,7 +11,8 @@ import glob
 import shutil
 import subprocess
 
-from constants import (HOME, MOUNT, NAME, LOCALE, SHARE, SYSLINUX)
+from constants import (HOME, MOUNT_ISO, MOUNT_USB, \
+                       NAME, LOCALE, SHARE, SYSLINUX)
 
 t = gettext.translation(NAME, LOCALE, fallback = True)
 _ = t.ugettext
@@ -74,7 +75,8 @@ def getMounted(disk_path):
 
 def createDirs():
     if not os.path.exists(HOME):
-        os.makedirs(MOUNT)
+        os.makedirs(MOUNT_ISO)
+        os.mkdir(MOUNT_USB)
 
 def createUSBDirs(dst):
     dirs = ("repo", "boot/syslinux")
@@ -98,7 +100,7 @@ class PartitionUtils:
         cmd = "mkfs.vfat -F 32 %s" % dst
 
         return runCommand(cmd)
-    
+
     def getDevice(self, device):
         dev_obj = self.bus.get_object("org.freedesktop.Hal", device)
         
