@@ -24,9 +24,19 @@
       <comment>Ba&#x15F;ka bir imaj yolu g&#xF6;sterilmi&#x15F;se, "Bu Pardus imaj&#x131; de&#x11F;il" uyar&#x131;s&#x131; vermeli.</comment>
     </item>
     <item>
-      <attribute id="1251153539" priority="1" done="0" start_date="733644" enddate="99999999" notify="0" endtime="-60" last_edited="1251153539"/>
+      <attribute id="1251153539" priority="1" done="1" start_date="733644" completed_date="733645" notify="0" last_edited="1251240711"/>
       <summary>Archlinux'ta Mtools paketi sorunlu.</summary>
       <comment>Archlinux'ta mtools paketiyle ilgili sorunu d&#xFC;zeltmek i&#xE7;in debian-tracker veya pardus'taki yamalara bak.</comment>
+    </item>
+    <item>
+      <attribute id="1251240745" priority="1" done="0" start_date="733645" enddate="99999999" notify="0" endtime="-60" last_edited="1251240745"/>
+      <summary>runCommand fonksiyonu kald&#x131;r&#x131;lacak.</summary>
+      <comment>runCommand kullanan t&#xFC;m fonksiyonlar run kullanacak &#x15F;ekilde d&#xFC;zeltilecek.</comment>
+    </item>
+    <item>
+      <attribute id="1251242214" priority="1" done="1" start_date="733645" completed_date="733646" notify="0" last_edited="1251368554"/>
+      <summary>Dizinler USB bellekte de &#xF6;nceden olu&#x15F;turulsun</summary>
+      <comment>createDirs fonksiyonunun bir benzeri, usb bellek i&#xE7;in de yap&#x131;lmal&#x131;.</comment>
     </item>
   </category>
 </gtodo>
