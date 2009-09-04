@@ -147,6 +147,6 @@ class PartitionUtils:
 
         if not len(self.drives):
             return False
-    
+
         else:
-        	return True
+            return True
