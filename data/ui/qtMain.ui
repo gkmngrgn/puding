@@ -115,16 +115,16 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="button_ok">
+       <widget class="QPushButton" name="button_quit">
         <property name="text">
-         <string>&amp;OK</string>
+         <string>&amp;Quit</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="button_quit">
+       <widget class="QPushButton" name="button_ok">
         <property name="text">
-         <string>&amp;Quit</string>
+         <string>&amp;Create</string>
         </property>
        </widget>
       </item>
