@@ -57,3 +57,9 @@ class SelectDisk(QtGui.QDialog):
     def __init__(self, parent = None):
         super(SelectDisk, self).__init__(parent)
         uic.loadUi("%s/ui/qtSelectDisk.ui" % SHARE, self)
+
+    @QtCore.pyqtSignature("bool")
+    def on_button_browse_clicked(self):
+        dirname = QtGui.QFileDialog.getExistingDirectory(self, "Choose Mount Disk Path")
+
+        self.line_directory.setText(dirname)
