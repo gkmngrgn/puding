@@ -25,8 +25,8 @@ class Create(QtGui.QMainWindow):
 
     @QtCore.pyqtSignature("bool")
     def on_button_browse_disk_clicked(self):
-        browse_disk = SelectDisk()
-        browse_disk.show()
+        self.browse_disk = SelectDisk()
+        self.browse_disk.exec_()
 
     def __checkSource(self, src):
         if QtCore.QString(src).isEmpty():
