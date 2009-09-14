@@ -29,7 +29,13 @@ class Create(QtGui.QMainWindow):
     @QtCore.pyqtSignature("bool")
     def on_button_browse_disk_clicked(self):
         self.browse_disk = SelectDisk()
-        self.browse_disk.exec_()
+        if self.browse_disk.exec_() == QtGui.QDialog.Accepted:
+            dirname = self.browse_disk.getSelectedDirectory()
+            if not dirname and not self.line_disk.displayText():
+                QtGui.QMessageBox.warning(self, "Warning", "You should select a valid directory", QtGui.QMessageBox.Ok)
+
+            else:
+                self.line_disk.setText(dirname)
 
     @QtCore.pyqtSignature("bool")
     def on_actionAbout_triggered(self):
@@ -74,8 +80,16 @@ class SelectDisk(QtGui.QDialog):
         for drive in self.drives:
             self.listWidget.addItem(self.drives[drive]["label"])
 
+        # print(self.listWidget.currentItem())
+
     @QtCore.pyqtSignature("bool")
     def on_button_browse_clicked(self):
         dirname = QtGui.QFileDialog.getExistingDirectory(self, "Choose Mount Disk Path")
 
         self.line_directory.setText(dirname)
+
+    def getSelectedDirectory(self):
+        if self.line_directory.displayText() == "":
+            return False
+
+        return self.line_directory.displayText()
