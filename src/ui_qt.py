@@ -118,12 +118,24 @@ class SelectDisk(QtGui.QDialog):
 
         return self.line_directory.displayText()
 
+class ProgressIncrement(QtCore.QThread):
+    def __init__(self):
+        QtCore.QThread.__init__(self)
+
+    def run(self, progressbar):
+        for i in range(100):
+            progressbar.setValue(i)
+
 class ProgressBar(QtGui.QDialog):
     def __init__(self, title, message, parent = None):
         super(ProgressBar, self).__init__(parent)
         uic.loadUi("%s/ui/qtProgressBar.ui" % SHARE, self)
-        
+
         self.setWindowTitle(title)
         self.label.setText(message)
+        self.progressBar.setMaximum(100)
 
         self.connect(self.button_cancel, QtCore.SIGNAL("clicked()"), QtCore.SLOT("close()"))
+
+        increment = ProgressIncrement(self.progressBar)
+        increment.start()
