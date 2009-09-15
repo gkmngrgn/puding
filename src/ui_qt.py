@@ -67,7 +67,12 @@ class Create(QtGui.QMainWindow):
         try:
             #(name, md5, url) = verifyIsoChecksum(src)
             check_iso = ProgressBar("Verify Checksum", "The checksum of the source is checking now...")
-            check_iso.exec_()            
+            progressbar = check_iso.progressBar
+            pi = ProgressIncrement(progressbar, check_iso)
+            pi.start()
+
+            QtCore.QObject.connect(pi, QtCore.SIGNAL("incrementProgressBar()"), pi.incrementProgress)
+            check_iso.exec_()
 
         except TypeError:
             self.warningDialog("Checksum invalid", """\
@@ -119,12 +124,25 @@ class SelectDisk(QtGui.QDialog):
         return self.line_directory.displayText()
 
 class ProgressIncrement(QtCore.QThread):
-    def __init__(self):
+    def __init__(self, progressbar, dialog):
         QtCore.QThread.__init__(self)
 
-    def run(self, progressbar):
-        for i in range(100):
-            progressbar.setValue(i)
+        self.pbar = progressbar
+        self.dialog = dialog
+
+    def run(self):
+        import time
+
+        for i in range(0, 101):
+            if i == 100:
+                self.dialog.close()
+            else:
+                self.emit(QtCore.SIGNAL("incrementProgressBar()"))
+                time.sleep(0.04)
+
+    def incrementProgress(self):
+        current_value = self.pbar.value()
+        self.pbar.setValue(current_value + 1)
 
 class ProgressBar(QtGui.QDialog):
     def __init__(self, title, message, parent = None):
@@ -135,7 +153,4 @@ class ProgressBar(QtGui.QDialog):
         self.label.setText(message)
         self.progressBar.setMaximum(100)
 
-        self.connect(self.button_cancel, QtCore.SIGNAL("clicked()"), QtCore.SLOT("close()"))
-
-        increment = ProgressIncrement(self.progressBar)
-        increment.start()
+        self.connect(self.button_cancel, QtCore.SIGNAL("clicked(bool)"), QtCore.SLOT("close()"))
