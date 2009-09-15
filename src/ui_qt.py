@@ -65,7 +65,6 @@ class Create(QtGui.QMainWindow):
             self.warningDialog("ISO Image is Invalid", "Please check the ISO image path.")
 
         try:
-            #(name, md5, url) = verifyIsoChecksum(src)
             check_iso = ProgressBar("Verify Checksum", "The checksum of the source is checking now...")
             progressbar = check_iso.progressBar
             pi = ProgressIncrement(progressbar, check_iso)
@@ -128,9 +127,12 @@ class ProgressIncrement(QtCore.QThread):
         QtCore.QThread.__init__(self)
 
         self.pbar = progressbar
+        #self.pbar.setMaximum(iso_size / 1024)
         self.dialog = dialog
 
     def run(self):
+        #(name, md5, url) = verifyIsoChecksum(src)
+
         import time
 
         for i in range(0, 101):

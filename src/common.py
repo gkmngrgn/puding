@@ -35,7 +35,7 @@ def verifyIsoChecksum(src, progress = None):
         class DummyProgress:
             def set_max_progress(self, value): pass
             def update_progress(self, value): pass
-            
+
         progress = DummyProgress()
 
     iso_size = os.stat(src).st_size
@@ -52,7 +52,7 @@ def verifyIsoChecksum(src, progress = None):
         bytes = len(data)
         total += bytes
         progress.update_progress(total / 1024)
-        
+
     src_md5 = checksum.hexdigest()
 
     for release in releases:
