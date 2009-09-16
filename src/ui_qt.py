@@ -13,7 +13,7 @@ from constants import DESCRIPTION
 from PyQt4 import (QtCore, QtGui, uic)
 
 # General variables
-bytes = 1024**2
+increment_value = 1024**2
 
 class Create(QtGui.QMainWindow):
     def __init__(self, parent = None):
@@ -65,9 +65,8 @@ class Create(QtGui.QMainWindow):
             self.warningDialog("ISO Image is Invalid", "Please check the ISO image path.")
 
         try:
-            global bytes # is it required?
             iso_size = getIsoSize(src)
-            iso_size_progress = iso_size / bytes
+            iso_size_progress = iso_size / increment_value
 
             check_iso = ProgressBar(title = "Verify Checksum",
                                     message = "The checksum of the source is checking now...",
@@ -148,12 +147,13 @@ class ProgressIncrement(QtCore.QThread):
         QtCore.QThread.__init__(self)
 
         self.progressBar = progressbar
+        self.progressBar.setValue(0)
         self.src = source
 
     def run(self):
         import hashlib
 
-        global bytes
+        bytes = increment_value
         checksum = hashlib.md5()
         isofile = file(self.src, "rb")
 
