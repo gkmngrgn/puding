@@ -7,7 +7,7 @@
 import os
 import sys
 
-from common import (SHARE, getDiskInfo, getIsoSize, verifyIsoChecksum)
+from common import (SHARE, getDiskInfo, getIsoSize)
 from common import PartitionUtils
 from constants import DESCRIPTION
 from PyQt4 import (QtCore, QtGui, uic)
