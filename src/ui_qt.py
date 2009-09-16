@@ -15,7 +15,6 @@ from PyQt4 import (QtCore, QtGui, uic)
 # General variables
 bytes = 1024**2
 
-
 class Create(QtGui.QMainWindow):
     def __init__(self, parent = None):
         super(Create, self).__init__(parent)
@@ -66,9 +65,13 @@ class Create(QtGui.QMainWindow):
             self.warningDialog("ISO Image is Invalid", "Please check the ISO image path.")
 
         try:
+            global bytes # is it required?
+            iso_size = getIsoSize(src)
+            iso_size_progress = iso_size / bytes
+
             check_iso = ProgressBar(title = "Verify Checksum",
                                     message = "The checksum of the source is checking now...",
-                                    src = src)
+                                    max_value = iso_size_progress)
             progressbar = check_iso.progressBar
             pi = ProgressIncrement(progressbar, src)
             pi.start()
@@ -76,7 +79,7 @@ class Create(QtGui.QMainWindow):
             QtCore.QObject.connect(pi, QtCore.SIGNAL("incrementProgressBar()"), pi.incrementProgress)
 
             check_iso.exec_()
-            # pi.exit()
+            # pi.exit() Is it required?
 
         except TypeError:
             self.warningDialog("Checksum invalid", """\
@@ -128,18 +131,15 @@ class SelectDisk(QtGui.QDialog):
         return self.line_directory.displayText()
 
 class ProgressBar(QtGui.QDialog):
-    def __init__(self, title, message, src = None, parent = None):
+    def __init__(self, title, message, max_value, parent = None):
         super(ProgressBar, self).__init__(parent)
         uic.loadUi("%s/ui/qtProgressBar.ui" % SHARE, self)
 
         self.setWindowTitle(title)
         self.label.setText(message)
 
-        iso_size = getIsoSize(src)
-
-        # FIX ME: It should not use src parameter.
         self.progressBar.setMinimum(0)
-        self.progressBar.setMaximum(iso_size / bytes)
+        self.progressBar.setMaximum(max_value)
 
         self.connect(self.button_cancel, QtCore.SIGNAL("clicked(bool)"), QtCore.SLOT("close()"))
 
