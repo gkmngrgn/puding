@@ -4,6 +4,7 @@
 # author: Gökmen Görgen
 # license: GPLv3
 
+import glob
 import os
 import shutil
 import sys
@@ -57,8 +58,8 @@ class Create(QtGui.QMainWindow):
 
     @QtCore.pyqtSignature("bool")
     def on_button_create_clicked(self):
-        dst = self.line_disk.displayText()
-        src = self.line_image.displayText()
+        dst = str(self.line_disk.displayText())
+        src = str(self.line_image.displayText())
 
         if not self.__checkDestination(dst):
             self.warningDialog("Directory is Invalid", "Please check the USB disk path.")
@@ -158,7 +159,7 @@ you have downloaded the source correctly.""")
             return False
 
         # Copy image
-        self.__copyImage(src, dst)
+        self.__copyImage(MOUNT_ISO, dst)
 
         # Unmount iso
         cmd = "fusermount -u %s" % MOUNT_ISO
@@ -193,18 +194,21 @@ you have downloaded the source correctly.""")
     def __copyImage(self, src, dst):
         # Pardus image
         shutil.copy("%s/pardus.img" % src, "%s/pardus.img" % dst)
+        print("copied pardus.img")
 
         # Boot directory
         for file in glob.glob("%s/boot/*" % src):
             if not os.path.isdir(file):
                 file_name = os.path.split(file)[1]
                 shutil.copy(file, "%s/boot/%s" % (dst, file_name))
+                print(file_name)
 
         # Pisi packages
         for file in glob.glob("%s/repo/*" % src):
             pisi = os.path.split(file)[1]
             if not os.path.exists("%s/repo/%s" % (dst, pisi)):
                 shutil.copy(file, "%s/repo/%s" % (dst, pisi))
+                print(pisi)
 
 class SelectDisk(QtGui.QDialog):
     def __init__(self, parent = None):
