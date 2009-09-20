@@ -153,42 +153,26 @@ you have downloaded the source correctly.""")
         return os.path.ismount(str(dst))
 
     def __createImage(self, src, dst):
-        # First of all, mount iso
+        # Mount iso
         cmd = "fuseiso %s %s" % (src, MOUNT_ISO)
         if runCommand(cmd):
             # FIX ME: Should use warning dialog.
             return False
 
-        # Copy image
-        self.__copyImage(MOUNT_ISO, dst)
+        create_image = ProgressBar(title = "Creating Image",
+                                message = "Creating image..",
+                                max_value = getFilesSize(MOUNT_ISO))
 
-        # Unmount iso
-        cmd = "fusermount -u %s" % MOUNT_ISO
-        if runCommand(cmd):
-            # FIX ME: Should use warning dialog.
-            return False
+        pi = ProgressIncrementCopy(create_image, MOUNT_ISO, dst)
+        pi.start()
 
-        # Create config file
-        # FIX ME: Embed try - except to createConfigFile func.
-        try:
-            createConfigFile(dst)
+        def closeDialog():
+            pi.quit()
+            create_image.close()
 
-        except:
-            # File are already exists (?! Why is it required?)
-            pass
+        QtCore.QObject.connect(pi, QtCore.SIGNAL("closeProgressDialog()"), closeDialog)
 
-        # Upstream bug. Follow this.
-        cmd = "LC_ALL=C syslinux %s" % getMounted(dst)
-        if runCommand(cmd):
-            # FIX ME: Should use warning dialog.
-            return False
-
-        # FIX ME: Should use PartitionUtils
-        device = os.path.split(getMounted(dst))[1][:3]
-        cmd = "cat /usr/lib/syslinux/mbr.bin > /dev/%s" % device
-        if runCommand(cmd):
-            # FIX ME: Should use warning dialog.
-            return False
+        create_image.exec_()
 
         return True
 
@@ -282,6 +266,28 @@ class ProgressIncrementCopy(QtCore.QThread):
         self.completed = 0
 
     def run(self):
+        # Create config file
+        # FIX ME: Embed try - except to createConfigFile func.
+        try:
+            createConfigFile(self.dst)
+
+        except:
+            # File are already exists (?! Why is it required?)
+            pass
+
+        # Upstream bug. Follow this.
+        cmd = "LC_ALL=C syslinux %s" % getMounted(self.dst)
+        if runCommand(cmd):
+            # FIX ME: Should use warning dialog.
+            return False
+
+        # FIX ME: Should use PartitionUtils
+        device = os.path.split(getMounted(self.dst))[1][:3]
+        cmd = "cat /usr/lib/syslinux/mbr.bin > /dev/%s" % device
+        if runCommand(cmd):
+            # FIX ME: Should use warning dialog.
+            return False
+
         # Pardus image
         pardus_image = "%s/pardus.img" % self.src
         pardus_image_size = os.stat(pardus_image).st_size
@@ -304,12 +310,18 @@ class ProgressIncrementCopy(QtCore.QThread):
         # Pisi packages
         for file in glob.glob("%s/repo/*" % self.src):
             pisi = os.path.split(file)[1]
-            if not os.path.exists("%s/repo/%s" % (dst, pisi)):
+            if not os.path.exists("%s/repo/%s" % (self.dst, pisi)):
                 pisi_size = os.stat(file).st_size
-                shutil.copy(file, "%s/repo/%s" % (dst, pisi))
+                shutil.copy(file, "%s/repo/%s" % (self.dst, pisi))
                 #self.emit(QtCore.SIGNAL("incrementProgress()"))
                 self.completed = self.completed + pisi_size
                 self.progressBar.setValue(self.completed)
+
+        # Unmount iso
+        cmd = "fusermount -u %s" % MOUNT_ISO
+        if runCommand(cmd):
+            # FIX ME: Should use warning dialog.
+            return False
 
         self.emit(QtCore.SIGNAL("closeProgressDialog()"))
 
