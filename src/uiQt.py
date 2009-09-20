@@ -271,30 +271,45 @@ class ProgressIncrementChecksum(QtCore.QThread):
         return False
 
 class ProgressIncrementCopy(QtCore.QThread):
-    def __init__(self, src, dst):
+    def __init__(self, dialog, source, destination):
         QtCore.QThread.__init__(self)
 
-        self.src = src
-        self.dst = dst
+        self.progressBar = dialog.progressBar
+        self.src = source
+        self.dst = destination
+
+        self.progressBar.setValue(0)
+        self.completed = 0
 
     def run(self):
         # Pardus image
-        shutil.copy("%s/pardus.img" % self.src, "%s/pardus.img" % self.dst)
-        self.emit(QtCore.SIGNAL("incrementProgress()"))
+        pardus_image = "%s/pardus.img" % self.src
+        pardus_image_size = os.stat(pardus_image).st_size
+
+        shutil.copy(pardus_image, "%s/pardus.img" % self.dst)
+        #self.emit(QtCore.SIGNAL("incrementProgress()"))
+        self.completed = self.completed + pardus_image_size
+        self.progressBar.setValue(self.completed)
 
         # Boot directory
         for file in glob.glob("%s/boot/*" % self.src):
             if not os.path.isdir(file):
                 file_name = os.path.split(file)[1]
+                file_size = os.stat(file).st_size
                 shutil.copy(file, "%s/boot/%s" % (self.dst, file_name))
-                self.emit(QtCore.SIGNAL("incrementProgress()"))
+                #self.emit(QtCore.SIGNAL("incrementProgress()"))
+                self.completed = self.completed + file_size
+                self.progressBar.setValue(self.completed)
 
         # Pisi packages
         for file in glob.glob("%s/repo/*" % self.src):
             pisi = os.path.split(file)[1]
             if not os.path.exists("%s/repo/%s" % (dst, pisi)):
+                pisi_size = os.stat(file).st_size
                 shutil.copy(file, "%s/repo/%s" % (dst, pisi))
-                self.emit(QtCore.SIGNAL("incrementProgress()"))
+                #self.emit(QtCore.SIGNAL("incrementProgress()"))
+                self.completed = self.completed + pisi_size
+                self.progressBar.setValue(self.completed)
 
         self.emit(QtCore.SIGNAL("closeProgressDialog()"))
 
