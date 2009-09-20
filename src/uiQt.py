@@ -14,6 +14,7 @@ from common import (MOUNT_ISO, \
                     getDiskInfo, \
                     getMounted, \
                     getIsoSize, \
+                    getFilesSize, \
                     createConfigFile, \
                     createUSBDirs, \
                     runCommand)
@@ -58,30 +59,14 @@ class Create(QtGui.QMainWindow):
 
     @QtCore.pyqtSignature("bool")
     def on_button_create_clicked(self):
-        dst = str(self.line_disk.displayText())
         src = str(self.line_image.displayText())
+        dst = str(self.line_disk.displayText())
 
         if not self.__checkDestination(dst):
             self.warningDialog("Directory is Invalid", "Please check the USB disk path.")
 
         try:
-            (self.name, self.md5, self.url) = self.__getSourceInfo(src)
-
-            confirm_message = """\
-Please double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?
-
-CD Image Path: %s
-USB Device: %s (%s)
-
-Release Name: %s
-Md5sum: %s
-Download URL: %s""" % (self.line_image.displayText(),
-                       self.line_disk.displayText(),
-                       "NULL",
-                       self.name, self.md5, self.url)
-
-            confirm_infos = self.questionDialog("Confirm Informations",
-                                                       confirm_message)
+            confirm_infos = self.confirmDialog(src, dst)
 
             if confirm_infos == QtGui.QMessageBox.Ok:
                 createUSBDirs(dst)
@@ -96,6 +81,23 @@ Download URL: %s""" % (self.line_image.displayText(),
             # FIX ME: what is pass?
             pass
 
+    def confirmDialog(self, src, dst):
+        (name, md5, url) = self.__getSourceInfo(src)
+
+        confirm_message = """\
+Please double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?
+
+CD Image Path: %s
+USB Device: %s (%s)
+
+Release Name: %s
+Md5sum: %s
+Download URL: %s""" % (src, dst, "NULL", name, md5, url)
+
+        confirm_infos = self.questionDialog("Confirm Informations", confirm_message)
+
+        return confirm_infos
+
     def warningDialog(self, title, message,):
         QtGui.QMessageBox.warning(self, title, message, QtGui.QMessageBox.Ok)
 
@@ -103,7 +105,6 @@ Download URL: %s""" % (self.line_image.displayText(),
         return QtGui.QMessageBox.question(self, title, message,
                                           QtGui.QMessageBox.Cancel |
                                           QtGui.QMessageBox.Ok)
-
 
     def __getSourceInfo(self, src):
         if QtCore.QString(src).isEmpty():
@@ -191,25 +192,6 @@ you have downloaded the source correctly.""")
 
         return True
 
-    def __copyImage(self, src, dst):
-        # Pardus image
-        shutil.copy("%s/pardus.img" % src, "%s/pardus.img" % dst)
-        print("copied pardus.img")
-
-        # Boot directory
-        for file in glob.glob("%s/boot/*" % src):
-            if not os.path.isdir(file):
-                file_name = os.path.split(file)[1]
-                shutil.copy(file, "%s/boot/%s" % (dst, file_name))
-                print(file_name)
-
-        # Pisi packages
-        for file in glob.glob("%s/repo/*" % src):
-            pisi = os.path.split(file)[1]
-            if not os.path.exists("%s/repo/%s" % (dst, pisi)):
-                shutil.copy(file, "%s/repo/%s" % (dst, pisi))
-                print(pisi)
-
 class SelectDisk(QtGui.QDialog):
     def __init__(self, parent = None):
         self.partutils = PartitionUtils()
@@ -288,9 +270,33 @@ class ProgressIncrementChecksum(QtCore.QThread):
 
         return False
 
-class ProgressIncrementCreate(QtCore.QThread):
-    def __init__(self):
+class ProgressIncrementCopy(QtCore.QThread):
+    def __init__(self, src, dst):
         QtCore.QThread.__init__(self)
+
+        self.src = src
+        self.dst = dst
+
+    def run(self):
+        # Pardus image
+        shutil.copy("%s/pardus.img" % self.src, "%s/pardus.img" % self.dst)
+        self.emit(QtCore.SIGNAL("incrementProgress()"))
+
+        # Boot directory
+        for file in glob.glob("%s/boot/*" % self.src):
+            if not os.path.isdir(file):
+                file_name = os.path.split(file)[1]
+                shutil.copy(file, "%s/boot/%s" % (self.dst, file_name))
+                self.emit(QtCore.SIGNAL("incrementProgress()"))
+
+        # Pisi packages
+        for file in glob.glob("%s/repo/*" % self.src):
+            pisi = os.path.split(file)[1]
+            if not os.path.exists("%s/repo/%s" % (dst, pisi)):
+                shutil.copy(file, "%s/repo/%s" % (dst, pisi))
+                self.emit(QtCore.SIGNAL("incrementProgress()"))
+
+        self.emit(QtCore.SIGNAL("closeProgressDialog()"))
 
 # And last..
 def main():
