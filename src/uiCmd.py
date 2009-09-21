@@ -224,12 +224,9 @@ USB disk informations:
             return False
 
         self.utils.cprint("Copying syslinux files..", "yellow")
-        try:
-            createConfigFile(dst)
 
-        except:
-            # Files are already exists..
-            pass
+        # Copy boot manager files
+        createConfigFile(dst)
 
         self.utils.cprint("Creating ldlinux.sys..", "yellow")
         # Shit! There's upstream bug on mtools..

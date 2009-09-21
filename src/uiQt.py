@@ -268,13 +268,7 @@ class ProgressIncrementCopy(QtCore.QThread):
 
     def run(self):
         # Create config file
-        # FIX ME: Embed try - except to createConfigFile func.
-        try:
-            createConfigFile(self.dst)
-
-        except:
-            # File are already exists (?! Why is it required?)
-            pass
+        createConfigFile(self.dst)
 
         # Upstream bug. Follow this.
         cmd = "LC_ALL=C syslinux %s" % getMounted(self.dst)
