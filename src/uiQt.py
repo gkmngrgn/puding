@@ -16,6 +16,7 @@ from common import (MOUNT_ISO, \
                     getIsoSize, \
                     getFilesSize, \
                     createConfigFile, \
+                    createSyslinux, \
                     createUSBDirs, \
                     runCommand)
 
@@ -71,11 +72,6 @@ class Create(QtGui.QMainWindow):
             if confirm_infos == QtGui.QMessageBox.Ok:
                 createUSBDirs(dst)
                 self.__createImage(src, dst)
-
-                print("Ok")
-
-            else:
-                print("Cancel")
 
         except TypeError: # 'bool' object is not iterable
             # FIX ME: what is pass?
@@ -270,11 +266,8 @@ class ProgressIncrementCopy(QtCore.QThread):
         # Create config file
         createConfigFile(self.dst)
 
-        # Upstream bug. Follow this.
-        cmd = "LC_ALL=C syslinux %s" % getMounted(self.dst)
-        if runCommand(cmd):
-            # FIX ME: Should use warning dialog.
-            return False
+        # Create ldlinux.sys file
+        createSyslinux(self.dst)
 
         # FIX ME: Should use PartitionUtils
         device = os.path.split(getMounted(self.dst))[1][:3]

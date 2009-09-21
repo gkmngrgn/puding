@@ -102,6 +102,15 @@ def createConfigFile(dst):
     if not os.path.exists(syslinux_conf_file):
         shutil.copy("%s/syslinux.cfg.pardus" % SHARE, syslinux_conf_file)
 
+def createSyslinux(dst):
+    sys_file = "%s/ldlinux.sys" % dst
+    if os.path.exists(sys_file):
+        os.remove(sys_file)
+
+    cmd = "LC_ALL=C syslinux %s" % getMounted(dst)
+
+    return runCommand(cmd)
+
 def getMounted(disk_path):
     parts = {}
     for line in open("/proc/mounts"):
