@@ -170,7 +170,8 @@ you have downloaded the source correctly.""")
             pi.quit()
             create_image.close()
 
-        QtCore.QObject.connect(pi, QtCore.SIGNAL("closeProgressDialog()"), closeDialog)
+        QtCore.QObject.connect(pi, QtCore.SIGNAL("incrementProgress()"), pi.incrementProgress)
+        #QtCore.QObject.connect(pi, QtCore.SIGNAL("closeProgressDialog()"), closeDialog)
 
         create_image.exec_()
 
@@ -290,32 +291,26 @@ class ProgressIncrementCopy(QtCore.QThread):
 
         # Pardus image
         pardus_image = "%s/pardus.img" % self.src
-        pardus_image_size = os.stat(pardus_image).st_size
+        self.size = os.stat(pardus_image).st_size
 
         shutil.copy(pardus_image, "%s/pardus.img" % self.dst)
-        #self.emit(QtCore.SIGNAL("incrementProgress()"))
-        self.completed = self.completed + pardus_image_size
-        self.progressBar.setValue(self.completed)
+        self.emit(QtCore.SIGNAL("incrementProgress()"))
 
         # Boot directory
         for file in glob.glob("%s/boot/*" % self.src):
             if not os.path.isdir(file):
                 file_name = os.path.split(file)[1]
-                file_size = os.stat(file).st_size
+                self.size = os.stat(file).st_size
                 shutil.copy(file, "%s/boot/%s" % (self.dst, file_name))
-                #self.emit(QtCore.SIGNAL("incrementProgress()"))
-                self.completed = self.completed + file_size
-                self.progressBar.setValue(self.completed)
+                self.emit(QtCore.SIGNAL("incrementProgress()"))
 
         # Pisi packages
         for file in glob.glob("%s/repo/*" % self.src):
             pisi = os.path.split(file)[1]
             if not os.path.exists("%s/repo/%s" % (self.dst, pisi)):
-                pisi_size = os.stat(file).st_size
+                self.size = os.stat(file).st_size
                 shutil.copy(file, "%s/repo/%s" % (self.dst, pisi))
-                #self.emit(QtCore.SIGNAL("incrementProgress()"))
-                self.completed = self.completed + pisi_size
-                self.progressBar.setValue(self.completed)
+                self.emit(QtCore.SIGNAL("incrementProgress()"))
 
         # Unmount iso
         cmd = "fusermount -u %s" % MOUNT_ISO
@@ -323,7 +318,9 @@ class ProgressIncrementCopy(QtCore.QThread):
             # FIX ME: Should use warning dialog.
             return False
 
-        self.emit(QtCore.SIGNAL("closeProgressDialog()"))
+    def incrementProgress(self):
+        current_value = self.progressBar.value()
+        self.progressBar.setValue(current_value + self.size)
 
 # And last..
 def main():
