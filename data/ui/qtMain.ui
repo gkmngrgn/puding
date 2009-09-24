@@ -60,7 +60,7 @@
          </property>
          <property name="icon">
           <iconset resource="../icons.qrc">
-           <normaloff>:/icons/images/open.png</normaloff>:/icons/images/open.png</iconset>
+           <normaloff>:/icons/images/fileopen.png</normaloff>:/icons/images/fileopen.png</iconset>
          </property>
         </widget>
        </item>
@@ -84,7 +84,7 @@
          </property>
          <property name="icon">
           <iconset resource="../icons.qrc">
-           <normaloff>:/icons/images/open.png</normaloff>:/icons/images/open.png</iconset>
+           <normaloff>:/icons/images/folderopen.png</normaloff>:/icons/images/folderopen.png</iconset>
          </property>
         </widget>
        </item>
@@ -126,7 +126,7 @@
         </property>
         <property name="icon">
          <iconset resource="../icons.qrc">
-          <normaloff>:/icons/images/application-exit.png</normaloff>:/icons/images/application-exit.png</iconset>
+          <normaloff>:/icons/images/exit.png</normaloff>:/icons/images/exit.png</iconset>
         </property>
        </widget>
       </item>
@@ -137,7 +137,7 @@
         </property>
         <property name="icon">
          <iconset resource="../icons.qrc">
-          <normaloff>:/icons/images/dialog-ok.png</normaloff>:/icons/images/dialog-ok.png</iconset>
+          <normaloff>:/icons/images/create.png</normaloff>:/icons/images/create.png</iconset>
         </property>
        </widget>
       </item>
@@ -173,7 +173,7 @@
   <action name="actionQuit">
    <property name="icon">
     <iconset resource="../icons.qrc">
-     <normaloff>:/icons/images/application-exit.png</normaloff>:/icons/images/application-exit.png</iconset>
+     <normaloff>:/icons/images/exit.png</normaloff>:/icons/images/exit.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Quit</string>
