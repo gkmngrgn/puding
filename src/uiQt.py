@@ -73,6 +73,8 @@ class Create(QtGui.QMainWindow, qtMain.Ui_MainWindow):
         if not self.__checkDestination(dst):
             self.warningDialog("Directory is Invalid", "Please check the USB disk path.")
 
+            return False
+
         try:
             confirm_infos = self.confirmDialog(src, dst)
 
@@ -80,9 +82,10 @@ class Create(QtGui.QMainWindow, qtMain.Ui_MainWindow):
                 createUSBDirs(dst)
                 self.__createImage(src, dst)
 
+            return True
+
         except TypeError: # 'bool' object is not iterable
-            # FIX ME: what is pass?
-            pass
+            return False
 
     def confirmDialog(self, src, dst):
         (name, md5, url) = self.__getSourceInfo(src)
