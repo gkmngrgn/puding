@@ -127,7 +127,6 @@ Download URL: %s""" % (src, dst, "NULL", name, md5, url)
                                 message = "The checksum of the source is checking now...",
                                 max_value = iso_size_progress)
         pi = ProgressIncrementChecksum(check_iso, src)
-        pi.start()
 
         # FIX ME: Why is it in here?
         def closeDialog():
@@ -137,6 +136,7 @@ Download URL: %s""" % (src, dst, "NULL", name, md5, url)
         QtCore.QObject.connect(pi, QtCore.SIGNAL("incrementProgress()"), check_iso.incrementProgress)
         QtCore.QObject.connect(pi, QtCore.SIGNAL("closeProgressDialog()"), closeDialog)
 
+        pi.start()
         check_iso.exec_()
 
         if not pi.checksum():
@@ -165,9 +165,7 @@ you have downloaded the source correctly.""")
         create_image = ProgressBar(title = "Creating Image",
                                 message = "Creating image..",
                                 max_value = getFilesSize(MOUNT_ISO))
-
         pi = ProgressIncrementCopy(create_image, MOUNT_ISO, dst)
-        pi.start()
 
         def closeDialog():
             pi.quit()
@@ -176,6 +174,7 @@ you have downloaded the source correctly.""")
         QtCore.QObject.connect(pi, QtCore.SIGNAL("incrementProgress()"), pi.incrementProgress)
         #QtCore.QObject.connect(pi, QtCore.SIGNAL("closeProgressDialog()"), closeDialog)
 
+        pi.start()
         create_image.exec_()
 
         return True
@@ -263,6 +262,7 @@ class ProgressIncrementCopy(QtCore.QThread):
         QtCore.QThread.__init__(self)
 
         self.progressBar = dialog.progressBar
+        self.label = dialog.label
         self.src = source
         self.dst = destination
 
@@ -271,6 +271,7 @@ class ProgressIncrementCopy(QtCore.QThread):
 
     def run(self):
         # Create config file
+        self.label.setText("Creating config files for boot loader...")
         createConfigFile(self.dst)
 
         # Create ldlinux.sys file
@@ -287,6 +288,7 @@ class ProgressIncrementCopy(QtCore.QThread):
         pardus_image = "%s/pardus.img" % self.src
         self.size = os.stat(pardus_image).st_size
 
+        self.label.setText("Copying pardus.img file...")
         shutil.copy(pardus_image, "%s/pardus.img" % self.dst)
         self.emit(QtCore.SIGNAL("incrementProgress()"))
 
@@ -295,6 +297,7 @@ class ProgressIncrementCopy(QtCore.QThread):
             if not os.path.isdir(file):
                 file_name = os.path.split(file)[1]
                 self.size = os.stat(file).st_size
+                self.label.setText("Copying %s..." % file_name)
                 shutil.copy(file, "%s/boot/%s" % (self.dst, file_name))
                 self.emit(QtCore.SIGNAL("incrementProgress()"))
 
@@ -303,6 +306,7 @@ class ProgressIncrementCopy(QtCore.QThread):
             pisi = os.path.split(file)[1]
             if not os.path.exists("%s/repo/%s" % (self.dst, pisi)):
                 self.size = os.stat(file).st_size
+                self.label.setText("Copying %s..." % pisi)
                 shutil.copy(file, "%s/repo/%s" % (self.dst, pisi))
                 self.emit(QtCore.SIGNAL("incrementProgress()"))
 
@@ -311,6 +315,7 @@ class ProgressIncrementCopy(QtCore.QThread):
         if runCommand(cmd):
             # FIX ME: Should use warning dialog.
             return False
+        print("and unmount iso is OK")
 
     def incrementProgress(self):
         current_value = self.progressBar.value()
