@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="icons" >
+    <file>images/open.png</file>
+    <file>images/dialog-ok.png</file>
+    <file>images/application-exit.png</file>
     <file>images/puding.png</file>
   </qresource>
 </RCC>
