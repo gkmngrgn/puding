@@ -21,7 +21,14 @@ from common import createUSBDirs
 from common import runCommand
 from common import PartitionUtils
 
+from constants import COPYRIGHT
+from constants import CORE_DEVELOPER
+from constants import CORE_EMAIL
 from constants import DESCRIPTION
+from constants import LICENSE_NAME
+from constants import NAME
+from constants import VERSION
+from constants import URL
 
 from puding import qtMain
 from puding import qtProgressBar
@@ -63,7 +70,14 @@ class Create(QtGui.QMainWindow, qtMain.Ui_MainWindow):
 
     @QtCore.pyqtSignature("bool")
     def on_actionAbout_triggered(self):
-         QtGui.QMessageBox.about(self, "About Puding", DESCRIPTION)
+         QtGui.QMessageBox.about(self, "About Puding", """\
+<b>%s</b> - %s<br />
+%s<br /><br />
+%s<br />
+%s<br />
+%s, <i>%s</i><br />
+<a href="%s">%s</a>""" % (NAME, VERSION, DESCRIPTION, LICENSE_NAME, \
+                          COPYRIGHT, CORE_DEVELOPER, CORE_EMAIL, URL, URL))
 
     @QtCore.pyqtSignature("bool")
     def on_button_create_clicked(self):
