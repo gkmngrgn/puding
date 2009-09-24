@@ -271,9 +271,8 @@ class ProgressIncrementCopy(QtCore.QThread):
 
     def run(self):
         # Create config file
-        #self.label.setText("Creating config files for boot loader...")
         self.message = "Creating config files for boot loader..."
-        self.connectAndEmitSignal()
+        self.emit(QtCore.SIGNAL("updateLabel"), self.message)
         createConfigFile(self.dst)
 
         # Create ldlinux.sys file
@@ -289,8 +288,8 @@ class ProgressIncrementCopy(QtCore.QThread):
         # Pardus image
         pardus_image = "%s/pardus.img" % self.src
         self.size = os.stat(pardus_image).st_size
-        #self.label.setText("Copying pardus.img file...")
-        self.emit(QtCore.SIGNAL("updateLabel(message)", "Copying pardus.img file..."))
+        self.message = "Copying pardus.img file..."
+        self.emit(QtCore.SIGNAL("updateLabel"), self.message)
         shutil.copy(pardus_image, "%s/pardus.img" % self.dst)
         self.emit(QtCore.SIGNAL("incrementProgress()"))
 
@@ -299,8 +298,8 @@ class ProgressIncrementCopy(QtCore.QThread):
             if not os.path.isdir(file):
                 file_name = os.path.split(file)[1]
                 self.size = os.stat(file).st_size
-                #self.label.setText("Copying %s..." % file_name)
-                self.emit(QtCore.SIGNAL("updateLabel(message)", "Copying %s..." % file_name))
+                self.message = "Copying %s..." % file_name
+                self.emit(QtCore.SIGNAL("updateLabel"), self.message)
                 shutil.copy(file, "%s/boot/%s" % (self.dst, file_name))
                 self.emit(QtCore.SIGNAL("incrementProgress()"))
 
@@ -309,8 +308,8 @@ class ProgressIncrementCopy(QtCore.QThread):
             pisi = os.path.split(file)[1]
             if not os.path.exists("%s/repo/%s" % (self.dst, pisi)):
                 self.size = os.stat(file).st_size
-                #self.label.setText("Copying %s..." % pisi)
-                self.emit(QtCore.SIGNAL("updateLabel()", "Copying %s..." % pisi))
+                self.message = "Copying %s..." % pisi
+                self.emit(QtCore.SIGNAL("updateLabel"), self.message)
                 shutil.copy(file, "%s/repo/%s" % (self.dst, pisi))
                 self.emit(QtCore.SIGNAL("incrementProgress()"))
 
