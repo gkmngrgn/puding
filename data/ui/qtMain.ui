@@ -20,8 +20,8 @@
    <string>Puding</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/logo/puding.png</normaloff>:/logo/puding.png</iconset>
+   <iconset resource="../icons.qrc">
+    <normaloff>:/icons/images/puding.png</normaloff>:/icons/images/puding.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
