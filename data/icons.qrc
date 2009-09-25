@@ -5,5 +5,6 @@
     <file>images/exit.png</file>
     <file>images/fileopen.png</file>
     <file>images/folderopen.png</file>
+    <file>images/usb.png</file>
   </qresource>
 </RCC>
