@@ -53,7 +53,7 @@ class Create(QtGui.QMainWindow, qtMain.Ui_MainWindow):
 
     @QtCore.pyqtSignature("bool")
     def on_button_browse_image_clicked(self):
-        filename = QtGui.QFileDialog.getOpenFileName(self, self.tr("Select ISO Image"),
+        filename = QtGui.QFileDialog.getOpenFileName(self, self.tr("Select CD Image"),
                 os.environ["HOME"], "%s (*.iso *.img)" % self.tr("Images"))
 
         self.line_image.setText(filename)
@@ -130,12 +130,12 @@ Download URL: %s""" % (src, dst, "NULL", name, md5, url))
 
     def __getSourceInfo(self, src):
         if QtCore.QString(src).isEmpty():
-            self.warningDialog(self.tr("ISO Image is Invalid"), self.tr("Please set an ISO image path."))
+            self.warningDialog(self.tr("CD Image is Invalid"), self.tr("Please set an CD image path."))
 
             return False
 
         if not os.path.isfile(src):
-            self.warningDialog(self.tr("ISO Image is Invalid"), self.tr("Please check the ISO image path."))
+            self.warningDialog(self.tr("CD Image is Invalid"), self.tr("Please check the CD image path."))
 
             return False
 
