@@ -35,7 +35,7 @@ from puding.constants import VERSION
 
 class Options:
     def parseArgs(self, parser):
-        parser.add_option('-l', '--license', dest = 'license', action = 'store_true',
+        parser.add_option("-l", "--license", dest = "license", action = "store_true",
                           help = _("show program's license info and exit"))
         parser.add_option("-c", "--create", dest = "create", action = "store_true",
                           help = _("create Pardus USB image from console"))

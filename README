@@ -1,5 +1,5 @@
 WHAT IS PUIC?
-  Puic is a USB image creator for Pardus 2008 or later. You can write
+  Puding is a USB image creator for Pardus 2008 or later. You can write
   image to USB disk from any Pardus 2008 or later ISO image.
 
 REQUIREMENTS
@@ -10,19 +10,21 @@ REQUIREMENTS
   fuse
 
 INSTALLATION
-  Now, puic is not stable and still it has not any graphical
+  Now, puding is not stable and still it has not any graphical
   interface. So it is not at Pardus repositories, now. But you can
   package it your Pardus and install this package for using puic.
   Therefore:
 
-  # pisi bi http://svn.pardus.org.tr/pardus/playground/ggorgen/puic/pspec.xml
-  # pisi it puic*.pisi
+  $ sudo pisi it puding
 
 TRANSLATION
   For translators:
-      $ cd $(PUIC)/po
+      $ cd $(PUDING)/po
       $ msginit -l $(LANG)
 
   For developers:
-      $ cd $(PUIC)/po
-      $ xgettext -f POTFILES.in ../puic.py -L Python --output=puic.pot
+      $ cd $(PUDING)/po
+      $ xgettext -f POTFILES.in -L Python --copyright-holder=GPLv3 --package-name=puding --package-version=TRUNK --msgid-bugs-address=gkmngrgn@gmail.com -o messages.pot
+
+      $ cd $(PUDING)/qt4
+      $ pylupdate4 /usr/lib/python*/site-packages/puding/qt*.py src/*.py -ts messages.ts

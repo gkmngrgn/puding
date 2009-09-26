@@ -13,6 +13,8 @@ from distutils.core import setup
 
 if not os.path.exists("puding/"):
     shutil.copytree("src/", "puding/")
+    for file in glob.glob("qt4/src/*"):
+        shutil.copy(file, "puding/")
 
 from puding.constants import NAME
 from puding.constants import VERSION
@@ -22,13 +24,18 @@ from puding.constants import CORE_EMAIL
 from puding.constants import URL
 from puding.constants import LICENSE_NAME
 
+# General installation functions
+def locale(lang):
+    return("share/locale/%s/LC_MESSAGES" % lang,
+            ["locale/mo/%s/%s.mo" % (lang, NAME)])
+
 def removeBuildFiles():
-    rmDir = ["build", "data/po/locale", NAME]
+    rmDir = ["build", "locale", "puding"]
 
     # remove build directories
     for dir in rmDir:
         try:
-            print("Removing directory, %s.." % dir)
+            print("removing directory, %s.." % dir)
             shutil.rmtree(dir)
 
         except:
@@ -39,15 +46,38 @@ def removeBuildFiles():
         if file.endswith(".pyc"):
             os.remove(file)
 
-def convertToPy(file_list):
+def convertQtFiles(file_list):
+    qm_dir = "locale/qm"
+    if not os.path.exists(qm_dir):
+        os.makedirs(qm_dir)
+
     for i in file_list:
         file_name = os.path.split(i)[1]
+        print("converting %s..." % i)
         if os.path.splitext(i)[1] == ".qrc":
             os.system("/usr/bin/pyrcc4 %s -o puding/%s" % (i, file_name.replace(".qrc", "_rc.py")))
 
         if os.path.splitext(i)[1] == ".ui":
-            # FIX ME: It should go to true directory.
             os.system("/usr/bin/pyuic4 %s -o puding/%s" % (i, file_name.replace(".ui", ".py")))
+
+        if os.path.splitext(i)[1] == ".ts":
+            os.system("/usr/bin/lrelease-qt4 %s -qm locale/qm/%s" % (i, file_name.replace(".ts", ".qm")))
+
+def createMoFiles(langs):
+    mo_dir = "locale/mo/"
+    if not os.path.exists(mo_dir):
+        os.makedirs(mo_dir)
+
+    for lang in langs:
+        pofile = "po/" + lang + ".po"
+        mofile = mo_dir + lang + "/%s.mo" % NAME
+
+        os.mkdir(mo_dir + lang + "/")
+        print("generating %s" % mofile)
+        os.system("msgfmt %s -o %s" % (pofile, mofile))
+
+# Create .mo files
+createMoFiles(["tr", ])
 
 # Edit script
 script = "%s/%s" % (NAME, NAME)
@@ -56,36 +86,19 @@ os.chmod(script, 0755)
 os.remove("%s.py" % script)
 
 # Convert Qt files
-qt_files = ["data/icons.qrc"]
-qt_files.extend(glob.glob("data/ui/qt*.ui"))
-convertToPy(qt_files)
-
-#LANGS = ["tr"]
-
-# General installation functions
-# def locale(lang):
-#    return("share/locale/%s/LC_MESSAGES" % lang,
-#            ["data/po/locale/%s/%s.mo" % (lang, NAME)])
-
-# Create .mo files
-# if not os.path.exists("data/po/locale"):
-#    os.mkdir("data/po/locale")
-# 
-#    for lang in LANGS:
-#        pofile = "data/po/" + lang + ".po"
-#        mofile = "data/po/locale/" + lang + "/%s.mo" % NAME
-# 
-#        os.mkdir("data/po/locale/" + lang + "/")
-#        print("generating %s" % mofile)
-#        os.system("msgfmt %s -o %s" % (pofile, mofile))
+qt_files = ["qt4/icons.qrc"]
+qt_files.extend(glob.glob("qt4/ui/qt*.ui"))
+qt_files.extend(glob.glob("qt4/ts/puding*.ts"))
+convertQtFiles(qt_files)
 
 data = [
-    ("share/doc/%s" % NAME, ["AUTHORS", "ChangeLog", "COPYING", "NOTES", "README"]),
-    ("share/%s" % NAME, glob.glob("data/syslinux.cfg.*")),
-    ("share/pixmaps", ["data/images/%s.png" % NAME]),
-    ("share/applications", ["data/%s.desktop" % NAME]),
-    ("share/%s/gfxtheme" % NAME, glob.glob("data/gfxtheme/*"))]
-#    locale("tr")]
+    ("share/doc/puding", ["AUTHORS", "ChangeLog", "COPYING", "NOTES", "README"]),
+    ("share/puding", glob.glob("datas/syslinux.cfg.*")),
+    ("share/puding/qm", glob.glob("locale/qm/puding*.qm")),
+    ("share/applications", ["datas/puding.desktop"]),
+    ("share/puding/gfxtheme", glob.glob("datas/gfxtheme/*")),
+    ("share/pixmaps", ["images/puding.png"]),
+    locale("tr")]
 
 setup(
     name = NAME,

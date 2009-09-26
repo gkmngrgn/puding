@@ -1,4 +1,7 @@
-recursive-include data *
+recursive-include datas *
+recursive-include images *
+recursive-include po *
+recursive-include qt4 *
 recursive-include src *
 prune puding
-include AUTHORS ChangeLog COPYING NOTES README setup.py
+include AUTHORS ChangeLog COPYING NOTES README
