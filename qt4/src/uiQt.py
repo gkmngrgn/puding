@@ -125,8 +125,7 @@ Download URL: %s""" % (src, dst, "NULL", name, md5, url))
 
     def questionDialog(self, title, message):
         return QtGui.QMessageBox.question(self, title, message,
-                                          QtGui.QMessageBox.Cancel |
-                                          QtGui.QMessageBox.Ok)
+                QtGui.QMessageBox.Cancel | QtGui.QMessageBox.Ok)
 
     def __getSourceInfo(self, src):
         if QtCore.QString(src).isEmpty():
@@ -182,9 +181,10 @@ you have downloaded the source correctly."""
             # FIX ME: Should use warning dialog.
             return False
 
+        max_value = getFilesSize(MOUNT_ISO)
         create_image = ProgressBar(title = self.tr("Creating Image"),
-                                message = self.tr("Creating image..."),
-                                max_value = getFilesSize(MOUNT_ISO))
+                message = self.tr("Creating image..."),
+                max_value = max_value)
         pi = ProgressIncrementCopy(create_image, MOUNT_ISO, dst)
 
         def closeDialog():
@@ -300,8 +300,6 @@ class ProgressIncrementCopy(QtCore.QThread):
         self.label = dialog.label
         self.src = source
         self.dst = destination
-        self.completed = 0
-        self.progressBar.setValue(0)
 
     def run(self):
         # Create config file
@@ -329,7 +327,7 @@ class ProgressIncrementCopy(QtCore.QThread):
 
         # Boot directory
         for file in glob.glob("%s/boot/*" % self.src):
-            if not os.path.isdir(file):
+            if os.path.isfile(file):
                 file_name = os.path.split(file)[1]
                 self.size = os.stat(file).st_size
                 self.message = self.tr("Copying %s..." % file_name)
@@ -352,7 +350,9 @@ class ProgressIncrementCopy(QtCore.QThread):
         if runCommand(cmd):
             # FIX ME: Should use warning dialog.
             return False
-        print("and unmount iso is OK")
+
+        #self.emit(QtCore.SIGNAL("closeProgressDialog()"))
+        print("done")
 
     def incrementProgress(self):
         current_value = self.progressBar.value()
