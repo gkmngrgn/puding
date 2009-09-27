@@ -12,8 +12,8 @@ import sys
 from common import getDiskInfo
 from common import getMounted
 from common import getIsoSize
+from common import getFileSize
 from common import getFilesSize
-from common import createConfigFile
 from common import createSyslinux
 from common import createUSBDirs
 from common import runCommand
@@ -176,10 +176,11 @@ you have downloaded the source correctly."""
 
     def __createImage(self, src, dst):
         # Mount iso
-        cmd = "fuseiso %s %s" % (src, MOUNT_ISO)
-        if runCommand(cmd):
-            # FIX ME: Should use warning dialog.
-            return False
+        if not os.path.ismount(MOUNT_ISO):
+            cmd = "fuseiso %s %s" % (src, MOUNT_ISO)
+            if runCommand(cmd):
+                # FIX ME: Should use warning dialog.
+                return False
 
         max_value = getFilesSize(MOUNT_ISO)
         create_image = ProgressBar(title = self.tr("Creating Image"),
@@ -197,6 +198,8 @@ you have downloaded the source correctly."""
 
         pi.start()
         create_image.exec_()
+
+        self.warningDialog(self.tr("USB Image is Ready"), self.tr("Your USB image is ready. Now you can install or run Pardus from USB storage."))
 
         return True
 
@@ -301,25 +304,19 @@ class ProgressIncrementCopy(QtCore.QThread):
         self.src = source
         self.dst = destination
 
+        self.progressBar.setValue(0)
+
     def run(self):
         # Create config file
         self.message = self.tr("Creating config files for boot loader...")
         self.emit(QtCore.SIGNAL("updateLabel"), self.message)
-        createConfigFile(self.dst)
 
-        # Create ldlinux.sys file
+        # Boot loader
         createSyslinux(self.dst)
-
-        # FIX ME: Should use PartitionUtils
-        device = os.path.split(getMounted(self.dst))[1][:3]
-        cmd = "cat /usr/lib/syslinux/mbr.bin > /dev/%s" % device
-        if runCommand(cmd):
-            # FIX ME: Should use warning dialog.
-            return False
 
         # Pardus image
         pardus_image = "%s/pardus.img" % self.src
-        self.size = os.stat(pardus_image).st_size
+        self.size = getFileSize(pardus_image)
         self.message = self.tr("Copying pardus.img file...")
         self.emit(QtCore.SIGNAL("updateLabel"), self.message)
         shutil.copy(pardus_image, "%s/pardus.img" % self.dst)
@@ -329,7 +326,7 @@ class ProgressIncrementCopy(QtCore.QThread):
         for file in glob.glob("%s/boot/*" % self.src):
             if os.path.isfile(file):
                 file_name = os.path.split(file)[1]
-                self.size = os.stat(file).st_size
+                self.size = getFileSize(file)
                 self.message = self.tr("Copying %s..." % file_name)
                 self.emit(QtCore.SIGNAL("updateLabel"), self.message)
                 shutil.copy(file, "%s/boot/%s" % (self.dst, file_name))
@@ -339,7 +336,7 @@ class ProgressIncrementCopy(QtCore.QThread):
         for file in glob.glob("%s/repo/*" % self.src):
             pisi = os.path.split(file)[1]
             if not os.path.exists("%s/repo/%s" % (self.dst, pisi)):
-                self.size = os.stat(file).st_size
+                self.size = getFileSize(file)
                 self.message = self.tr("Copying %s..." % pisi)
                 self.emit(QtCore.SIGNAL("updateLabel"), self.message)
                 shutil.copy(file, "%s/repo/%s" % (self.dst, pisi))
@@ -351,15 +348,15 @@ class ProgressIncrementCopy(QtCore.QThread):
             # FIX ME: Should use warning dialog.
             return False
 
-        #self.emit(QtCore.SIGNAL("closeProgressDialog()"))
-        print("done")
+        self.emit(QtCore.SIGNAL("closeProgressDialog()"))
 
     def incrementProgress(self):
         current_value = self.progressBar.value()
-        self.progressBar.setValue(current_value + self.size)
 
-    def updateLabel(self):
-        self.label.setText(self.message)
+        return self.progressBar.setValue(current_value + self.size)
+
+    def updateLabel(self, message):
+        self.label.setText(message)
 
 # And last..
 def main():
