@@ -308,13 +308,47 @@ class ProgressIncrementCopy(QtCore.QThread):
         QtCore.QThread.__init__(self)
 
         self.progressBar = dialog.progressBar
+        self.progressBar.setValue(0)
         self.label = dialog.label
         self.src = source
         self.dst = destination
 
-        self.progressBar.setValue(0)
+        # TRY:
+        self.file_list = glob.glob("%s/repo/*" % self.src)
+        self.file_list.append("%s/pardus.img" % self.src)
 
+        # Add boot files
+        for file in glob.glob("%s/boot/*" % self.src):
+            if os.path.isfile(file):
+                self.file_list.append(file)
+        # ----
+
+    # TRY:
     def run(self):
+        # Create config file
+        createSyslinux(self.dst)
+
+        while len(file_list):
+            size = getFileSize(file)
+            file_name = os.path.split(file)[1]
+            self.message = self.tr("Copying %s (%s)..." % (file_name, size))
+            self.emit(QtCore.SIGNAL("updateLabel"), self.message)
+            shutil.copyfile(file, "%s/%s" % (self.dst, file.split(self.src)[-1]))
+            self.emit(QtCore.SIGNAL("incrementProgress()"))
+            file_list.remove(file)
+
+        # Unmount iso
+        cmd = "fusermount -u %s" % MOUNT_ISO
+        if runCommand(cmd):
+            # FIX ME: Should use warning dialog.
+            return False
+
+        self.emit(QtCore.SIGNAL("closeProgressDialog()"))
+
+        return True
+    #----
+
+    def run_old(self):
         # Create config file
         self.message = self.tr("Creating config files for boot loader...")
         self.emit(QtCore.SIGNAL("updateLabel"), self.message)
