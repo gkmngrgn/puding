@@ -104,6 +104,9 @@ class Create(QtGui.QMainWindow, qtMain.Ui_MainWindow):
                 createUSBDirs(dst)
                 self.__createImage(src, dst)
 
+                if dst = MOUNT_USB:
+                    pt.umount(dst)
+
             return True
 
         except TypeError: # 'bool' object is not iterable
