@@ -208,6 +208,12 @@ you have downloaded the source correctly."""
         pi.start()
         create_image.exec_()
 
+        # Unmount iso
+        cmd = "fusermount -u %s" % MOUNT_ISO
+        if runCommand(cmd):
+            # FIX ME: Should use warning dialog.
+            return False
+
         self.warningDialog(self.tr("USB Image is Ready"), self.tr("Your USB image is ready. Now you can install or run Pardus from USB storage."))
 
         return True
@@ -312,13 +318,11 @@ class ProgressIncrementCopy(QtCore.QThread):
         self.label = dialog.label
         self.src = source
         self.dst = destination
-        self.file_list = glob.glob("%s/repo/*" % self.src)
-        self.file_list.append("%s/pardus.img" % self.src)
-
-        # Add boot files
+        self.file_list = ["%s/pardus.img" % self.src]
         for file in glob.glob("%s/boot/*" % self.src):
             if os.path.isfile(file):
                 self.file_list.append(file)
+        self.file_list.extend(glob.glob("%s/repo/*" % self.src))
 
     def run(self):
         # Create config file
@@ -331,12 +335,6 @@ class ProgressIncrementCopy(QtCore.QThread):
             self.emit(QtCore.SIGNAL("updateLabel"), self.message)
             shutil.copyfile(file, "%s/%s" % (self.dst, file.split(self.src)[-1]))
             self.emit(QtCore.SIGNAL("incrementProgress()"))
-
-        # Unmount iso
-        cmd = "fusermount -u %s" % MOUNT_ISO
-        if runCommand(cmd):
-            # FIX ME: Should use warning dialog.
-            return False
 
         self.emit(QtCore.SIGNAL("closeProgressDialog()"))
 
