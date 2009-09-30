@@ -215,7 +215,7 @@ class Create:
 
     def __checkDestination(self, dst):
         if os.path.isdir(dst) and os.path.ismount(dst):
-            print(self.__printDiskInfo(dst))
+            self.__printDiskInfo(dst)
             self.utils.cprint(_("Please double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?"))
 
             answer = raw_input(_("Please type CONFIRM to continue: "))
@@ -241,13 +241,10 @@ class Create:
 
         (capacity, available, used) = getDiskInfo(str(dst))
 
-        output = _("""\
-USB disk informations:
-    Capacity  : %dG
-    Available : %dG
-    Used      : %dG""" % (capacity, available, used))
-
-        return output
+        print(_("USB disk informations:"))
+        print("%s: %0.2fG" % (_("\tCapacity\t"), capacity))
+        print("%s: %0.2fG" % (_("\tAvailable\t"), available))
+        print("%s: %0.2fG" % (_("\tUsed\t\t"), used))
 
     def __createImage(self, src, dst):
         self.utils.cprint(_("Mounting %s.." % src), "green")
