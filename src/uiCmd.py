@@ -273,6 +273,14 @@ class Create:
 
             return False
 
+        if dst == MOUNT_USB:
+            cmd = "umount %s" % MOUNT_USB
+
+            if runCommand(cmd):
+                self.utils.cprint(_("Could not unmounted USB disk."), "red")
+
+                return False
+
         device = os.path.split(getMounted(dst))[1][:3]
         self.utils.cprint(_("Concatenating MBR to %s" % device), "yellow")
         cmd = "cat /usr/lib/syslinux/mbr.bin > /dev/%s" % device
