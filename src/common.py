@@ -26,9 +26,9 @@ _ = t.ugettext
 
 def getDiskInfo(dst):
     disk_info = os.statvfs(dst)
-    capacity = int(disk_info.f_bsize * disk_info.f_blocks / 1024.0**3)
-    available = int(disk_info.f_bsize * disk_info.f_bavail / 1024.0**3)
-    used = int(disk_info.f_bsize * (disk_info.f_blocks - disk_info.f_bavail) / 1024.0**3)
+    capacity = int(disk_info.f_bsize * disk_info.f_blocks / 1024**2)
+    available = int(disk_info.f_bsize * disk_info.f_bavail / 1024**2)
+    used = int(disk_info.f_bsize * (disk_info.f_blocks - disk_info.f_bavail) / 1024**2)
 
     return [capacity, available, used]
 

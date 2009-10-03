@@ -242,9 +242,9 @@ class Create:
         (capacity, available, used) = getDiskInfo(str(dst))
 
         print(_("USB disk informations:"))
-        print("%s: %0.2fG" % (_("\tCapacity\t"), capacity))
-        print("%s: %0.2fG" % (_("\tAvailable\t"), available))
-        print("%s: %0.2fG" % (_("\tUsed\t\t"), used))
+        print("%s: %dMB" % (_("\tCapacity\t"), capacity))
+        print("%s: %dMB" % (_("\tAvailable\t"), available))
+        print("%s: %dMB" % (_("\tUsed\t\t"), used))
 
     def __createImage(self, src, dst):
         self.utils.cprint(_("Mounting %s.." % src), "green")
