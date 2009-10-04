@@ -114,6 +114,9 @@ class Create(QtGui.QMainWindow, qtMain.Ui_MainWindow):
 
     def confirmDialog(self, src, dst):
         (name, md5, url) = self.__getSourceInfo(src)
+
+        # Why not inheritance?
+        self.partutils = PartitionUtils()
         drives = self.partutils.returnDrives()
 
         confirm_message = self.tr("""\
