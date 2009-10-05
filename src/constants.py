@@ -5,7 +5,6 @@
 # license: GPLv3
 
 from os import getenv
-from common import _
 
 NAME = "puding"
 LOCALE = "/usr/share/locale"
