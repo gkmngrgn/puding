@@ -73,7 +73,7 @@ class Create(QtGui.QMainWindow, qtMain.Ui_MainWindow):
 
     @QtCore.pyqtSignature("bool")
     def on_actionAbout_triggered(self):
-         QtGui.QMessageBox.about(self, self.tr("About Puding"), """\
+        QtGui.QMessageBox.about(self, self.tr("About Puding"), """\
 <b>%s</b> - %s<br />
 %s<br /><br />
 %s<br />
