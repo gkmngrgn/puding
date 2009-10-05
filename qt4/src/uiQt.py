@@ -325,7 +325,7 @@ class ProgressIncrementCopy(QtCore.QThread):
         for file in self.file_list:
             size = getFileSize(file)
             file_name = os.path.split(file)[1]
-            self.message = self.tr("Copying %s (%0.2fMB)..." % (file_name, size))
+            self.message = self.tr("Copying %s (%0.2fMB)" % (file_name, size))
             self.emit(QtCore.SIGNAL("updateLabel"), self.message)
             shutil.copyfile(file, "%s/%s" % (self.dst, file.split(self.src)[-1]))
             self.emit(QtCore.SIGNAL("incrementProgress()"))
