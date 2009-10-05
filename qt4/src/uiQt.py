@@ -222,7 +222,6 @@ class SelectDisk(QtGui.QDialog, qtSelectDisk.Ui_Dialog):
 
         super(SelectDisk, self).__init__(parent)
         self.setupUi(self)
-        self.setWindowTitle(self.tr("Select USB Disk Path"))
 
         for drive in self.drives:
             label = QtGui.QListWidgetItem(QtCore.QString(self.drives[drive]["label"]))
