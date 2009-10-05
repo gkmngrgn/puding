@@ -261,8 +261,6 @@ class ConfirmDialog(QtGui.QDialog, qtConfirmDialog.Ui_Dialog):
         self.label_md5.setText(md5)
         self.label_url.setText(url)
 
-
-
 class ProgressBar(QtGui.QDialog, qtProgressBar.Ui_Dialog):
     def __init__(self, title, message, max_value, parent = None):
         super(ProgressBar, self).__init__(parent)
