@@ -3,87 +3,97 @@
 <context>
     <name>Create</name>
     <message>
-        <location filename="uiQt.py" line="56"/>
+        <location filename="uiQt.py" line="55"/>
         <source>Select CD Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="57"/>
+        <location filename="uiQt.py" line="56"/>
         <source>Images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="68"/>
+        <location filename="uiQt.py" line="67"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="68"/>
+        <location filename="uiQt.py" line="67"/>
         <source>You should select a valid directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="uiQt.py" line="75"/>
+        <source>Puding is an USB image creator for Pardus Linux.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="uiQt.py" line="75"/>
+        <source>Copyright (c) %s TUBITAK / UEKAE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="uiQt.py" line="77"/>
         <source>About Puding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="98"/>
+        <location filename="uiQt.py" line="100"/>
         <source>Directory is Invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="98"/>
+        <location filename="uiQt.py" line="100"/>
         <source>Please check the USB disk path.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="134"/>
+        <location filename="uiQt.py" line="136"/>
         <source>CD Image is Invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="129"/>
+        <location filename="uiQt.py" line="131"/>
         <source>Please set an CD image path.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="134"/>
+        <location filename="uiQt.py" line="136"/>
         <source>Please check the CD image path.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="141"/>
+        <location filename="uiQt.py" line="143"/>
         <source>Verify Checksum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="142"/>
+        <location filename="uiQt.py" line="144"/>
         <source>The checksum of the source is checking now...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="162"/>
+        <location filename="uiQt.py" line="164"/>
         <source>Checksum invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="183"/>
+        <location filename="uiQt.py" line="185"/>
         <source>Creating Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="184"/>
+        <location filename="uiQt.py" line="186"/>
         <source>Creating image...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="205"/>
+        <location filename="uiQt.py" line="207"/>
         <source>USB Image is Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="uiQt.py" line="205"/>
+        <location filename="uiQt.py" line="207"/>
         <source>Your USB image is ready. Now you can install or run Pardus from USB storage.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -96,45 +106,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtConfirmDialog.py" line="82"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning:&lt;/span&gt; Please double check your path information. If you don&apos;t type the path to the USB stick correctly, you may damage your computer. Would you like to continue?&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="qtConfirmDialog.py" line="87"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Image Path:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="qtConfirmDialog.py" line="88"/>
+        <location filename="qtConfirmDialog.py" line="79"/>
         <source>&lt;b&gt;USB Disk Path:&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtConfirmDialog.py" line="89"/>
+        <location filename="qtConfirmDialog.py" line="80"/>
         <source>&lt;b&gt;Release Name:&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtConfirmDialog.py" line="94"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Checksum Value:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="qtConfirmDialog.py" line="95"/>
+        <location filename="qtConfirmDialog.py" line="82"/>
         <source>&lt;b&gt;Download URL:&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -161,6 +143,21 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="qtSelectDisk.py" line="66"/>
         <source>Browse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtConfirmDialog.py" line="77"/>
+        <source>&lt;font color=&quot;red&quot;&gt;&lt;b&gt;Warning:&lt;/b&gt;&lt;/font&gt; Please double check your path information. If you don&apos;t type the path to the USB stick correctly, you may damage your computer. Would you like to continue?&lt;br /&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtConfirmDialog.py" line="78"/>
+        <source>&lt;b&gt;Image Path:&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtConfirmDialog.py" line="81"/>
+        <source>&lt;b&gt;Checksum Value:&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -215,7 +212,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ProgressIncrementCopy</name>
     <message>
-        <location filename="uiQt.py" line="334"/>
+        <location filename="uiQt.py" line="336"/>
         <source>Copying %s (%0.2fMB)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -223,7 +220,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SelectDisk</name>
     <message>
-        <location filename="uiQt.py" line="227"/>
+        <location filename="uiQt.py" line="229"/>
         <source>Choose Mount Disk Path</source>
         <translation type="unfinished"></translation>
     </message>
