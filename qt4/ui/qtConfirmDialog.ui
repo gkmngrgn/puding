@@ -54,7 +54,7 @@ p, li { white-space: pre-wrap; }
      <item row="0" column="1">
       <widget class="QLabel" name="label_src">
        <property name="text">
-        <string>TextLabel</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -71,7 +71,7 @@ p, li { white-space: pre-wrap; }
      <item row="1" column="1">
       <widget class="QLabel" name="label_dst">
        <property name="text">
-        <string>TextLabel</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -88,7 +88,7 @@ p, li { white-space: pre-wrap; }
      <item row="2" column="1">
       <widget class="QLabel" name="label_name">
        <property name="text">
-        <string>TextLabel</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -109,7 +109,7 @@ p, li { white-space: pre-wrap; }
      <item row="3" column="1">
       <widget class="QLabel" name="label_md5">
        <property name="text">
-        <string>TextLabel</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -139,7 +139,7 @@ p, li { white-space: pre-wrap; }
      <item row="4" column="1">
       <widget class="QLabel" name="label_url">
        <property name="text">
-        <string>TextLabel</string>
+        <string/>
        </property>
       </widget>
      </item>
