@@ -39,7 +39,7 @@ class ProgressBar:
         return wheel[digit%4]
 
     def fSpaces(self, tour, digit):
-        return "[" + digit * "=" + (tour - digit - 1) * " " + "]"
+        return "[" + digit * "=" + (tour - digit) * " " + "]"
 
     def fProgressbar(self, wheel, tour, digit):
         sys.stdout.write("\r%s\t%s " % (self.fSpaces(tour, digit),
