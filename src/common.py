@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 #
 # author: Gökmen Görgen
-# license: GPLv3
+# license: GPLv3 (Read COPYING file.)
+#
 
 import dbus
 import gettext
