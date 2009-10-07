@@ -121,7 +121,7 @@ class Create:
                 device, dst = self.__askDestination()
 
                 # FIX ME: You should not use it.
-                if dst == "":
+                if not dst:
                     cmd = "mount -t vfat %s %s" % (device, MOUNT_USB)
                     runCommand(cmd)
                     dst = MOUNT_USB
@@ -231,7 +231,6 @@ class Create:
                 return False
 
         else:
-            # FIX ME: is it required?
             self.utils.cprint(_("The path you have typed is invalid. If you think the path is valid, make sure you have mounted USB stick to the path you gave. To check the path, you can use: mount | grep %s" % dst), "red")
 
             return False

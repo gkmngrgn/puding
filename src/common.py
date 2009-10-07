@@ -84,6 +84,15 @@ def createConfigFile(dst):
     if not os.path.exists(syslinux_conf_file):
         shutil.copyfile("%s/syslinux.cfg.pardus" % SHARE, syslinux_conf_file)
 
+def getMounted(disk_path):
+    parts = {}
+    for line in open("/proc/mounts"):
+        if line.startswith("/dev/"):
+            device, path, other = line.split(" ", 2)
+            parts[path] = device
+
+    return parts[disk_path.replace(" ", "\\040")]
+
 def createSyslinux(dst):
     createConfigFile(dst)
 
@@ -108,15 +117,6 @@ def createSyslinux_old(dst):
     cmd = "LC_ALL=C syslinux %s" % getMounted(dst)
 
     return runCommand(cmd)
-
-def getMounted(disk_path):
-    parts = {}
-    for line in open("/proc/mounts"):
-        if line.startswith("/dev/"):
-            device, path, other = line.split(" ", 2)
-            parts[path] = device
-
-    return parts[disk_path.replace(" ", "\\040")]
 
 def createDirs():
     if not os.path.exists(HOME):
