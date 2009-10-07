@@ -116,7 +116,7 @@ def getMounted(disk_path):
             device, path, other = line.split(" ", 2)
             parts[path] = device
 
-    return parts[disk_path]
+    return parts[disk_path.replace(" ", "\\040")]
 
 def createDirs():
     if not os.path.exists(HOME):
