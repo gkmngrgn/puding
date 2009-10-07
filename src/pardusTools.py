@@ -6,8 +6,22 @@
 #
 
 import comar
+import glob
 
-class PardusTools:
+class Main:
+    def __init__(self, src):
+        self.file_list = self.getFileList(src)
+
+    def getFileList(self, src):
+        file_list = ["%s/pardus.img" % src]
+        for i in glob.glob("%s/boot/*" % src):
+            if os.path.isfile(i):
+                file_list.append(i)
+        file_list.extend(glob.glob("%s/repo/*" % src))
+
+        return file_list
+
+class Authorization:
     def __init__(self):
         self.link = comar.Link()
         self.link.setLocale()
@@ -20,3 +34,4 @@ class PardusTools:
 
     def createSyslinux(self, device):
         self.link.Disk.Manager["puding"].createSyslinux(device)
+
