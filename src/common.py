@@ -66,11 +66,6 @@ def run(cmd):
 
     return process, result
 
-def copyPisiPackage(file, dst, pisi):
-    shutil.copy(file, "%s/repo/%s" % (dst, pisi))
-
-    return pisi
-
 def createConfigFile(dst):
     conf_dir = "%s/boot/syslinux" % dst
     conf_files = ["%s/gfxboot.com" % SYSLINUX, "%s/hdt.c32" % SYSLINUX]

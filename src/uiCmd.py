@@ -13,7 +13,6 @@ import subprocess
 
 from common import _
 from common import runCommand
-from common import copyPisiPackage
 from common import createConfigFile
 from common import createSyslinux_old
 from common import createUSBDirs
