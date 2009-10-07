@@ -247,7 +247,7 @@ class Create:
         print("%s: %dMB" % (_("\tUsed\t\t"), used))
 
     def __createImage(self, src, dst):
-        self.utils.cprint(_("Mounting %s.." % src), "green")
+        self.utils.cprint(_("Mounting %s..." % src), "green")
         cmd = "fuseiso %s %s" % (src, MOUNT_ISO)
         if runCommand(cmd):
             self.utils.cprint(_("Could not mounted CD image."), "red")
@@ -295,25 +295,14 @@ class Create:
         return True
 
     def __copyImage(self, src, dst):
-        # Pardus Image
-        self.utils.cprint(_("Copying pardus.img to %s..") % dst, "green")
-        shutil.copy('%s/pardus.img' % src, '%s/pardus.img' % dst)
+        # FIX ME: Now, Puding supports only Pardus..
+        from puding.pardusTools import Main
 
-        # Boot directory
-        for file in glob.glob("%s/boot/*" % src):
-            if not os.path.isdir(file):
-                file_name = os.path.split(file)[1]
-                self.utils.cprint(_("Copying: "), "green", True)
-                self.utils.cprint(file_name, "cyan")
+        tools = Main(src, dst)
+        file_list = tools.file_list
 
-                shutil.copy(file, "%s/boot/%s" % (dst, file_name))
-
-        # Pisi Packages
-        for file in glob.glob("%s/repo/*" % src):
-            pisi = os.path.split(file)[1]
-            self.utils.cprint(_("Copying: "), "green", True)
-            if os.path.exists("%s/repo/%s" % (dst, pisi)):
-                self.utils.cprint(_("%s is already exist.") % pisi, "brightyellow")
-
-            else:
-                self.utils.cprint(copyPisiPackage(file, dst, pisi), "brightyellow")
+        for path in file_list:
+            file_name = os.path.split(path)[-1]
+            self.utils.cprint("%s:" % _("Copying"), "green", True)
+            self.utils.cprint(file_name, "brightyellow")
+            tools.copyFile(path)
