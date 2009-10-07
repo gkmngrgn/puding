@@ -105,15 +105,6 @@ def createSyslinux(dst):
     cmd = "LC_ALL=C syslinux %s" % getMounted(dst)
     return runCommand(cmd)
 
-def createSyslinux_old(dst):
-    sys_file = "%s/ldlinux.sys" % dst
-    if os.path.exists(sys_file):
-        os.remove(sys_file)
-
-    cmd = "LC_ALL=C syslinux %s" % getMounted(dst)
-
-    return runCommand(cmd)
-
 def createDirs():
     if not os.path.exists(HOME):
         os.makedirs(MOUNT_ISO)
