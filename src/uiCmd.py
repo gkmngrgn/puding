@@ -123,6 +123,7 @@ class Create:
                 # FIX ME: You should not use it.
                 if not dst:
                     cmd = "mount -t vfat %s %s" % (device, MOUNT_USB)
+                    self.utils.cprint(_("Mounting USB device..."), "green")
                     runCommand(cmd)
                     dst = MOUNT_USB
 
