@@ -135,7 +135,7 @@ class Create:
 
     def __checkSource(self, src):
         if not os.path.isfile(src):
-            self.utils.cprint(_("The path is invalid, please specify an CD image path."), "red")
+            self.utils.cprint(_("The path is invalid, please specify an image path."), "red")
 
             return False
 
@@ -221,7 +221,7 @@ class Create:
             answer = raw_input("%s " % _("Please type CONFIRM to continue:"))
 
             if answer in (_('CONFIRM'), _('confirm')):
-                self.utils.cprint(_("Writing CD image data to USB stick!"), "green")
+                self.utils.cprint(_("Writing image data to USB stick!"), "green")
 
                 return True
 
@@ -261,7 +261,7 @@ class Create:
 
         self.__copyImage(MOUNT_ISO, dst)
 
-        self.utils.cprint(_("\nUnmounting image..."), "green")
+        self.utils.cprint(_("Unmounting image..."), "green")
         cmd = "fusermount -u %s" % MOUNT_ISO
 
         if runCommand(cmd):
@@ -269,15 +269,16 @@ class Create:
 
             return False
 
-        self.utils.cprint(_("USB disk is ready. Now you can install or run Pardus from your USB disk."), "brightgreen")
-
         if dst == MOUNT_USB:
+            self.utils.cprint(_("Unmounting USB disk..."), "green")
             cmd = "umount %s" % MOUNT_USB
 
             if runCommand(cmd):
                 self.utils.cprint(_("Could not unmounted USB disk."), "red")
 
                 return False
+
+        self.utils.cprint(_("USB disk is ready. Now you can install or run Pardus from your USB disk."), "brightgreen")
 
         return True
 

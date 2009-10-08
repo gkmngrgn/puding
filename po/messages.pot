@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: puding TRUNK\n"
 "Report-Msgid-Bugs-To: gkmngrgn@gmail.com\n"
-"POT-Creation-Date: 2009-10-08 03:03+0300\n"
+"POT-Creation-Date: 2009-10-08 03:27+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,7 +59,7 @@ msgid "USB device not found."
 msgstr ""
 
 #: ../src/uiCmd.py:138
-msgid "The path is invalid, please specify an CD image path."
+msgid "The path is invalid, please specify an image path."
 msgstr ""
 
 #: ../src/uiCmd.py:142
@@ -159,7 +159,7 @@ msgid "confirm"
 msgstr ""
 
 #: ../src/uiCmd.py:224
-msgid "Writing CD image data to USB stick!"
+msgid "Writing image data to USB stick!"
 msgstr ""
 
 #: ../src/uiCmd.py:229
@@ -207,24 +207,26 @@ msgid "Could not create boot manager."
 msgstr ""
 
 #: ../src/uiCmd.py:264
-msgid ""
-"\n"
-"Unmounting image..."
+msgid "Unmounting image..."
 msgstr ""
 
 #: ../src/uiCmd.py:268
 msgid "Could not unmounted image."
 msgstr ""
 
-#: ../src/uiCmd.py:272
+#: ../src/uiCmd.py:273
+msgid "Unmounting USB disk..."
+msgstr ""
+
+#: ../src/uiCmd.py:277
+msgid "Could not unmounted USB disk."
+msgstr ""
+
+#: ../src/uiCmd.py:281
 msgid ""
 "USB disk is ready. Now you can install or run Pardus from your USB disk."
 msgstr ""
 
-#: ../src/uiCmd.py:278
-msgid "Could not unmounted USB disk."
-msgstr ""
-
-#: ../src/uiCmd.py:293
+#: ../src/uiCmd.py:294
 msgid "Copying"
 msgstr ""

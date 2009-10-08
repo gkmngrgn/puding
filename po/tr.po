@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: puding TRUNK\n"
 "Report-Msgid-Bugs-To: gkmngrgn@gmail.com\n"
-"POT-Creation-Date: 2009-10-08 03:03+0300\n"
-"PO-Revision-Date: 2009-10-08 03:07+0200\n"
+"POT-Creation-Date: 2009-10-08 03:27+0300\n"
+"PO-Revision-Date: 2009-10-08 03:29+0200\n"
 "Last-Translator: Gökmen Görgen <gkmngrgn@gmail.com>\n"
 "Language-Team: Turkish\n"
 "MIME-Version: 1.0\n"
@@ -61,8 +61,8 @@ msgid "USB device not found."
 msgstr "USB sürücü bulunamadı."
 
 #: ../src/uiCmd.py:138
-msgid "The path is invalid, please specify an CD image path."
-msgstr "Yol geçersiz, lütfen CD kalıbı yolunu belirtin."
+msgid "The path is invalid, please specify an image path."
+msgstr "Yol geçersiz, lütfen kalıp yolunu doğru belirtin."
 
 #: ../src/uiCmd.py:142
 msgid "Calculating checksum..."
@@ -158,8 +158,8 @@ msgid "confirm"
 msgstr "onayla"
 
 #: ../src/uiCmd.py:224
-msgid "Writing CD image data to USB stick!"
-msgstr "CD kalıbı USB belleğinize yazılıyor!"
+msgid "Writing image data to USB stick!"
+msgstr "Kalıp USB belleğinize yazılıyor!"
 
 #: ../src/uiCmd.py:229
 msgid "You did not type CONFIRM. Exiting.."
@@ -203,26 +203,26 @@ msgid "Could not create boot manager."
 msgstr "Açılış yöneticisi oluşturulamadı."
 
 #: ../src/uiCmd.py:264
-msgid ""
-"\n"
-"Unmounting image..."
-msgstr ""
-"\n"
-"Kalıp kaldırılıyor..."
+msgid "Unmounting image..."
+msgstr "Kalıp kaldırılıyor..."
 
 #: ../src/uiCmd.py:268
 msgid "Could not unmounted image."
 msgstr "Kalıp ayırma işlemi başarısızlıkla sonuçlandı."
 
-#: ../src/uiCmd.py:272
-msgid "USB disk is ready. Now you can install or run Pardus from your USB disk."
-msgstr "USB belleğiniz hazır. Şimdi, Pardus'unuzu USB belleğinizden kurabilir veya çalıştırabilirsiniz."
+#: ../src/uiCmd.py:273
+msgid "Unmounting USB disk..."
+msgstr "USB bellek kaldırılıyor..."
 
-#: ../src/uiCmd.py:278
+#: ../src/uiCmd.py:277
 msgid "Could not unmounted USB disk."
 msgstr "USB bellek ayırma işlemi başarısızlıkla sonuçlandı."
 
-#: ../src/uiCmd.py:293
+#: ../src/uiCmd.py:281
+msgid "USB disk is ready. Now you can install or run Pardus from your USB disk."
+msgstr "USB belleğiniz hazır. Şimdi, Pardus'unuzu USB belleğinizden kurabilir veya çalıştırabilirsiniz."
+
+#: ../src/uiCmd.py:294
 msgid "Copying"
 msgstr "Kopyalanıyor"
 
