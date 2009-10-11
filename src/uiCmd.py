@@ -285,7 +285,7 @@ class Create:
 
     def __copyImage(self, src, dst):
         # FIX ME: Now, Puding supports only Pardus..
-        from puding.pardusTools import Main
+        from pardusTools import Main
 
         tools = Main(src, dst)
         file_list = tools.file_list

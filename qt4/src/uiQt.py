@@ -182,7 +182,12 @@ you have downloaded the source correctly."""
                 # FIX ME: Should use warning dialog.
                 return False
 
-        max_value = getNumberOfFiles(MOUNT_ISO)
+        # FIX ME: Now Puding supports only Pardus.
+        from pardusTools import Main
+
+        tools = Main(src, dst)
+        file_list = tools.file_list
+        max_value = tools.getNumberOfFiles()
         create_image = ProgressBar(title = self.tr("Creating Image"),
                 message = self.tr("Creating image..."),
                 max_value = max_value)

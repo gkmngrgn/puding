@@ -41,17 +41,6 @@ def getFileSize(file):
 
     return file_size
 
-def getNumberOfFiles(src):
-    all_files = []
-    all_files.extend(glob.glob("%s/repo/*" % src))
-    boot_files = glob.glob("%s/boot/*" % src)
-    for i in boot_files:
-        if os.path.isfile(i):
-            all_files.append(i)
-    all_files.append("%s/pardus.img" % src)
-
-    return len(all_files)
-
 def runCommand(cmd):
     process = subprocess.call(cmd, shell = True)
 
