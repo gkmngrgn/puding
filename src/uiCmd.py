@@ -128,35 +128,16 @@ class Create:
                     dst = MOUNT_USB
 
         if self.__checkSource(src) and self.__checkDestination(dst):
-            createUSBDirs(dst)
-            self.__createImage(src, dst)
+            from pardusTools import Main
+
+            tools = Main(MOUNT_ISO, dst)
+            if self.__checkDiskInfo(dst, tools.getTotalSize()):
+                self.__createImage(src, dst)
 
         else:
+            self.utils.cprint(_("The path you have typed is invalid. If you think the path is valid, make sure you have mounted USB stick to the path you gave. To check the path, you can use: mount | grep %s" % dst), "red")
+
             sys.exit(1)
-
-    def __checkSource(self, src):
-        if not os.path.isfile(src):
-            self.utils.cprint(_("The path is invalid, please specify an image path."), "red")
-
-            return False
-
-        self.utils.cprint(_("Calculating checksum..."))
-
-        try:
-            (name, md5, url) = self.progressbar.verifyIsoChecksum(src)
-
-            self.utils.cprint(_("\n   Image path: %s" % src))
-            self.utils.cprint(_("         Name: %s" % name))
-            self.utils.cprint(_("       Md5sum: %s" % md5))
-            self.utils.cprint(_(" Download URL: %s\n" % url))
-
-            return True
-
-        # FIX ME: Bad Code..
-        except TypeError:
-            self.utils.cprint(_("The checksum of the source cannot be validated. Please specify a correct source or be sure that you have downloaded the source correctly."), "red")
-
-            return False
 
     def __askDestination(self):
         self.drives = self.partutils.returnDrives()
@@ -216,37 +197,62 @@ class Create:
 
     def __checkDestination(self, dst):
         if os.path.isdir(dst) and os.path.ismount(dst):
-            self.__printDiskInfo(dst)
-            self.utils.cprint(_("Please double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?"))
+            return True
 
-            answer = raw_input("%s " % _("Please type CONFIRM to continue:"))
+        return False
 
-            if answer in (_('CONFIRM'), _('confirm')):
-                self.utils.cprint(_("Writing image data to USB stick!"), "green")
-
-                return True
-
-            else:
-                self.utils.cprint(_("You did not type CONFIRM. Exiting.."), "red")
-
-                return False
-
-        else:
-            self.utils.cprint(_("The path you have typed is invalid. If you think the path is valid, make sure you have mounted USB stick to the path you gave. To check the path, you can use: mount | grep %s" % dst), "red")
-
-            return False
-
-    def __printDiskInfo(self, dst):
+    def __checkDiskInfo(self, dst, total_size):
         from common import getDiskInfo
 
         (capacity, available, used) = getDiskInfo(str(dst))
+        if available < total_size:
+            self.utils.cprint(_("Sorry, there is no available disk on your USB disk partition. Please remove unrequired files from USB disk."), "red")
+
+            return False
 
         print(_("USB disk informations:"))
         print("%s: %dMB" % (_("\tCapacity\t"), capacity))
         print("%s: %dMB" % (_("\tAvailable\t"), available))
         print("%s: %dMB" % (_("\tUsed\t\t"), used))
+        self.utils.cprint(_("Please double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?"))
+
+        answer = raw_input("%s " % _("Please type CONFIRM to continue:"))
+        if answer in (_('CONFIRM'), _('confirm')):
+            self.utils.cprint(_("Writing image data to USB stick!"), "green")
+
+            return True
+
+        self.utils.cprint(_("You did not type CONFIRM. Exiting.."), "red")
+
+        return False
+
+    def __checkSource(self, src):
+        if not os.path.isfile(src):
+            self.utils.cprint(_("The path is invalid, please specify an image path."), "red")
+
+            return False
+
+        self.utils.cprint(_("Calculating checksum..."))
+
+        try:
+            (name, md5, url) = self.progressbar.verifyIsoChecksum(src)
+
+            self.utils.cprint(_("\n   Image path: %s" % src))
+            self.utils.cprint(_("         Name: %s" % name))
+            self.utils.cprint(_("       Md5sum: %s" % md5))
+            self.utils.cprint(_(" Download URL: %s\n" % url))
+
+            return True
+
+        # FIX ME: Bad Code..
+        except TypeError:
+            self.utils.cprint(_("The checksum of the source cannot be validated. Please specify a correct source or be sure that you have downloaded the source correctly."), "red")
+
+            return False
 
     def __createImage(self, src, dst):
+        createUSBDirs(dst)
+
         self.utils.cprint(_("Mounting image..."), "green")
         cmd = "fuseiso %s %s" % (src, MOUNT_ISO)
         if runCommand(cmd):
