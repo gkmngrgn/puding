@@ -79,13 +79,6 @@ def createMoFiles():
 
     return data_list
 
-#def locale(lang):
-#    return("share/locale/%s/LC_MESSAGES" % lang,
-#            ["locale/mo/%s/%s.mo" % (lang, NAME)])
-#
-## Create .mo files
-#createMoFiles()
-
 # Edit script
 script = "%s/%s" % (NAME, NAME)
 shutil.copyfile("%s.py" % script, script)
