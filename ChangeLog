@@ -1,5 +1,6 @@
 -- 0.0.93
 	- update translations.
+	- add German translations.
 
 -- 0.0.92 (2009-10-12)
 	- rewrite __copyImage function. now it's more simple.
