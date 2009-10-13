@@ -127,6 +127,13 @@ class Create:
                     runCommand(cmd)
                     dst = MOUNT_USB
 
+        self.utils.cprint(_("Mounting image..."), "green")
+        cmd = "fuseiso %s %s" % (src, MOUNT_ISO)
+        if runCommand(cmd):
+            self.utils.cprint(_("Could not mounted image."), "red")
+
+            sys.exit(1)
+
         if self.__checkSource(src) and self.__checkDestination(dst):
             from pardusTools import Main
 
@@ -149,37 +156,37 @@ class Create:
         else:
             drive_no = 0
 
-            self.utils.cprint(_("Devices:"), "brightcyan")
+            self.utils.cprint(_("Devices:"), "brightwhite")
 
             for drive in self.drives:
                 drive_no += 1
 
                 # FIX ME: Bad coding..
-                self.utils.cprint("\n%d) %s:" % (drive_no, drive), "brightcyan")
-                self.utils.cprint(_("    Label\t\t:"), "green", True)
-                self.utils.cprint(self.drives[drive]["label"], "yellow")
+                self.utils.cprint("%d) %s:" % (drive_no, drive), "brightgreen")
+                self.utils.cprint("    %s:" % _("Label"), "green", True)
+                print(self.drives[drive]["label"])
 
-                self.utils.cprint(_("    Parent\t\t:"), "green", True)
-                self.utils.cprint(str(self.drives[drive]["parent"]), "yellow")
+                self.utils.cprint("    %s:" % _("Parent"), "green", True)
+                print(str(self.drives[drive]["parent"]))
 
-                self.utils.cprint(_("    Mount Point\t\t:"), "green", True)
+                self.utils.cprint("    %s:" % _("Mount Point"), "green", True)
                 mount_dir = self.drives[drive]["mount"]
                 if not mount_dir:
-                    self.utils.cprint("%s (%s)" % (MOUNT_ISO,  _("not mounted")), "yellow")
+                    print("%s (%s)" % (MOUNT_ISO,  _("not mounted")))
                 else:
-                    self.utils.cprint(mount_dir, "yellow")
+                    print(mount_dir)
 
-                self.utils.cprint(_("    Unmount\t\t:"), "green", True)
-                self.utils.cprint(str(self.drives[drive]["unmount"]), "yellow")
+                self.utils.cprint("    %s:" % _("Unmount"), "green", True)
+                print(str(self.drives[drive]["unmount"]))
 
-                self.utils.cprint(_("    UUID\t\t:"), "green", True)
-                self.utils.cprint(self.drives[drive]["uuid"], "yellow")
+                self.utils.cprint("    %s:" % _("UUID"), "green", True)
+                print(self.drives[drive]["uuid"])
 
-                self.utils.cprint(_("    File System Version\t:"), "green", True)
-                self.utils.cprint(self.drives[drive]["fsversion"], "yellow")
+                self.utils.cprint("    %s:" % _("File System Version"), "green", True)
+                print(self.drives[drive]["fsversion"])
 
-                self.utils.cprint(_("    File System Type\t:"), "green", True)
-                self.utils.cprint(self.drives[drive]["fstype"], "yellow")
+                self.utils.cprint("    %s:" % _("File System Type"), "green", True)
+                print("%s\n" % self.drives[drive]["fstype"])
 
             try:
                 part_number = int(raw_input("%s " % _("USB devices or partitions have found more than one. Please choose one:")))
@@ -208,13 +215,22 @@ class Create:
         if available < total_size:
             self.utils.cprint(_("Sorry, there is no available disk on your USB disk partition. Please remove unrequired files from USB disk."), "red")
 
+            self.utils.cprint(_("Unmounting image..."), "red")
+            runCommand("fusermount -u %s" % MOUNT_ISO)
+
             return False
 
-        print(_("USB disk informations:"))
-        print("%s: %dMB" % (_("\tCapacity\t"), capacity))
-        print("%s: %dMB" % (_("\tAvailable\t"), available))
-        print("%s: %dMB" % (_("\tUsed\t\t"), used))
-        self.utils.cprint(_("Please double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?"))
+        self.utils.cprint(_("USB disk informations:"), "brightgreen")
+        self.utils.cprint("    %s:" % _("Capacity"), "green", True)
+        print("%dMB" % capacity)
+
+        self.utils.cprint("    %s:" % _("Available"), "green", True)
+        print("%dMB" % available)
+
+        self.utils.cprint("    %s:" % _("Used"), "green", True)
+        print("%dMB" % used)
+
+        print(_("\nPlease double check your path information. If you don't type the path to the USB stick correctly, you may damage your computer. Would you like to continue?"))
 
         answer = raw_input("%s " % _("Please type CONFIRM to continue:"))
         if answer in (_('CONFIRM'), _('confirm')):
@@ -232,15 +248,20 @@ class Create:
 
             return False
 
-        self.utils.cprint(_("Calculating checksum..."))
+        self.utils.cprint(_("Calculating checksum..."), "green")
 
         try:
             (name, md5, url) = self.progressbar.verifyIsoChecksum(src)
 
-            self.utils.cprint(_("\n   Image path: %s" % src))
-            self.utils.cprint(_("         Name: %s" % name))
-            self.utils.cprint(_("       Md5sum: %s" % md5))
-            self.utils.cprint(_(" Download URL: %s\n" % url))
+            self.utils.cprint(_("Source Informations:"), "brightgreen")
+            self.utils.cprint("    %s:" % _("Image Path"), "green", True)
+            print(src)
+            self.utils.cprint("    %s:" % _("Name"), "green", True)
+            print(name)
+            self.utils.cprint("    %s:" % _("Md5sum"), "green", True)
+            print(md5)
+            self.utils.cprint("    %s:" % _("Download URL"), "green", True)
+            print(url)
 
             return True
 
@@ -252,13 +273,6 @@ class Create:
 
     def __createImage(self, src, dst):
         createUSBDirs(dst)
-
-        self.utils.cprint(_("Mounting image..."), "green")
-        cmd = "fuseiso %s %s" % (src, MOUNT_ISO)
-        if runCommand(cmd):
-            self.utils.cprint(_("Could not mounted image."), "red")
-
-            return False
 
         self.utils.cprint(_("Creating boot manager..."), "yellow")
         if createSyslinux(dst):
