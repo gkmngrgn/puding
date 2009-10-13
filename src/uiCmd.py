@@ -16,6 +16,7 @@ from common import runCommand
 from common import createConfigFile
 from common import createSyslinux
 from common import createUSBDirs
+from common import getDiskInfo
 from common import getIsoSize
 from common import getMounted
 from common import PartitionUtils
@@ -179,7 +180,7 @@ class Create:
                 self.utils.cprint("    %s:" % _("Unmount"), "green", True)
                 print(str(self.drives[drive]["unmount"]))
 
-                self.utils.cprint("    UUID", "green", True)
+                self.utils.cprint("    UUID:", "green", True)
                 print(self.drives[drive]["uuid"])
 
                 self.utils.cprint("    %s:" % _("File System Version"), "green", True)
@@ -209,8 +210,6 @@ class Create:
         return False
 
     def __checkDiskInfo(self, dst, total_size):
-        from common import getDiskInfo
-
         (capacity, available, used) = getDiskInfo(str(dst))
         if available < total_size:
             self.utils.cprint(_("Sorry, there is no available disk on your USB disk partition. Please remove unrequired files from USB disk."), "red")
