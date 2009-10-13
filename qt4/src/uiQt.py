@@ -104,7 +104,8 @@ class Create(QtGui.QMainWindow, qtMain.Ui_MainWindow):
         try:
             (name, md5, url) = self.__getSourceInfo(src)
             mount_point = getMounted(dst)
-            self.confirm_infos = ConfirmDialog(src, dst, mount_point, name, md5, url)
+            (capacity, available, used) = getDiskInfo(dst)
+            self.confirm_infos = ConfirmDialog(src, dst, mount_point, name, capacity, available, used)
             if self.confirm_infos.exec_() == QtGui.QDialog.Accepted:
                 createUSBDirs(dst)
                 self.__createImage(src, dst)
@@ -117,6 +118,7 @@ class Create(QtGui.QMainWindow, qtMain.Ui_MainWindow):
             return False
 
         except TypeError: # 'bool' object is not iterable
+            # It's not true way, you should warn to the users with WarningDialog.
             return False
 
     def warningDialog(self, title, message,):
@@ -256,7 +258,7 @@ class SelectDisk(QtGui.QDialog, qtSelectDisk.Ui_Dialog):
         return self.line_directory.displayText()
 
 class ConfirmDialog(QtGui.QDialog, qtConfirmDialog.Ui_Dialog):
-    def __init__(self, src, dst, mount_point, name, md5, url, parent = None):
+    def __init__(self, src, dst, mount_point, name, capacity, available, used, parent = None):
         super(ConfirmDialog, self).__init__(parent)
         self.setupUi(self)
         dst_info = "%s (%s)" % (dst, mount_point)
@@ -264,8 +266,9 @@ class ConfirmDialog(QtGui.QDialog, qtConfirmDialog.Ui_Dialog):
         self.label_src.setText(src)
         self.label_dst.setText(dst_info)
         self.label_name.setText(name)
-        self.label_md5.setText(md5)
-        self.label_url.setText(url)
+        self.label_capacity.setText("%dMB" % capacity)
+        self.label_available.setText("%dMB" % available)
+        self.label_used.setText("%dMB" % used)
 
 class ProgressBar(QtGui.QDialog, qtProgressBar.Ui_Dialog):
     def __init__(self, title, message, max_value, parent = None):

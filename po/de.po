@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-13 13:52+0300\n"
+"POT-Creation-Date: 2009-10-13 19:15+0300\n"
 "PO-Revision-Date: 12/10/09 12:55\n"
 "Last-Translator: Stefan Wilhelm <sw1976de@googlemail.com>\n"
 "Language-Team: deutsch <pardus-translators-de@pardus.org.tr>\n"
@@ -26,35 +26,35 @@ msgstr "Puding ist ein Tool um USB Images von Pardus zu erstellen "
 msgid "USB image creator"
 msgstr ""
 
-#: ../src/puding.py:38
+#: ../src/puding.py:41
 msgid "show program's license info and exit"
 msgstr "Zeige Programmlizenz und Beende "
 
-#: ../src/puding.py:39
+#: ../src/puding.py:42
 msgid "create Pardus USB image from console"
 msgstr "erstellt von der Konsole aus ein Pardus USB-Image"
 
-#: ../src/puding.py:41
+#: ../src/puding.py:44
 msgid "Graphical Interface Options"
 msgstr "Optionen der Benutzeroberfläche"
 
-#: ../src/puding.py:42
+#: ../src/puding.py:45
 msgid "run Puding with Qt4 graphical interface"
 msgstr "starte Puding mit dem Interface von Qt4"
 
-#: ../src/puding.py:49
+#: ../src/puding.py:52
 msgid "Puding is an USB image creator for Pardus Linux."
 msgstr "Puding ist ein Tool um USB Images von Pardus zu erstellen "
 
-#: ../src/puding.py:55
+#: ../src/puding.py:58
 msgid "You need superuser permissions to run this application."
 msgstr "Für dieses Programm benötigen sie Administratorrechte."
 
-#: ../src/puding.py:73
+#: ../src/puding.py:76
 msgid "Invalid usage. Example:"
 msgstr "Ungültige Eingabe. Beispiel:"
 
-#: ../src/puding.py:96
+#: ../src/puding.py:104
 msgid ""
 "\n"
 "Quit."
@@ -62,28 +62,28 @@ msgstr ""
 "\n"
 "Beenden."
 
-#: ../src/uiCmd.py:66
+#: ../src/uiCmd.py:67
 msgid "Finished"
 msgstr "Fertig"
 
-#: ../src/uiCmd.py:117
+#: ../src/uiCmd.py:118
 msgid "USB device not found."
 msgstr "USB Gerät nicht gefunden."
 
-#: ../src/uiCmd.py:126
+#: ../src/uiCmd.py:127
 #, fuzzy
 msgid "Mounting USB device..."
 msgstr "Hänge USB-Medium aus..."
 
-#: ../src/uiCmd.py:130
+#: ../src/uiCmd.py:131
 msgid "Mounting image..."
 msgstr "Hänge Image ein..."
 
-#: ../src/uiCmd.py:133
+#: ../src/uiCmd.py:134
 msgid "Could not mounted image."
 msgstr "Kann Image nicht einhängen."
 
-#: ../src/uiCmd.py:145
+#: ../src/uiCmd.py:146
 #, python-format
 msgid ""
 "The path you have typed is invalid. If you think the path is valid, make "
@@ -94,82 +94,82 @@ msgstr ""
 "richtig ist,dann stellen sie sicher, dass der USB-Stick korrekt eingehängt "
 "ist. Um den Pfad zuüberprüfen, tippen sie: mount | grep %s"
 
-#: ../src/uiCmd.py:159
+#: ../src/uiCmd.py:160
 msgid "Devices:"
 msgstr "Geräte:"
 
-#: ../src/uiCmd.py:166
+#: ../src/uiCmd.py:167
 msgid "Label"
 msgstr ""
 
-#: ../src/uiCmd.py:169
+#: ../src/uiCmd.py:170
 #, fuzzy
 msgid "Parent"
 msgstr "    Bovenliggende map\t\t:"
 
-#: ../src/uiCmd.py:172
+#: ../src/uiCmd.py:173
 #, fuzzy
 msgid "Mount Point"
 msgstr "    Einhängepunkt\t\t:"
 
-#: ../src/uiCmd.py:175
+#: ../src/uiCmd.py:176
 msgid "not mounted"
 msgstr "nicht eingehängt"
 
-#: ../src/uiCmd.py:179
+#: ../src/uiCmd.py:180
 #, fuzzy
 msgid "Unmount"
 msgstr "nicht eingehängt"
 
-#: ../src/uiCmd.py:185
+#: ../src/uiCmd.py:186
 #, fuzzy
 msgid "File System Version"
 msgstr "    Version des Dateisystems\t:"
 
-#: ../src/uiCmd.py:188
+#: ../src/uiCmd.py:189
 #, fuzzy
 msgid "File System Type"
 msgstr "    Typ Dateisystem\t:"
 
-#: ../src/uiCmd.py:192
+#: ../src/uiCmd.py:193
 msgid "USB devices or partitions have found more than one. Please choose one:"
 msgstr "Mehr als ein USB Gerät oder Partition gefunden. Bitte eines auswählen:"
 
-#: ../src/uiCmd.py:197
+#: ../src/uiCmd.py:198
 #, python-format
 msgid "You must enter a number between 0 - %d."
 msgstr "Eine Nummer zwischen 0 - %d eingeben."
 
-#: ../src/uiCmd.py:216
+#: ../src/uiCmd.py:215
 msgid ""
 "Sorry, there is no available disk on your USB disk partition. Please remove "
 "unrequired files from USB disk."
 msgstr ""
 
-#: ../src/uiCmd.py:218 ../src/uiCmd.py:285
+#: ../src/uiCmd.py:217 ../src/uiCmd.py:284
 msgid "Unmounting image..."
 msgstr "Hänge Image aus..."
 
-#: ../src/uiCmd.py:223
+#: ../src/uiCmd.py:222
 msgid "USB disk informations:"
 msgstr "USB Medium Information:"
 
-#: ../src/uiCmd.py:224
+#: ../src/uiCmd.py:223
 #, fuzzy
 msgid "Capacity"
 msgstr "\tKapazität\t"
 
-#: ../src/uiCmd.py:227
+#: ../src/uiCmd.py:226
 #, fuzzy
 msgid "Available"
 msgstr "\tVerfügbar\t"
 
-#: ../src/uiCmd.py:230
+#: ../src/uiCmd.py:229
 #, fuzzy
 msgid "Used"
 msgstr "\tBelegt\t\t"
 
-#: ../src/uiCmd.py:233
+#: ../src/uiCmd.py:232
 #, fuzzy
 msgid ""
 "\n"
@@ -180,56 +180,56 @@ msgstr ""
 "Bitte überprüfen sie ihre Pfadeingabe sehr sorgfältig. Falls die Pfadadresse "
 "zu dem USB-Stick falsch eingegeben wurde, droht Datenverlust! Weiter?"
 
-#: ../src/uiCmd.py:235
+#: ../src/uiCmd.py:234
 msgid "Please type CONFIRM to continue:"
 msgstr "Für weiter tippen sie bitte BESTÄTIGE:"
 
-#: ../src/uiCmd.py:236
+#: ../src/uiCmd.py:235
 msgid "CONFIRM"
 msgstr "BESTÄTIGE"
 
-#: ../src/uiCmd.py:236
+#: ../src/uiCmd.py:235
 msgid "confirm"
 msgstr "bestätige"
 
-#: ../src/uiCmd.py:237
+#: ../src/uiCmd.py:236
 msgid "Writing image data to USB stick!"
 msgstr "Schreibe Image auf den USB-Stick!"
 
-#: ../src/uiCmd.py:241
+#: ../src/uiCmd.py:240
 msgid "You did not type CONFIRM. Exiting.."
 msgstr "Sie haben nicht BESTÄTIGE eingetippt. Beende.."
 
-#: ../src/uiCmd.py:247
+#: ../src/uiCmd.py:246
 msgid "The path is invalid, please specify an image path."
 msgstr "Der Pfad ist ungültig, bitte einen Pfad für das Image angeben."
 
-#: ../src/uiCmd.py:251
+#: ../src/uiCmd.py:250
 msgid "Calculating checksum..."
 msgstr "Berechne Prüfsumme..."
 
-#: ../src/uiCmd.py:256
+#: ../src/uiCmd.py:255
 #, fuzzy
 msgid "Source Informations:"
 msgstr "USB Medium Information:"
 
-#: ../src/uiCmd.py:257
+#: ../src/uiCmd.py:256
 #, fuzzy
 msgid "Image Path"
 msgstr ""
 "\n"
 "   Image Pfad: %s"
 
-#: ../src/uiCmd.py:259
+#: ../src/uiCmd.py:258
 msgid "Name"
 msgstr ""
 
-#: ../src/uiCmd.py:263
+#: ../src/uiCmd.py:262
 #, fuzzy
 msgid "Download URL"
 msgstr " Download URL: %s\n"
 
-#: ../src/uiCmd.py:270
+#: ../src/uiCmd.py:269
 msgid ""
 "The checksum of the source cannot be validated. Please specify a correct "
 "source or be sure that you have downloaded the source correctly."
@@ -237,34 +237,34 @@ msgstr ""
 "Die Prüfsumme der Quelldatei ist nicht gültig. Bitte die korrekte Quelle "
 "angeben, oder überprüfen sie, ob der Download fehlerfrei war."
 
-#: ../src/uiCmd.py:277
+#: ../src/uiCmd.py:276
 msgid "Creating boot manager..."
 msgstr "Erstelle Boot-Manager..."
 
-#: ../src/uiCmd.py:279
+#: ../src/uiCmd.py:278
 msgid "Could not create boot manager."
 msgstr "Kann Boot-Manager nicht erstellen."
 
-#: ../src/uiCmd.py:289
+#: ../src/uiCmd.py:288
 msgid "Could not unmounted image."
 msgstr "Kann Image nicht aushängen."
 
-#: ../src/uiCmd.py:294
+#: ../src/uiCmd.py:293
 msgid "Unmounting USB disk..."
 msgstr "Hänge USB-Medium aus..."
 
-#: ../src/uiCmd.py:298
+#: ../src/uiCmd.py:297
 msgid "Could not unmounted USB disk."
 msgstr "Kann USB-Medium nicht aushängen."
 
-#: ../src/uiCmd.py:302
+#: ../src/uiCmd.py:301
 msgid ""
 "USB disk is ready. Now you can install or run Pardus from your USB disk."
 msgstr ""
 "USB-Medium ist erstellt. Jetzt können sie Pardus von USB starten oder "
 "installieren."
 
-#: ../src/uiCmd.py:315
+#: ../src/uiCmd.py:314
 msgid "Copying"
 msgstr "Kopiere"
 

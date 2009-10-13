@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-13 13:52+0300\n"
+"POT-Creation-Date: 2009-10-13 19:15+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,61 +24,61 @@ msgstr ""
 msgid "USB image creator"
 msgstr ""
 
-#: ../src/puding.py:38
+#: ../src/puding.py:41
 msgid "show program's license info and exit"
 msgstr ""
 
-#: ../src/puding.py:39
+#: ../src/puding.py:42
 msgid "create Pardus USB image from console"
 msgstr ""
 
-#: ../src/puding.py:41
+#: ../src/puding.py:44
 msgid "Graphical Interface Options"
 msgstr ""
 
-#: ../src/puding.py:42
+#: ../src/puding.py:45
 msgid "run Puding with Qt4 graphical interface"
 msgstr ""
 
-#: ../src/puding.py:49
+#: ../src/puding.py:52
 msgid "Puding is an USB image creator for Pardus Linux."
 msgstr ""
 
-#: ../src/puding.py:55
+#: ../src/puding.py:58
 msgid "You need superuser permissions to run this application."
 msgstr ""
 
-#: ../src/puding.py:73
+#: ../src/puding.py:76
 msgid "Invalid usage. Example:"
 msgstr ""
 
-#: ../src/puding.py:96
+#: ../src/puding.py:104
 msgid ""
 "\n"
 "Quit."
 msgstr ""
 
-#: ../src/uiCmd.py:66
+#: ../src/uiCmd.py:67
 msgid "Finished"
 msgstr ""
 
-#: ../src/uiCmd.py:117
+#: ../src/uiCmd.py:118
 msgid "USB device not found."
 msgstr ""
 
-#: ../src/uiCmd.py:126
+#: ../src/uiCmd.py:127
 msgid "Mounting USB device..."
 msgstr ""
 
-#: ../src/uiCmd.py:130
+#: ../src/uiCmd.py:131
 msgid "Mounting image..."
 msgstr ""
 
-#: ../src/uiCmd.py:133
+#: ../src/uiCmd.py:134
 msgid "Could not mounted image."
 msgstr ""
 
-#: ../src/uiCmd.py:145
+#: ../src/uiCmd.py:146
 #, python-format
 msgid ""
 "The path you have typed is invalid. If you think the path is valid, make "
@@ -86,74 +86,74 @@ msgid ""
 "can use: mount | grep %s"
 msgstr ""
 
-#: ../src/uiCmd.py:159
+#: ../src/uiCmd.py:160
 msgid "Devices:"
 msgstr ""
 
-#: ../src/uiCmd.py:166
+#: ../src/uiCmd.py:167
 msgid "Label"
 msgstr ""
 
-#: ../src/uiCmd.py:169
+#: ../src/uiCmd.py:170
 msgid "Parent"
 msgstr ""
 
-#: ../src/uiCmd.py:172
+#: ../src/uiCmd.py:173
 msgid "Mount Point"
 msgstr ""
 
-#: ../src/uiCmd.py:175
+#: ../src/uiCmd.py:176
 msgid "not mounted"
 msgstr ""
 
-#: ../src/uiCmd.py:179
+#: ../src/uiCmd.py:180
 msgid "Unmount"
 msgstr ""
 
-#: ../src/uiCmd.py:185
+#: ../src/uiCmd.py:186
 msgid "File System Version"
 msgstr ""
 
-#: ../src/uiCmd.py:188
+#: ../src/uiCmd.py:189
 msgid "File System Type"
 msgstr ""
 
-#: ../src/uiCmd.py:192
+#: ../src/uiCmd.py:193
 msgid "USB devices or partitions have found more than one. Please choose one:"
 msgstr ""
 
-#: ../src/uiCmd.py:197
+#: ../src/uiCmd.py:198
 #, python-format
 msgid "You must enter a number between 0 - %d."
 msgstr ""
 
-#: ../src/uiCmd.py:216
+#: ../src/uiCmd.py:215
 msgid ""
 "Sorry, there is no available disk on your USB disk partition. Please remove "
 "unrequired files from USB disk."
 msgstr ""
 
-#: ../src/uiCmd.py:218 ../src/uiCmd.py:285
+#: ../src/uiCmd.py:217 ../src/uiCmd.py:284
 msgid "Unmounting image..."
 msgstr ""
 
-#: ../src/uiCmd.py:223
+#: ../src/uiCmd.py:222
 msgid "USB disk informations:"
 msgstr ""
 
-#: ../src/uiCmd.py:224
+#: ../src/uiCmd.py:223
 msgid "Capacity"
 msgstr ""
 
-#: ../src/uiCmd.py:227
+#: ../src/uiCmd.py:226
 msgid "Available"
 msgstr ""
 
-#: ../src/uiCmd.py:230
+#: ../src/uiCmd.py:229
 msgid "Used"
 msgstr ""
 
-#: ../src/uiCmd.py:233
+#: ../src/uiCmd.py:232
 msgid ""
 "\n"
 "Please double check your path information. If you don't type the path to the "
@@ -161,81 +161,81 @@ msgid ""
 "continue?"
 msgstr ""
 
-#: ../src/uiCmd.py:235
+#: ../src/uiCmd.py:234
 msgid "Please type CONFIRM to continue:"
 msgstr ""
 
-#: ../src/uiCmd.py:236
+#: ../src/uiCmd.py:235
 msgid "CONFIRM"
 msgstr ""
 
-#: ../src/uiCmd.py:236
+#: ../src/uiCmd.py:235
 msgid "confirm"
 msgstr ""
 
-#: ../src/uiCmd.py:237
+#: ../src/uiCmd.py:236
 msgid "Writing image data to USB stick!"
 msgstr ""
 
-#: ../src/uiCmd.py:241
+#: ../src/uiCmd.py:240
 msgid "You did not type CONFIRM. Exiting.."
 msgstr ""
 
-#: ../src/uiCmd.py:247
+#: ../src/uiCmd.py:246
 msgid "The path is invalid, please specify an image path."
 msgstr ""
 
-#: ../src/uiCmd.py:251
+#: ../src/uiCmd.py:250
 msgid "Calculating checksum..."
 msgstr ""
 
-#: ../src/uiCmd.py:256
+#: ../src/uiCmd.py:255
 msgid "Source Informations:"
 msgstr ""
 
-#: ../src/uiCmd.py:257
+#: ../src/uiCmd.py:256
 msgid "Image Path"
 msgstr ""
 
-#: ../src/uiCmd.py:259
+#: ../src/uiCmd.py:258
 msgid "Name"
 msgstr ""
 
-#: ../src/uiCmd.py:263
+#: ../src/uiCmd.py:262
 msgid "Download URL"
 msgstr ""
 
-#: ../src/uiCmd.py:270
+#: ../src/uiCmd.py:269
 msgid ""
 "The checksum of the source cannot be validated. Please specify a correct "
 "source or be sure that you have downloaded the source correctly."
 msgstr ""
 
-#: ../src/uiCmd.py:277
+#: ../src/uiCmd.py:276
 msgid "Creating boot manager..."
 msgstr ""
 
-#: ../src/uiCmd.py:279
+#: ../src/uiCmd.py:278
 msgid "Could not create boot manager."
 msgstr ""
 
-#: ../src/uiCmd.py:289
+#: ../src/uiCmd.py:288
 msgid "Could not unmounted image."
 msgstr ""
 
-#: ../src/uiCmd.py:294
+#: ../src/uiCmd.py:293
 msgid "Unmounting USB disk..."
 msgstr ""
 
-#: ../src/uiCmd.py:298
+#: ../src/uiCmd.py:297
 msgid "Could not unmounted USB disk."
 msgstr ""
 
-#: ../src/uiCmd.py:302
+#: ../src/uiCmd.py:301
 msgid ""
 "USB disk is ready. Now you can install or run Pardus from your USB disk."
 msgstr ""
 
-#: ../src/uiCmd.py:315
+#: ../src/uiCmd.py:314
 msgid "Copying"
 msgstr ""
