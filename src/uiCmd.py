@@ -179,7 +179,7 @@ class Create:
                 self.utils.cprint("    %s:" % _("Unmount"), "green", True)
                 print(str(self.drives[drive]["unmount"]))
 
-                self.utils.cprint("    %s:" % _("UUID"), "green", True)
+                self.utils.cprint("    UUID", "green", True)
                 print(self.drives[drive]["uuid"])
 
                 self.utils.cprint("    %s:" % _("File System Version"), "green", True)
@@ -258,7 +258,7 @@ class Create:
             print(src)
             self.utils.cprint("    %s:" % _("Name"), "green", True)
             print(name)
-            self.utils.cprint("    %s:" % _("Md5sum"), "green", True)
+            self.utils.cprint("    Md5sum:", "green", True)
             print(md5)
             self.utils.cprint("    %s:" % _("Download URL"), "green", True)
             print(url)
