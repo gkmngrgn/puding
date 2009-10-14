@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>581</width>
-    <height>288</height>
+    <height>310</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -49,7 +49,7 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
+     <item row="6" column="0">
       <widget class="QLabel" name="label_8">
        <property name="text">
         <string>&lt;b&gt;Capacity:&lt;/b&gt;</string>
@@ -59,14 +59,14 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="6" column="1">
       <widget class="QLabel" name="label_capacity">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="6" column="0">
+     <item row="7" column="0">
       <widget class="QLabel" name="label_10">
        <property name="text">
         <string>&lt;b&gt;Available:&lt;/b&gt;</string>
@@ -76,7 +76,7 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="7" column="1">
       <widget class="QLabel" name="label_available">
        <property name="text">
         <string/>
@@ -100,7 +100,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>&lt;i&gt;&lt;b&gt;USB Disk Informations&lt;/b&gt;&lt;/i&gt;</string>
@@ -110,7 +110,7 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
         <string>&lt;b&gt;USB Disk Path:&lt;/b&gt;</string>
@@ -120,7 +120,7 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="5" column="1">
       <widget class="QLabel" name="label_dst">
        <property name="text">
         <string/>
@@ -137,7 +137,7 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
+     <item row="8" column="0">
       <widget class="QLabel" name="label_7">
        <property name="text">
         <string>&lt;b&gt;Used:&lt;/b&gt;</string>
@@ -147,7 +147,7 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="8" column="1">
       <widget class="QLabel" name="label_used">
        <property name="text">
         <string/>
@@ -166,6 +166,23 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>&lt;b&gt;Image Size:&lt;/b&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="label_src_size">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
