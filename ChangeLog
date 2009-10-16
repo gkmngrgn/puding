@@ -1,3 +1,7 @@
+-- 0.2
+	- Remove argument, --qt. If puding has not taken an argument, it starts
+	Qt gui as default.
+
 -- 0.1 (2009-10-14)
 	- Update translations.
 	- Add German translations.
