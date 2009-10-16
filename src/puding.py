@@ -41,11 +41,6 @@ class Options:
         parser.add_option("-l", "--license", dest = "license", action = "store_true", help = _("show program's license info and exit"))
         parser.add_option("-c", "--create", dest = "create", action = "store_true", help = _("create Pardus USB image from console"))
 
-        group = OptionGroup(parser, _("Graphical Interface Options"))
-        group.add_option("--qt", dest = "with_qt", action = "store_true", help = _("run Puding with Qt4 graphical interface"))
-
-        parser.add_option_group(group)
-
         return parser.parse_args()
 
     def main(self):
@@ -81,13 +76,10 @@ class Options:
         elif opts.license:
             print(LICENSE)
 
-        elif opts.with_qt:
+        else:
             from puding.uiQt import main
 
             main()
-
-        else:
-            parser.print_help()
 
 if __name__ == "__main__":
     createDirs()
