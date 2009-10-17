@@ -23,7 +23,6 @@ from common import getMounted
 from common import PartitionUtils
 
 from constants import HOME
-from constants import MOUNT_USB
 from constants import NAME
 from constants import SHARE
 
@@ -110,9 +109,9 @@ class Create:
     def __init__(self, src, dst):
         self.utils = Utils()
         self.progressbar = ProgressBar(src)
-        self.iso_dir = tempfile.mkdtemp(suffix="_puding_iso")
+        self.iso_dir = tempfile.mkdtemp(suffix="_isoPuding")
 
-        if dst == None:
+        if not dst:
             self.partutils = PartitionUtils()
 
             if not self.partutils.detectRemovableDrives():
@@ -124,10 +123,10 @@ class Create:
 
                 # FIX ME: You should not use it.
                 if not dst:
-                    cmd = "mount -t vfat %s %s" % (device, MOUNT_USB)
+                    dst = tempfile.mkdtemp(suffix="_usbPuding")
+                    cmd = "mount -t vfat %s %s" % (device, dst)
                     self.utils.cprint(_("Mounting USB device..."), "green")
                     runCommand(cmd)
-                    dst = MOUNT_USB
 
         self.utils.cprint(_("Mounting image..."), "green")
         cmd = "fuseiso %s %s" % (src, self.iso_dir)
@@ -290,9 +289,9 @@ class Create:
 
             return False
 
-        if dst == MOUNT_USB:
+        if dst.endswith("_usbPuding"):
             self.utils.cprint(_("Unmounting USB disk..."), "green")
-            cmd = "umount %s" % MOUNT_USB
+            cmd = "umount %s" % dst
 
             if runCommand(cmd):
                 self.utils.cprint(_("Could not unmounted USB disk."), "red")

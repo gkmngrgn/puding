@@ -31,8 +31,6 @@ from puding.common import runCommand
 
 from puding.constants import HOME
 from puding.constants import LICENSE
-from puding.constants import MOUNT_ISO
-from puding.constants import MOUNT_USB
 from puding.constants import NAME
 from puding.constants import VERSION
 
@@ -82,15 +80,8 @@ class Options:
             main()
 
 if __name__ == "__main__":
-    createDirs()
-
     try:
         Options().main()
 
     except KeyboardInterrupt:
-        if os.path.ismount(MOUNT_ISO):
-            runCommand("fusermount -u %s" % MOUNT_ISO)
-        if os.path.ismount(MOUNT_USB):
-            runCommand("umount %s" % MOUNT_USB)
-
         print(_("\nQuit."))

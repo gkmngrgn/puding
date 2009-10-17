@@ -13,8 +13,6 @@ import shutil
 import subprocess
 
 from constants import HOME
-from constants import MOUNT_ISO
-from constants import MOUNT_USB
 from constants import NAME
 from constants import LOCALE
 from constants import SHARE
@@ -93,11 +91,6 @@ def createSyslinux(dst):
 
     cmd = "LC_ALL=C syslinux %s" % getMounted(dst)
     return runCommand(cmd)
-
-def createDirs():
-    if not os.path.exists(HOME):
-        os.makedirs(MOUNT_ISO)
-        os.mkdir(MOUNT_USB)
 
 def createUSBDirs(dst):
     dirs = ("repo", "boot/syslinux")
