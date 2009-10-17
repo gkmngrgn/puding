@@ -10,6 +10,7 @@ import glob
 import sys
 import shutil
 import subprocess
+import tempfile
 
 from common import _
 from common import runCommand
@@ -22,7 +23,6 @@ from common import getMounted
 from common import PartitionUtils
 
 from constants import HOME
-from constants import MOUNT_ISO
 from constants import MOUNT_USB
 from constants import NAME
 from constants import SHARE
@@ -110,6 +110,7 @@ class Create:
     def __init__(self, src, dst):
         self.utils = Utils()
         self.progressbar = ProgressBar(src)
+        self.iso_dir = tempfile.mkdtemp(suffix="_puding_iso")
 
         if dst == None:
             self.partutils = PartitionUtils()
@@ -129,7 +130,7 @@ class Create:
                     dst = MOUNT_USB
 
         self.utils.cprint(_("Mounting image..."), "green")
-        cmd = "fuseiso %s %s" % (src, MOUNT_ISO)
+        cmd = "fuseiso %s %s" % (src, self.iso_dir)
         if runCommand(cmd):
             self.utils.cprint(_("Could not mounted image."), "red")
 
@@ -138,7 +139,7 @@ class Create:
         if self.__checkSource(src) and self.__checkDestination(dst):
             from pardusTools import Main
 
-            tools = Main(MOUNT_ISO, dst)
+            tools = Main(self.iso_dir, dst)
             if self.__checkDiskInfo(dst, tools.getTotalSize()):
                 self.__createImage(src, dst)
 
@@ -173,7 +174,7 @@ class Create:
                 self.utils.cprint("    %s:" % _("Mount Point"), "green", True)
                 mount_dir = self.drives[drive]["mount"]
                 if not mount_dir:
-                    print("%s (%s)" % (MOUNT_ISO,  _("not mounted")))
+                    print("%s (%s)" % (self.iso_dir,  _("not mounted")))
                 else:
                     print(mount_dir)
 
@@ -215,7 +216,7 @@ class Create:
             self.utils.cprint(_("There is not enough space left on your USB stick for the image."), "red")
 
             self.utils.cprint(_("Unmounting image..."), "red")
-            runCommand("fusermount -u %s" % MOUNT_ISO)
+            runCommand("fusermount -u %s" % self.iso_dir)
 
             return False
 
@@ -279,10 +280,10 @@ class Create:
 
             return False
 
-        self.__copyImage(MOUNT_ISO, dst)
+        self.__copyImage(self.iso_dir, dst)
 
         self.utils.cprint(_("Unmounting image..."), "green")
-        cmd = "fusermount -u %s" % MOUNT_ISO
+        cmd = "fusermount -u %s" % self.iso_dir
 
         if runCommand(cmd):
             self.utils.cprint(_("Could not unmounted image."), "red")
