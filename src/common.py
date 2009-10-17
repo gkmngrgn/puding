@@ -44,15 +44,6 @@ def runCommand(cmd):
 
     return process
 
-def run(cmd):
-    process = subprocess.Popen(cmd, stdout = subprocess.PIPE,
-                               stderr = subprocess.PIPE,
-                               stdin = subprocess.PIPE)
-
-    result = process.communicate()
-
-    return process, result
-
 def createConfigFile(dst):
     conf_dir = "%s/boot/syslinux" % dst
     conf_files = ["%s/gfxboot.com" % SYSLINUX, "%s/hdt.c32" % SYSLINUX]
@@ -66,15 +57,6 @@ def createConfigFile(dst):
     syslinux_conf_file = "%s/syslinux.cfg" % conf_dir
     if not os.path.exists(syslinux_conf_file):
         shutil.copyfile("%s/syslinux.cfg.pardus" % SHARE, syslinux_conf_file)
-
-def getMounted(disk_path):
-    parts = {}
-    for line in open("/proc/mounts"):
-        if line.startswith("/dev/"):
-            device, path, other = line.split(" ", 2)
-            parts[path] = device
-
-    return parts[disk_path.replace(" ", "\\040")]
 
 def createSyslinux(dst):
     createConfigFile(dst)
@@ -99,6 +81,15 @@ def createUSBDirs(dst):
         path = "%s/%s" % (dst, d)
         if not os.path.exists(path):
             os.makedirs(path)
+
+def getMounted(disk_path):
+    parts = {}
+    for line in open("/proc/mounts"):
+        if line.startswith("/dev/"):
+            device, path, other = line.split(" ", 2)
+            parts[path] = device
+
+    return parts[disk_path.replace(" ", "\\040")]
 
 class PartitionUtils:
     def __init__(self):
