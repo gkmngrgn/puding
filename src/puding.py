@@ -83,5 +83,5 @@ if __name__ == "__main__":
         Options().main()
 
     except KeyboardInterrupt:
+        print(_("\nQuitting, please wait."))
         unmountDirs()
-        print(_("\nQuit."))

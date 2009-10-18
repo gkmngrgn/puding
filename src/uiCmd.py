@@ -20,6 +20,7 @@ from common import createUSBDirs
 from common import getDiskInfo
 from common import getIsoSize
 from common import getMounted
+from common import unmountDirs
 from common import PartitionUtils
 
 from constants import HOME
@@ -214,8 +215,8 @@ class Create:
         if available < total_size:
             self.utils.cprint(_("There is not enough space left on your USB stick for the image."), "red")
 
-            self.utils.cprint(_("Unmounting image..."), "red")
-            runCommand("fusermount -u %s" % self.iso_dir)
+            self.utils.cprint(_("Unmounting directories..."), "red")
+            unmountDirs()
 
             return False
 
@@ -238,6 +239,7 @@ class Create:
             return True
 
         self.utils.cprint(_("You did not type CONFIRM. Exiting.."), "red")
+        unmountDirs()
 
         return False
 
@@ -281,22 +283,8 @@ class Create:
 
         self.__copyImage(self.iso_dir, dst)
 
-        self.utils.cprint(_("Unmounting image..."), "green")
-        cmd = "fusermount -u %s" % self.iso_dir
-
-        if runCommand(cmd):
-            self.utils.cprint(_("Could not unmounted image."), "red")
-
-            return False
-
-        if dst.endswith("_usbPuding"):
-            self.utils.cprint(_("Unmounting USB disk..."), "green")
-            cmd = "umount %s" % dst
-
-            if runCommand(cmd):
-                self.utils.cprint(_("Could not unmounted USB disk."), "red")
-
-                return False
+        self.utils.cprint(_("Unmounting image and USB disk..."), "green")
+        unmountDirs()
 
         self.utils.cprint(_("USB disk is ready. Now you can install or run Pardus from your USB disk."), "brightgreen")
 

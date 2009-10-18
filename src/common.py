@@ -94,10 +94,9 @@ def createUSBDirs(dst):
 def unmountDirs():
     # BAD CODE:
     for line in open("/proc/mounts"):
-        if line.startswith("/dev/") or line.startswith("fuseiso"):
-            path = line.split(" ", 2)[1]
-            if path.endswith("Puding"):
-                runCommand("umount %s" % path)
+        path = line.split(" ", 2)[1]
+        if path.endswith("Puding"):
+            runCommand("umount %s" % path)
 
 class PartitionUtils:
     def __init__(self):
