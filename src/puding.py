@@ -26,10 +26,9 @@ from optparse import OptionParser
 from optparse import OptionGroup
 
 from puding.common import _
-from puding.common import createDirs
 from puding.common import runCommand
+from puding.common import unmountDirs
 
-from puding.constants import HOME
 from puding.constants import LICENSE
 from puding.constants import NAME
 from puding.constants import VERSION
@@ -84,4 +83,5 @@ if __name__ == "__main__":
         Options().main()
 
     except KeyboardInterrupt:
+        unmountDirs()
         print(_("\nQuit."))

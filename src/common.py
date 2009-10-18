@@ -39,6 +39,15 @@ def getFileSize(file):
 
     return file_size
 
+def getMounted(disk_path):
+    parts = {}
+    for line in open("/proc/mounts"):
+        if line.startswith("/dev/"):
+            device, path, other = line.split(" ", 2)
+            parts[path] = device
+
+    return parts[disk_path.replace(" ", "\\040")]
+
 def runCommand(cmd):
     process = subprocess.call(cmd, shell = True)
 
@@ -82,14 +91,13 @@ def createUSBDirs(dst):
         if not os.path.exists(path):
             os.makedirs(path)
 
-def getMounted(disk_path):
-    parts = {}
+def unmountDirs():
+    # BAD CODE:
     for line in open("/proc/mounts"):
-        if line.startswith("/dev/"):
-            device, path, other = line.split(" ", 2)
-            parts[path] = device
-
-    return parts[disk_path.replace(" ", "\\040")]
+        if line.startswith("/dev/") or line.startswith("fuseiso"):
+            path = line.split(" ", 2)[1]
+            if path.endswith("Puding"):
+                runCommand("umount %s" % path)
 
 class PartitionUtils:
     def __init__(self):
