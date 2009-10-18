@@ -17,7 +17,6 @@ from common import getMounted
 from common import createSyslinux
 from common import createUSBDirs
 from common import runCommand
-from common import unmountDirs
 from common import PartitionUtils
 
 from constants import CORE_DEVELOPER
@@ -141,7 +140,7 @@ class Create(QtGui.QMainWindow, qtMain.Ui_MainWindow):
                 if dst.endswith("Puding"):
                     auth.umount(dst)
 
-        unmountDirs()
+        runCommand("fusermount -u %s" % self.iso_dir)
 
     def warningDialog(self, title, message,):
         QtGui.QMessageBox.warning(self, title, message, QtGui.QMessageBox.Ok)
