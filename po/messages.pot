@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-19 21:08+0300\n"
+"POT-Creation-Date: 2009-10-19 21:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,15 @@ msgstr ""
 msgid "You need superuser permissions to run this application."
 msgstr ""
 
-#: ../src/puding.py:79
+#: ../src/puding.py:68
+msgid "Invalid usage. Example:"
+msgstr ""
+
+#: ../src/puding.py:70
+msgid "(If you know directory path that is your USB device mount point)"
+msgstr ""
+
+#: ../src/puding.py:86
 msgid ""
 "\n"
 "Quitting, please wait."
