@@ -144,7 +144,8 @@ class Create:
                 self.__createImage(src, dst)
 
         else:
-            self.utils.cprint(_("The path you have typed is invalid. If you think the path is valid, make sure you have mounted USB stick to the path you gave. To check the path, you can use: mount | grep %s" % dst), "red")
+            self.utils.cprint(_("The path you have typed as second argument is invalid. Please check the USB directory."), "red")
+            unmountDirs()
 
             sys.exit(1)
 
@@ -191,14 +192,20 @@ class Create:
                 print("%s\n" % self.drives[drive]["fstype"])
 
             try:
-                part_number = int(raw_input("%s " % _("USB devices or partitions have found more than one. Please choose one:")))
-
-                device = self.drives.keys()[part_number - 1]
+                part_number = int(raw_input(_("USB devices or partitions have found more than one. Please choose one:") + " "))
 
             except ValueError:
-               self.cprint(_("You must enter a number between 0 - %d." % drive_no + 1), "red")
+                self.utils.cprint(_("Please enter a number between 0 - %d." % (drive_no + 1)), "red")
 
-               return False
+                sys.exit(1)
+
+            try:
+                device = self.drives.keys()[part_number - 1]
+
+            except IndexError:
+                self.utils.cprint(_("You must enter a number between 0 - %d." % (drive_no + 1)), "red")
+
+                sys.exit(1)
 
         destination = self.drives[device]["mount"]
 

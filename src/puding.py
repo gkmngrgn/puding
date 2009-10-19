@@ -51,24 +51,17 @@ class Options:
 
                 sys.exit(0)
 
+            from puding import uiCmd
+
+            source = os.path.realpath(args[0])
+
             try:
-                from puding import uiCmd
+                destination = os.path.realpath(args[1])
 
-                source = os.path.realpath(args[0])
+            except:
+                destination = None
 
-                try:
-                    destination = os.path.realpath(args[1])
-
-                except:
-                    destination = None
-
-                uiCmd.Create(source, destination)
-
-            except IndexError:
-                print(_("Invalid usage. Example:"))
-                print("\t%s --create /mnt/archive/Pardus-2009.iso\n" % NAME)
-                print("(If you know directory path that is your USB device mount point)\n\
-\t%s --create /mnt/archive/Pardus-2009.iso /media/disk" % NAME)
+            uiCmd.Create(source, destination)
 
         elif opts.license:
             print(LICENSE)

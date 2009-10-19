@@ -11,8 +11,8 @@ import glob
 import os
 import shutil
 import subprocess
+import tempfile
 
-from constants import HOME
 from constants import NAME
 from constants import LOCALE
 from constants import SHARE
@@ -97,6 +97,10 @@ def unmountDirs():
         path = line.split(" ", 2)[1]
         if path.endswith("Puding"):
             runCommand("umount %s" % path)
+
+    tempdir = tempfile.gettempdir()
+    for puding_dir in glob.glob("%s/*Puding" % tempdir):
+        os.rmdir(puding_dir)
 
 class PartitionUtils:
     def __init__(self):
