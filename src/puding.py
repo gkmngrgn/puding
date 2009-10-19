@@ -67,8 +67,8 @@ class Options:
             except IndexError:
                 print(_("Invalid usage. Example:"))
                 print("\t%s --create /mnt/archive/Pardus-2009.iso\n" % NAME)
-                print("(If you know directory path that is your USB device mount point)\n\
-\t%s --create /mnt/archive/Pardus-2009.iso /media/disk" % NAME)
+                print(_("(If you know directory path that is your USB device mount point)"))
+                print("\t%s --create /mnt/archive/Pardus-2009.iso /media/disk" % NAME)
 
         elif opts.license:
             print(LICENSE)
