@@ -21,8 +21,6 @@ from common import PartitionUtils
 
 from constants import CORE_DEVELOPER
 from constants import CORE_EMAIL
-from constants import COPYRIGHT
-from constants import DESCRIPTION
 from constants import LICENSE_NAME
 from constants import NAME
 from constants import SHARE
@@ -290,8 +288,11 @@ class About(QtGui.QDialog, qtAbout.Ui_Dialog):
         super(About, self).__init__(parent)
         self.setupUi(self)
 
-        description = "<b>puding</b> - %s<br>%s<br>%s<br><br><a href=\"%s\">%s</a><br>" % (VERSION, DESCRIPTION, COPYRIGHT, URL, URL)
-        self.label_description.setText(description)
+        description = self.tr("Puding is an USB image creator for Pardus Linux.")
+        copyright = self.tr("Copyright (c) %s TUBITAK / UEKAE" % YEAR)
+
+        about_text = "<b>puding</b> - %s<br>%s<br>%s<br><br><a href=\"%s\">%s</a><br>" % (VERSION, description, copyright, URL, URL)
+        self.label_description.setText(about_text)
 
         authors = "%s, %s" % (CORE_DEVELOPER, CORE_EMAIL)
         translators = TRANSLATORS
