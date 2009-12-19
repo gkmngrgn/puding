@@ -21,17 +21,23 @@
 import getopt
 import os
 import sys
-
 from optparse import OptionParser
 from optparse import OptionGroup
 
-from puding.common import _
+
+try:
+    from puding import _
+except ImportError: 
+    module_dir = os.path.split(os.path.abspath(os.path.dirname(__file__)))[0]
+    sys.path.append(module_dir)
+
+    from puding import _
+
 from puding.common import runCommand
 from puding.common import unmountDirs
-
 from puding.constants import LICENSE
-from puding.constants import NAME
 from puding.constants import VERSION
+
 
 class Options:
     def parseArgs(self, parser):
@@ -66,9 +72,9 @@ class Options:
 
             except IndexError:
                 print(_("Invalid usage. Example:"))
-                print("\t%s --create /mnt/archive/Pardus-2009.iso\n" % NAME)
+                print("\tpuding --create /mnt/archive/Pardus-2009.iso\n")
                 print(_("(If you know directory path that is your USB device mount point)"))
-                print("\t%s --create /mnt/archive/Pardus-2009.iso /media/disk" % NAME)
+                print("\tpuding --create /mnt/archive/Pardus-2009.iso /media/disk")
 
         elif opts.license:
             print(LICENSE)
