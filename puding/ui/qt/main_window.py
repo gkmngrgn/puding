@@ -10,30 +10,31 @@ import shutil
 import sys
 import tempfile
 
-from common import getDiskInfo
-from common import getIsoSize
-from common import getFileSize
-from common import getMounted
-from common import createSyslinux
-from common import createUSBDirs
-from common import runCommand
-from common import PartitionUtils
-
-from constants import CORE_DEVELOPER
-from constants import CORE_EMAIL
-from constants import LICENSE_NAME
-from constants import SHARE
-from constants import URL
-from constants import VERSION
-from constants import YEAR
-from constants import ART_CONTRIBUTOR
-from constants import TRANSLATORS
+from puding.common import getDiskInfo
+from puding.common import getIsoSize
+from puding.common import getFileSize
+from puding.common import getMounted
+from puding.common import createSyslinux
+from puding.common import createUSBDirs
+from puding.common import runCommand
+from puding.common import PartitionUtils
+from puding.constants import CORE_DEVELOPER
+from puding.constants import CORE_EMAIL
+from puding.constants import LICENSE_NAME
+from puding.constants import SHARE
+from puding.constants import URL
+from puding.constants import VERSION
+from puding.constants import YEAR
+from puding.constants import ART_CONTRIBUTOR
+from puding.constants import TRANSLATORS
+from puding.resources import ResourceManager
 
 try:
     from puding.ui.qt import about_dialog_ui
 except ImportError:
-    ui_files = glob.glob("ui/qt/ui/*.ui")
-    rc_files = glob.glob("ui/qt/*.qrc")
+    res = ResourceManager()
+    ui_files = glob.glob("%s/ui/qt/ui/*.ui" % res.DEV_HOME)
+    rc_files = glob.glob("%s/ui/qt/*.qrc" % res.DEV_HOME)
 
     for qt_file in ui_files + rc_files:
         if qt_file.endswith(".qrc"):
@@ -47,7 +48,7 @@ except ImportError:
         qt_file_name = os.path.split(qt_file)[-1]
         py_file_name = os.path.splitext(qt_file_name)[0] + "_%s.py" % file_name_ext
         print("converting %s as %s..." % (qt_file_name, py_file_name))
-        os.system("/usr/bin/%s %s -o ui/qt/%s" % (command, qt_file, py_file_name))
+        os.system("/usr/bin/%s %s -o %s/ui/qt/%s" % (command, qt_file, res.DEV_HOME, py_file_name))
 
     from puding.ui.qt import about_dialog_ui
 
