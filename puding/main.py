@@ -24,7 +24,6 @@ import sys
 from optparse import OptionParser
 from optparse import OptionGroup
 
-
 try:
     from puding import _
 except ImportError: 
@@ -58,7 +57,7 @@ class Options:
                 sys.exit(0)
 
             try:
-                from puding import uiCmd
+                from puding.ui.cmd import uiCmd
 
                 source = os.path.realpath(args[0])
 
@@ -80,9 +79,9 @@ class Options:
             print(LICENSE)
 
         else:
-            from puding.uiQt import main
+            from puding.ui.qt import main_window
 
-            main()
+            main_window.run()
 
 if __name__ == "__main__":
     try:

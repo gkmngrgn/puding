@@ -22,7 +22,6 @@ from common import PartitionUtils
 from constants import CORE_DEVELOPER
 from constants import CORE_EMAIL
 from constants import LICENSE_NAME
-from constants import NAME
 from constants import SHARE
 from constants import URL
 from constants import VERSION
@@ -30,11 +29,32 @@ from constants import YEAR
 from constants import ART_CONTRIBUTOR
 from constants import TRANSLATORS
 
-from puding import qtAbout
-from puding import qtConfirmDialog
-from puding import qtMain
-from puding import qtProgressBar
-from puding import qtSelectDisk
+try:
+    from puding.ui.qt import about_dialog_ui
+except ImportError:
+    ui_files = glob.glob("ui/qt/ui/*.ui")
+    rc_files = glob.glob("ui/qt/*.qrc")
+
+    for qt_file in ui_files + rc_files:
+        if qt_file.endswith(".qrc"):
+            command = "pyrcc4"
+            file_name_ext = "rc"
+
+        else:
+            command = "pyuic4"
+            file_name_ext = "ui"
+
+        qt_file_name = os.path.split(qt_file)[-1]
+        py_file_name = os.path.splitext(qt_file_name)[0] + "_%s.py" % file_name_ext
+        print("converting %s as %s..." % (qt_file_name, py_file_name))
+        os.system("/usr/bin/%s %s -o ui/qt/%s" % (command, qt_file, py_file_name))
+
+    from puding.ui.qt import about_dialog_ui
+
+from puding.ui.qt import confirm_dialog_ui
+from puding.ui.qt import main_window_ui
+from puding.ui.qt import progressbar_ui
+from puding.ui.qt import select_disk_ui
 
 from PyQt4 import QtCore
 from PyQt4 import QtGui
@@ -44,7 +64,7 @@ from releases import releases
 # General variables
 increment_value = 1024**2
 
-class Create(QtGui.QMainWindow, qtMain.Ui_MainWindow):
+class Create(QtGui.QMainWindow, main_window_ui.Ui_MainWindow):
     def __init__(self, parent = None):
         self.iso_dir = tempfile.mkdtemp(suffix="_isoPuding")
 
@@ -211,7 +231,7 @@ you have downloaded the source correctly."""
 
         return True
 
-class SelectDisk(QtGui.QDialog, qtSelectDisk.Ui_Dialog):
+class SelectDisk(QtGui.QDialog, select_disk_ui.Ui_Dialog):
     def __init__(self, parent = None):
         self.partutils = PartitionUtils()
         self.partutils.detectRemovableDrives()
@@ -253,7 +273,7 @@ class SelectDisk(QtGui.QDialog, qtSelectDisk.Ui_Dialog):
 
         return self.line_directory.displayText()
 
-class ConfirmDialog(QtGui.QDialog, qtConfirmDialog.Ui_Dialog):
+class ConfirmDialog(QtGui.QDialog, confirm_dialog_ui.Ui_Dialog):
     def __init__(self, src, dst, mount_point, name, total_size, capacity, available, used, parent = None):
         super(ConfirmDialog, self).__init__(parent)
         self.setupUi(self)
@@ -268,7 +288,7 @@ class ConfirmDialog(QtGui.QDialog, qtConfirmDialog.Ui_Dialog):
         self.label_available.setText("%dMB" % available)
         self.label_used.setText("%dMB" % used)
 
-class ProgressBar(QtGui.QDialog, qtProgressBar.Ui_Dialog):
+class ProgressBar(QtGui.QDialog, progressbar_ui.Ui_Dialog):
     def __init__(self, title, message, max_value, parent = None):
         super(ProgressBar, self).__init__(parent)
         self.setupUi(self)
@@ -283,7 +303,7 @@ class ProgressBar(QtGui.QDialog, qtProgressBar.Ui_Dialog):
         current_value = self.progressBar.value()
         self.progressBar.setValue(current_value + 1)
 
-class About(QtGui.QDialog, qtAbout.Ui_Dialog):
+class About(QtGui.QDialog, about_dialog_ui.Ui_Dialog):
     def __init__(self, parent = None):
         super(About, self).__init__(parent)
         self.setupUi(self)
@@ -368,7 +388,7 @@ class ProgressIncrementCopy(QtCore.QThread):
         self.label.setText(message)
 
 # And last..
-def main():
+def run():
     app = QtGui.QApplication(sys.argv)
     locale = QtCore.QLocale.system().name()
     translator = QtCore.QTranslator()
