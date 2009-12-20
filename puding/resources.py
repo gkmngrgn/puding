@@ -30,13 +30,13 @@ class ResourceManager(object):
 
     def get_data_file(self, rel_path):
         dev_path = os.path.join(self.DEV_HOME, rel_path)
-        
+
         if os.path.isfile(dev_path):
             return dev_path
         else:
             for path in self.DATA_PATH:
                 prod_path = os.path.join(path, rel_path)
-                
+
                 if os.path.isfile(prod_path):
                     return prod_path
 
