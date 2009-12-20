@@ -9,6 +9,8 @@ import os
 import shutil
 import sys
 import tempfile
+from PyQt4 import QtCore
+from PyQt4 import QtGui
 
 from puding.common import getDiskInfo
 from puding.common import getIsoSize
@@ -27,45 +29,18 @@ from puding.constants import VERSION
 from puding.constants import YEAR
 from puding.constants import ART_CONTRIBUTOR
 from puding.constants import TRANSLATORS
-from puding.resources import ResourceManager
-
-try:
-    from puding.ui.qt import about_dialog_ui
-except ImportError:
-    res = ResourceManager()
-    ui_files = glob.glob("%s/ui/qt/ui/*.ui" % res.DEV_HOME)
-    rc_files = glob.glob("%s/ui/qt/*.qrc" % res.DEV_HOME)
-
-    for qt_file in ui_files + rc_files:
-        if qt_file.endswith(".qrc"):
-            command = "pyrcc4"
-            file_name_ext = "rc"
-
-        else:
-            command = "pyuic4"
-            file_name_ext = "ui"
-
-        qt_file_name = os.path.split(qt_file)[-1]
-        py_file_name = os.path.splitext(qt_file_name)[0] + "_%s.py" % file_name_ext
-        print("converting %s as %s..." % (qt_file_name, py_file_name))
-        os.system("/usr/bin/%s %s -o %s/ui/qt/%s" % (command, qt_file, res.DEV_HOME, py_file_name))
-
-    from puding.ui.qt import about_dialog_ui
-
+from puding.releases import releases
+from puding.ui.qt import about_dialog_ui
 from puding.ui.qt import confirm_dialog_ui
 from puding.ui.qt import main_window_ui
 from puding.ui.qt import progressbar_ui
 from puding.ui.qt import select_disk_ui
 
-from PyQt4 import QtCore
-from PyQt4 import QtGui
-
-from releases import releases
 
 # General variables
 increment_value = 1024**2
 
-class Create(QtGui.QMainWindow, main_window_ui.Ui_MainWindow):
+class MainWindow(QtGui.QMainWindow, main_window_ui.Ui_MainWindow):
     def __init__(self, parent = None):
         self.iso_dir = tempfile.mkdtemp(suffix="_isoPuding")
 

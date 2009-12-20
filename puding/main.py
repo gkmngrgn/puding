@@ -79,9 +79,10 @@ class Options:
             print(LICENSE)
 
         else:
-            from puding.ui.qt import main_window
+            from puding.ui.qt.puding_qt import RunApplicationInterface
 
-            main_window.run()
+            RunApplicationInterface()
+
 
 if __name__ == "__main__":
     try:
