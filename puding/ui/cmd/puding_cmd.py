@@ -14,16 +14,12 @@ import tempfile
 
 from puding import _
 from puding.common import runCommand
-from puding.common import createConfigFile
 from puding.common import createSyslinux
 from puding.common import createUSBDirs
 from puding.common import getDiskInfo
 from puding.common import getIsoSize
-from puding.common import getMounted
 from puding.common import unmountDirs
 from puding.common import PartitionUtils
-from puding.constants import HOME
-from puding.constants import SHARE
 from puding.releases import releases
 
 
