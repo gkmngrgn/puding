@@ -44,7 +44,7 @@ class MainWindow(QtGui.QMainWindow, main_window_ui.Ui_MainWindow):
     def __init__(self, parent = None):
         self.iso_dir = tempfile.mkdtemp(suffix="_isoPuding")
 
-        super(Create, self).__init__(parent)
+        super(MainWindow, self).__init__(parent)
         self.setupUi(self)
 
         self.connect(self.button_quit, QtCore.SIGNAL("clicked()"), QtCore.SLOT("close()"))
