@@ -6,10 +6,7 @@
 #
 
 import os
-import glob
 import sys
-import shutil
-import subprocess
 import tempfile
 
 from puding import _
