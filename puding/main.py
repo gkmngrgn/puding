@@ -57,7 +57,7 @@ class Options:
                 sys.exit(0)
 
             try:
-                from puding.ui.cmd import uiCmd
+                from puding.ui.cmd import puding_cmd
 
                 source = os.path.realpath(args[0])
 
@@ -67,7 +67,7 @@ class Options:
                 except:
                     destination = None
 
-                uiCmd.Create(source, destination)
+                puding_cmd.Create(source, destination)
 
             except IndexError:
                 print(_("Invalid usage. Example:"))
