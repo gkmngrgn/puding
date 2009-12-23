@@ -23,7 +23,6 @@ from puding.common import PartitionUtils
 from puding.constants import CORE_DEVELOPER
 from puding.constants import CORE_EMAIL
 from puding.constants import LICENSE_NAME
-from puding.constants import SHARE
 from puding.constants import URL
 from puding.constants import VERSION
 from puding.constants import YEAR

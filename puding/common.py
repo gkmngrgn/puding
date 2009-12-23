@@ -12,11 +12,10 @@ import shutil
 import subprocess
 import tempfile
 
-from constants import LOCALE
-from constants import SHARE
-from constants import SYSLINUX
-
-from releases import releases
+from puding.constants import LOCALE
+from puding.constants import SYSLINUX
+from puding.releases import releases
+from puding.resources import ResourceManager
 
 def getDiskInfo(dst):
     disk_info = os.statvfs(dst)
@@ -49,9 +48,11 @@ def runCommand(cmd):
     return process
 
 def createConfigFile(dst):
-    conf_dir = "%s/boot/syslinux" % dst
-    conf_files = ["%s/gfxboot.com" % SYSLINUX, "%s/hdt.c32" % SYSLINUX]
-    conf_files.extend(glob.glob("%s/gfxtheme/*" % SHARE))
+    res = ResourceManager()
+    conf_dir = os.path.join(dst, "boot", "syslinux")
+    isolinux_dir = os.path.join(dst, "boot" "isolinux")
+    conf_files = ["%s/gfxboot.com" % isolinux_dir, "%s/hdt.c32" % isolinux_dir]
+    conf_files.extend(glob.glob("%s/datas/gfxtheme/*" % DEV_HOME))
 
     for i in conf_files:
         file_name = os.path.split(i)[1]
@@ -60,7 +61,7 @@ def createConfigFile(dst):
 
     syslinux_conf_file = "%s/syslinux.cfg" % conf_dir
     if not os.path.exists(syslinux_conf_file):
-        shutil.copyfile("%s/syslinux.cfg.pardus" % SHARE, syslinux_conf_file)
+        shutil.copyfile(res.get_data_file("datas/syslinux.cfg.pardus"), syslinux_conf_file)
 
 def createSyslinux(dst):
     createConfigFile(dst)
