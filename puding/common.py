@@ -47,26 +47,27 @@ def runCommand(cmd):
 
     return process
 
-def createConfigFile(dst):
+def createConfigFile(iso_dir, dst):
     res = ResourceManager()
     conf_dir = os.path.join(dst, "boot", "syslinux")
-    isolinux_dir = os.path.join(dst, "boot" "isolinux")
-    conf_files = ["%s/gfxboot.com" % isolinux_dir, "%s/hdt.c32" % isolinux_dir]
-    conf_files.extend(glob.glob("%s/datas/gfxtheme/*" % DEV_HOME))
+    isolinux_dir = os.path.join(iso_dir, "boot", "isolinux")
+    conf_files = [os.path.join(isolinux_dir, "gfxboot.com"),
+        os.path.join(isolinux_dir, "hdt.c32")]
+    conf_files.extend(glob.glob(os.path.join(res.DEV_HOME, "datas", "gfxtheme", "*")))
 
     for i in conf_files:
-        file_name = os.path.split(i)[1]
-        if not os.path.exists("%s/%s" % (conf_dir, file_name)):
-            shutil.copyfile(i, "%s/%s" % (conf_dir, file_name))
+        file_name = os.path.split(i)[-1]
+        if not os.path.exists(os.path.join(conf_dir, file_name)):
+            shutil.copyfile(i, os.path.join(conf_dir, file_name))
 
-    syslinux_conf_file = "%s/syslinux.cfg" % conf_dir
+    syslinux_conf_file = os.path.join(conf_dir, "syslinux.cfg")
     if not os.path.exists(syslinux_conf_file):
-        shutil.copyfile(res.get_data_file("datas/syslinux.cfg.pardus"), syslinux_conf_file)
+        shutil.copyfile(res.get_data_file(os.path.join("datas", "syslinux.cfg.pardus")), syslinux_conf_file)
 
-def createSyslinux(dst):
-    createConfigFile(dst)
+def createSyslinux(iso_dir, dst):
+    createConfigFile(iso_dir, dst)
 
-    sys_file = "%s/ldlinux.sys" % dst
+    sys_file = os.path.join(dst, "ldlinux.sys")
     if os.path.exists(sys_file):
         os.remove(sys_file)
 

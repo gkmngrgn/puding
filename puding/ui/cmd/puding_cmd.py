@@ -274,7 +274,7 @@ class Create:
         createUSBDirs(dst)
 
         self.utils.cprint(_("Creating boot manager..."), "yellow")
-        if createSyslinux(dst):
+        if createSyslinux(self.iso_dir, dst):
             self.utils.cprint(_("Could not create boot manager."), "red")
 
             return False
