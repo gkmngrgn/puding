@@ -6,6 +6,14 @@
 #
 
 releases = (
+        { "name" : "Pardus 2009.1 Çalışan",
+          "url"  : "ftp://ftp.pardus.org.tr/pub/pardus/calisan/2009.1/Pardus_Calisan_2009.1_Anthropoides_virgo.iso",
+          "md5"  : "0d4af4056adfaa11af29348eb77ea81a" },
+
+        { "name" : "Pardus 2009.1 Kurulan",
+          "url"  : "ftp://ftp.pardus.org.tr/pub/pardus/kurulan/2009.1/Pardus_2009.1_Anthropoides_virgo.iso",
+          "md5"  : "104583ecd4d649cc58eafcaf94b4dceb" },
+
         { "name" : "Pardus 2009 Kurulan",
           "url"  : "ftp://ftp.pardus.org.tr/pub/pardus/kurulan/2009/Pardus_2009.iso",
           "md5"  : "d0836e92d77e016f5f9c8feb23afca55" },
